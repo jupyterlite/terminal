@@ -1,0 +1,14 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: v4.3.0
+_src_path: https://github.com/jupyterlab/extension-template
+author_email: ianthomas23@gmail.com
+author_name: Ian Thomas
+has_binder: false
+has_settings: false
+kind: frontend
+labextension_name: jupyterlite-terminal
+project_short_description: A terminal for JupyterLite
+python_name: jupyterlite_terminal
+repository: https://github.com/ianthomas23/jupyterlite-terminal
+test: true
+
