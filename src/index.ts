@@ -1,18 +1,73 @@
+// Copyright (c) Jupyter Development Team.
+// Distributed under the terms of the Modified BSD License.
+
 import {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin
-} from '@jupyterlab/application';
+  JupyterLiteServer,
+  JupyterLiteServerPlugin,
+  Router
+} from '@jupyterlite/server';
+import { ITerminalTracker } from '@jupyterlab/terminal';
+
+import { ITerminals } from './tokens';
+import { Terminals } from './terminals';
 
 /**
- * Initialization data for the jupyterlite-terminal extension.
+ * The terminals service plugin.
  */
-const plugin: JupyterFrontEndPlugin<void> = {
+const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
   id: 'jupyterlite-terminal:plugin',
   description: 'A terminal for JupyterLite',
   autoStart: true,
-  activate: (app: JupyterFrontEnd) => {
-    console.log('JupyterLab extension jupyterlite-terminal is activated!');
+  requires: [ITerminalTracker],
+  provides: ITerminals,
+  activate: async (app: JupyterLiteServer, tracker: ITerminalTracker) => {
+    console.log(
+      'JupyterLab extension jupyterlite-terminal:plugin is activated!'
+    );
+
+    console.log('==> ITerminalTracker', tracker);
+
+    const { serviceManager } = app;
+    const { contents, serverSettings, terminals } = serviceManager;
+    console.log('terminals available:', terminals.isAvailable());
+    console.log('terminals ready:', terminals.isReady); // Not ready
+    console.log('terminals active:', terminals.isActive);
+
+    // Not sure this is necessary?
+    await terminals.ready;
+    console.log('terminals ready after await:', terminals.isReady); // Ready
+
+    return new Terminals(serverSettings.wsUrl, contents);
   }
 };
 
-export default plugin;
+/**
+ * A plugin providing the routes for the terminals service
+ */
+const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
+  id: 'jupyterlite-terminal:routes-plugin',
+  autoStart: true,
+  requires: [ITerminals],
+  activate: (app: JupyterLiteServer, terminals: ITerminals) => {
+    console.log(
+      'JupyterLab extension jupyterlite-terminal:routes-plugin is activated!',
+      terminals
+    );
+
+    // GET /api/terminals - List the running terminals
+    app.router.get('/api/terminals', async (req: Router.IRequest) => {
+      const res = terminals.list();
+      // Should return last_activity for each too,
+      return new Response(JSON.stringify(res));
+    });
+
+    // POST /api/terminals - Start a terminal
+    app.router.post('/api/terminals', async (req: Router.IRequest) => {
+      const res = await terminals.startNew();
+      // Should return last_activity too.
+      return new Response(JSON.stringify(res));
+    });
+  }
+};
+
+export default [terminalsPlugin, terminalsRoutesPlugin];
