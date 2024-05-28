@@ -6,7 +6,8 @@ import { expect, test } from '@jupyterlab/galata';
  */
 test.use({ autoGoto: false });
 
-test('should emit an activation console message', async ({ page }) => {
+// TODO: re-enable when testing with JupyterLite
+test.skip('should emit an activation console message', async ({ page }) => {
   const logs: string[] = [];
 
   page.on('console', message => {
