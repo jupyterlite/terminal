@@ -53,9 +53,9 @@ export class Terminal implements ITerminal {
         const message_type = data[0];
         const content = data.slice(1);
 
-        if (message_type == 'stdin') {
+        if (message_type === 'stdin') {
           await this._shell!.input(content[0] as string);
-        } else if (message_type == 'set_size') {
+        } else if (message_type === 'set_size') {
           const rows = content[0] as number;
           const columns = content[1] as number;
           await this._shell!.setSize(rows, columns);
