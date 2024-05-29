@@ -18,7 +18,7 @@ test.skip('should emit an activation console message', async ({ page }) => {
 
   expect(
     logs.filter(
-      s => s === 'JupyterLab extension jupyterlite-terminal is activated!'
+      s => s === 'JupyterLab extension @jupyterlite/terminal is activated!'
     )
   ).toHaveLength(1);
 });

@@ -1,7 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { JupyterFileSystem, Shell, IFileSystem } from '@ianthomas23/cockle';
+import { JupyterFileSystem, Shell, IFileSystem } from '@jupyterlite/cockle';
 
 import { JSONPrimitive } from '@lumino/coreutils';
 

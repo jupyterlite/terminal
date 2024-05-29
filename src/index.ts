@@ -14,13 +14,13 @@ import { Terminals } from './terminals';
  * The terminals service plugin.
  */
 const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
-  id: 'jupyterlite-terminal:plugin',
+  id: '@jupyterlite/terminal:plugin',
   description: 'A terminal for JupyterLite',
   autoStart: true,
   provides: ITerminals,
   activate: async (app: JupyterLiteServer) => {
     console.log(
-      'JupyterLab extension jupyterlite-terminal:plugin is activated!'
+      'JupyterLab extension @jupyterlite/terminal:plugin is activated!'
     );
 
     const { serviceManager } = app;
@@ -41,12 +41,12 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
  * A plugin providing the routes for the terminals service
  */
 const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
-  id: 'jupyterlite-terminal:routes-plugin',
+  id: '@jupyterlite/terminal:routes-plugin',
   autoStart: true,
   requires: [ITerminals],
   activate: (app: JupyterLiteServer, terminals: ITerminals) => {
     console.log(
-      'JupyterLab extension jupyterlite-terminal:routes-plugin is activated!',
+      'JupyterLab extension @jupyterlite/terminal:routes-plugin is activated!',
       terminals
     );
 

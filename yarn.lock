@@ -1746,15 +1746,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ianthomas23/cockle@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@ianthomas23/cockle@npm:0.0.2"
-  dependencies:
-    "@jupyterlab/services": ^7.1.6
-  checksum: 7426122ce9e05cebf6db3c88a06b068eafa65dc8a6ba72384c6a9a62f95d13ebc3a3cb865ecaa6989a8809d0a0fc17155689be7d6067d5f3ffb4e0dbb0a32d33
-  languageName: node
-  linkType: hard
-
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -3004,6 +2995,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlite/cockle@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@jupyterlite/cockle@npm:0.0.3"
+  dependencies:
+    "@jupyterlab/services": ^7.1.6
+  checksum: 78451875892662175ba5f7bfac36ba97f6a1d2335ec8d801d39fd2dcd7f2996af08c0b5d76d67921843e888d7a94a70f43a24ade7d476c8b7556e775d1a8002f
+  languageName: node
+  linkType: hard
+
 "@jupyterlite/contents@npm:^0.3.0":
   version: 0.3.0
   resolution: "@jupyterlite/contents@npm:0.3.0"
@@ -3097,6 +3097,45 @@ __metadata:
   checksum: 343f88fe19cf9b24c1f518bf99d288204e922cddf584bff7424ee5ec52c2824a45b7958c3642a53126bedcc8b400289297b21f02dba5326d801f71c6b30a790e
   languageName: node
   linkType: hard
+
+"@jupyterlite/terminal@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@jupyterlite/terminal@workspace:."
+  dependencies:
+    "@jupyterlab/builder": ^4.0.0
+    "@jupyterlab/services": ^7.2.0
+    "@jupyterlab/terminal": ^4.2.0
+    "@jupyterlab/terminal-extension": ^4.2.0
+    "@jupyterlab/testutils": ^4.0.0
+    "@jupyterlite/cockle": ^0.0.3
+    "@jupyterlite/server": ^0.3.0
+    "@lumino/coreutils": ^2.1.2
+    "@types/jest": ^29.2.0
+    "@types/json-schema": ^7.0.11
+    "@types/react": ^18.0.26
+    "@types/react-addons-linked-state-mixin": ^0.14.22
+    "@typescript-eslint/eslint-plugin": ^6.1.0
+    "@typescript-eslint/parser": ^6.1.0
+    css-loader: ^6.7.1
+    eslint: ^8.36.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-prettier: ^5.0.0
+    jest: ^29.2.0
+    mock-socket: ^9.3.1
+    npm-run-all: ^4.1.5
+    prettier: ^3.0.0
+    rimraf: ^5.0.1
+    source-map-loader: ^1.0.2
+    style-loader: ^3.3.1
+    stylelint: ^15.10.1
+    stylelint-config-recommended: ^13.0.0
+    stylelint-config-standard: ^34.0.0
+    stylelint-csstree-validator: ^3.0.0
+    stylelint-prettier: ^4.0.0
+    typescript: ~5.0.2
+    yjs: ^13.5.0
+  languageName: unknown
+  linkType: soft
 
 "@jupyterlite/translation@npm:^0.3.0":
   version: 0.3.0
@@ -7690,45 +7729,6 @@ __metadata:
   checksum: 0b40f712900ad0c846681ea2db23b6684b9d5eedf55807b4708c656f5894b63507d0e28ae10aa1bddbea551241035afe62b6df0800fc94c2e2806a7f3adecd7c
   languageName: node
   linkType: hard
-
-"jupyterlite-terminal@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "jupyterlite-terminal@workspace:."
-  dependencies:
-    "@ianthomas23/cockle": ^0.0.2
-    "@jupyterlab/builder": ^4.0.0
-    "@jupyterlab/services": ^7.2.0
-    "@jupyterlab/terminal": ^4.2.0
-    "@jupyterlab/terminal-extension": ^4.2.0
-    "@jupyterlab/testutils": ^4.0.0
-    "@jupyterlite/server": ^0.3.0
-    "@lumino/coreutils": ^2.1.2
-    "@types/jest": ^29.2.0
-    "@types/json-schema": ^7.0.11
-    "@types/react": ^18.0.26
-    "@types/react-addons-linked-state-mixin": ^0.14.22
-    "@typescript-eslint/eslint-plugin": ^6.1.0
-    "@typescript-eslint/parser": ^6.1.0
-    css-loader: ^6.7.1
-    eslint: ^8.36.0
-    eslint-config-prettier: ^8.8.0
-    eslint-plugin-prettier: ^5.0.0
-    jest: ^29.2.0
-    mock-socket: ^9.3.1
-    npm-run-all: ^4.1.5
-    prettier: ^3.0.0
-    rimraf: ^5.0.1
-    source-map-loader: ^1.0.2
-    style-loader: ^3.3.1
-    stylelint: ^15.10.1
-    stylelint-config-recommended: ^13.0.0
-    stylelint-config-standard: ^34.0.0
-    stylelint-csstree-validator: ^3.0.0
-    stylelint-prettier: ^4.0.0
-    typescript: ~5.0.2
-    yjs: ^13.5.0
-  languageName: unknown
-  linkType: soft
 
 "keyv@npm:^4.5.3":
   version: 4.5.4
