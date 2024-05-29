@@ -8,7 +8,7 @@
 
 ### Enhancements made
 
-- Add missing dependencies and handling of terminal clients  [#2](https://github.com/jupyterlite/terminal/pull/2) ([@jtpio](https://github.com/jtpio))
+- Add missing dependencies and handling of terminal clients [#2](https://github.com/jupyterlite/terminal/pull/2) ([@jtpio](https://github.com/jtpio))
 - Skip the browser check for now [#1](https://github.com/jupyterlite/terminal/pull/1) ([@jtpio](https://github.com/jtpio))
 
 ### Maintenance and upkeep improvements
