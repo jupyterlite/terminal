@@ -1746,15 +1746,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ianthomas23/cockle@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@ianthomas23/cockle@npm:0.0.2"
-  dependencies:
-    "@jupyterlab/services": ^7.1.6
-  checksum: 7426122ce9e05cebf6db3c88a06b068eafa65dc8a6ba72384c6a9a62f95d13ebc3a3cb865ecaa6989a8809d0a0fc17155689be7d6067d5f3ffb4e0dbb0a32d33
-  languageName: node
-  linkType: hard
-
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -3004,6 +2995,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlite/cockle@npm:^0.0.3":
+  version: 0.0.3
+  resolution: "@jupyterlite/cockle@npm:0.0.3"
+  dependencies:
+    "@jupyterlab/services": ^7.1.6
+  checksum: 78451875892662175ba5f7bfac36ba97f6a1d2335ec8d801d39fd2dcd7f2996af08c0b5d76d67921843e888d7a94a70f43a24ade7d476c8b7556e775d1a8002f
+  languageName: node
+  linkType: hard
+
 "@jupyterlite/contents@npm:^0.3.0":
   version: 0.3.0
   resolution: "@jupyterlite/contents@npm:0.3.0"
@@ -3102,12 +3102,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@jupyterlite/terminal@workspace:."
   dependencies:
-    "@ianthomas23/cockle": ^0.0.2
     "@jupyterlab/builder": ^4.0.0
     "@jupyterlab/services": ^7.2.0
     "@jupyterlab/terminal": ^4.2.0
     "@jupyterlab/terminal-extension": ^4.2.0
     "@jupyterlab/testutils": ^4.0.0
+    "@jupyterlite/cockle": ^0.0.3
     "@jupyterlite/server": ^0.3.0
     "@lumino/coreutils": ^2.1.2
     "@types/jest": ^29.2.0

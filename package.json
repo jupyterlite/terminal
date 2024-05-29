@@ -57,10 +57,10 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@ianthomas23/cockle": "^0.0.2",
         "@jupyterlab/services": "^7.2.0",
         "@jupyterlab/terminal": "^4.2.0",
         "@jupyterlab/terminal-extension": "^4.2.0",
+        "@jupyterlite/cockle": "^0.0.3",
         "@jupyterlite/server": "^0.3.0",
         "@lumino/coreutils": "^2.1.2",
         "mock-socket": "^9.3.1"
