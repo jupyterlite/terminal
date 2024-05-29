@@ -6,7 +6,6 @@ import {
   JupyterLiteServerPlugin,
   Router
 } from '@jupyterlite/server';
-import { ITerminalTracker } from '@jupyterlab/terminal';
 
 import { ITerminals } from './tokens';
 import { Terminals } from './terminals';
@@ -18,14 +17,11 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
   id: 'jupyterlite-terminal:plugin',
   description: 'A terminal for JupyterLite',
   autoStart: true,
-  requires: [ITerminalTracker],
   provides: ITerminals,
-  activate: async (app: JupyterLiteServer, tracker: ITerminalTracker) => {
+  activate: async (app: JupyterLiteServer) => {
     console.log(
       'JupyterLab extension jupyterlite-terminal:plugin is activated!'
     );
-
-    console.log('==> ITerminalTracker', tracker);
 
     const { serviceManager } = app;
     const { contents, serverSettings, terminals } = serviceManager;

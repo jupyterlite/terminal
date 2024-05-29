@@ -1746,6 +1746,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ianthomas23/cockle@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@ianthomas23/cockle@npm:0.0.2"
+  dependencies:
+    "@jupyterlab/services": ^7.1.6
+  checksum: 7426122ce9e05cebf6db3c88a06b068eafa65dc8a6ba72384c6a9a62f95d13ebc3a3cb865ecaa6989a8809d0a0fc17155689be7d6067d5f3ffb4e0dbb0a32d33
+  languageName: node
+  linkType: hard
+
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -2341,6 +2350,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlab/coreutils@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@jupyterlab/coreutils@npm:6.2.1"
+  dependencies:
+    "@lumino/coreutils": ^2.1.2
+    "@lumino/disposable": ^2.1.2
+    "@lumino/signaling": ^2.1.2
+    minimist: ~1.2.0
+    path-browserify: ^1.0.0
+    url-parse: ~1.5.4
+  checksum: c8167bd8d4472471297e5669d6b3ee7c9d5c1246e8413680713b15f8a81926d2c97bc6a3c0b26c16603b197b412e01b443cc74b02a3676adea5690aac41964be
+  languageName: node
+  linkType: hard
+
 "@jupyterlab/coreutils@npm:~6.1.5":
   version: 6.1.8
   resolution: "@jupyterlab/coreutils@npm:6.1.8"
@@ -2518,6 +2541,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlab/nbformat@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "@jupyterlab/nbformat@npm:4.2.1"
+  dependencies:
+    "@lumino/coreutils": ^2.1.2
+  checksum: 192167e2a9019bf91e1e7088c9eaaae7b1037f5e7b5db15b97687b052323e6e75913b301ca7a9783d0e59aa36f18ddff90fc71a90a8153e0c89e32fd92b2519c
+  languageName: node
+  linkType: hard
+
 "@jupyterlab/nbformat@npm:~4.1.5":
   version: 4.1.8
   resolution: "@jupyterlab/nbformat@npm:4.1.8"
@@ -2662,6 +2694,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlab/services@npm:^7.1.6":
+  version: 7.2.1
+  resolution: "@jupyterlab/services@npm:7.2.1"
+  dependencies:
+    "@jupyter/ydoc": ^2.0.1
+    "@jupyterlab/coreutils": ^6.2.1
+    "@jupyterlab/nbformat": ^4.2.1
+    "@jupyterlab/settingregistry": ^4.2.1
+    "@jupyterlab/statedb": ^4.2.1
+    "@lumino/coreutils": ^2.1.2
+    "@lumino/disposable": ^2.1.2
+    "@lumino/polling": ^2.1.2
+    "@lumino/properties": ^2.0.1
+    "@lumino/signaling": ^2.1.2
+    ws: ^8.11.0
+  checksum: f07be2f3a174466c17ab5c22f8ef622fc623e8c61f2220b8bfb465a263971313cb9129e84bba32606e6ab7d1e0be3a9754b97f98e173e9c95eaf0b1c6cd8110a
+  languageName: node
+  linkType: hard
+
 "@jupyterlab/services@npm:^7.2.0":
   version: 7.2.0
   resolution: "@jupyterlab/services@npm:7.2.0"
@@ -2719,6 +2770,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@jupyterlab/settingregistry@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "@jupyterlab/settingregistry@npm:4.2.1"
+  dependencies:
+    "@jupyterlab/nbformat": ^4.2.1
+    "@jupyterlab/statedb": ^4.2.1
+    "@lumino/commands": ^2.3.0
+    "@lumino/coreutils": ^2.1.2
+    "@lumino/disposable": ^2.1.2
+    "@lumino/signaling": ^2.1.2
+    "@rjsf/utils": ^5.13.4
+    ajv: ^8.12.0
+    json5: ^2.2.3
+  peerDependencies:
+    react: ">=16"
+  checksum: 794e5ecde19a40e1b95c0d636eed7b56bbdc46857c8f3b4ef446c1bc90e8ea660c2ccf8f36a238bc312002f106a5a8522bb057742d9c0d674b2974ef21a786d7
+  languageName: node
+  linkType: hard
+
 "@jupyterlab/settingregistry@npm:~4.1.5":
   version: 4.1.8
   resolution: "@jupyterlab/settingregistry@npm:4.1.8"
@@ -2748,6 +2818,19 @@ __metadata:
     "@lumino/properties": ^2.0.1
     "@lumino/signaling": ^2.1.2
   checksum: 69620478aa7bf452d7440b9433b6411edef537cd7d9f72f87f70bd6fc0c8fc50003d02ab8d9d4b0746383f98cb7035b093ce5e596e6560e3c35c5a0fe434dce4
+  languageName: node
+  linkType: hard
+
+"@jupyterlab/statedb@npm:^4.2.1":
+  version: 4.2.1
+  resolution: "@jupyterlab/statedb@npm:4.2.1"
+  dependencies:
+    "@lumino/commands": ^2.3.0
+    "@lumino/coreutils": ^2.1.2
+    "@lumino/disposable": ^2.1.2
+    "@lumino/properties": ^2.0.1
+    "@lumino/signaling": ^2.1.2
+  checksum: 51e07db85269883bcd58fc5ba890db122e260e8d1ce4046f0b188453726694c2d909f27ca069ee3cd6944a93d70fcb8360074f87cdb13d611af2e24f6b14af30
   languageName: node
   linkType: hard
 
@@ -7612,6 +7695,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "jupyterlite-terminal@workspace:."
   dependencies:
+    "@ianthomas23/cockle": ^0.0.2
     "@jupyterlab/builder": ^4.0.0
     "@jupyterlab/services": ^7.2.0
     "@jupyterlab/terminal": ^4.2.0
@@ -7630,6 +7714,7 @@ __metadata:
     eslint-config-prettier: ^8.8.0
     eslint-plugin-prettier: ^5.0.0
     jest: ^29.2.0
+    mock-socket: ^9.3.1
     npm-run-all: ^4.1.5
     prettier: ^3.0.0
     rimraf: ^5.0.1
@@ -8223,7 +8308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mock-socket@npm:^9.1.0":
+"mock-socket@npm:^9.1.0, mock-socket@npm:^9.3.1":
   version: 9.3.1
   resolution: "mock-socket@npm:9.3.1"
   checksum: cb2dde4fc5dde280dd5ccb78eaaa223382ee16437f46b86558017655584ad08c22e733bde2dd5cc86927def506b6caeb0147e3167b9a62d70d5cf19d44103853
