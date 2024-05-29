@@ -21,10 +21,7 @@ jobs:
       - name: Install the dependencies
         run: |
           # need the latest JupyterLite 0.4.0 pre-release
-          python -m pip install --pre jupyterlite-core
-          
-          # install a kernel
-          python -m pip install jupyterlite-pyodide-kernel
+          python -m pip install --pre jupyterlite-core jupyterlite-pyodide-kernel
           
           # install a dev version of the terminal extension
           python -m pip install .
