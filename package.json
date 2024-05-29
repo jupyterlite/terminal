@@ -8,14 +8,14 @@
         "jupyterlite",
         "jupyterlite-extension"
     ],
-    "homepage": "https://github.com/ianthomas23/jupyterlite-terminal",
+    "homepage": "https://github.com/jupyterlite/terminal",
     "bugs": {
-        "url": "https://github.com/ianthomas23/jupyterlite-terminal/issues"
+        "url": "https://github.com/jupyterlite/terminal/issues"
     },
     "license": "BSD-3-Clause",
     "author": {
-        "name": "Ian Thomas",
-        "email": "ianthomas23@gmail.com"
+        "name": "JupyterLite Contributors",
+        "email": ""
     },
     "files": [
         "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
@@ -27,7 +27,7 @@
     "style": "style/index.css",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ianthomas23/jupyterlite-terminal.git"
+        "url": "https://github.com/jupyterlite/terminal.git"
     },
     "scripts": {
         "build": "jlpm build:lib && jlpm build:labextension:dev",

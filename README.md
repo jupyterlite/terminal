@@ -1,12 +1,12 @@
 # jupyterlite_terminal
 
-[![Github Actions Status](https://github.com/ianthomas23/jupyterlite-terminal/workflows/Build/badge.svg)](https://github.com/ianthomas23/jupyterlite-terminal/actions/workflows/build.yml)
+[![Github Actions Status](https://github.com/jupyterlite/terminal/workflows/Build/badge.svg)](https://github.com/jupyterlite/terminal/actions/workflows/build.yml)
 
 A terminal for JupyterLite.
 
 ⚠️ This extension is still in development and not yet ready for general use. ⚠️
 
-![a screenshot showing a terminal running in JupyterLite](https://github.com/ianthomas23/jupyterlite-terminal/assets/591645/1b4ff620-e8f2-4abf-b608-6badd66370ac)
+![a screenshot showing a terminal running in JupyterLite](https://github.com/jupyterlite/terminal/assets/591645/1b4ff620-e8f2-4abf-b608-6badd66370ac)
 
 ## Requirements
 
