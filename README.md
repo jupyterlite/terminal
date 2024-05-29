@@ -2,26 +2,47 @@
 
 [![Github Actions Status](https://github.com/ianthomas23/jupyterlite-terminal/workflows/Build/badge.svg)](https://github.com/ianthomas23/jupyterlite-terminal/actions/workflows/build.yml)
 
-A terminal for JupyterLite
+A terminal for JupyterLite.
+
+⚠️ This extension is still in development and not yet ready for general use. ⚠️
+
+![a screenshot showing a terminal running in JupyterLite](https://github.com/ianthomas23/jupyterlite-terminal/assets/591645/1b4ff620-e8f2-4abf-b608-6badd66370ac)
 
 ## Requirements
 
-- JupyterLab >= 4.0.0
+- JupyterLite >= 0.4.0
 
 ## Install
 
 To install the extension, execute:
 
 ```bash
-pip install jupyterlite_terminal
+pip install jupyterlite-terminal
 ```
 
-## Uninstall
-
-To remove the extension, execute:
+You will also need to install the JupyterLite CLI:
 
 ```bash
-pip uninstall jupyterlite_terminal
+python -m pip install --pre jupyterlite-core
+```
+
+## Usage
+
+After installing `jupyterlite-core` and `jupyterlite-terminal`, create a `jupyter-lite.json` file with the following content to activate the terminal extension:
+
+```json
+{
+  "jupyter-lite-schema-version": 0,
+  "jupyter-config-data": {
+    "terminalsAvailable": true
+  }
+}
+```
+
+Then build a new JupyterLite site:
+
+```bash
+jupyter lite build
 ```
 
 ## Contributing
@@ -54,43 +75,17 @@ jlpm watch
 jupyter lab
 ```
 
-With the watch command running, every saved change will immediately be built locally and available in your running JupyterLab. Refresh JupyterLab to load the change in your browser (you may need to wait several seconds for the extension to be rebuilt).
-
-By default, the `jlpm build` command generates the source maps for this extension to make it easier to debug using the browser dev tools. To also generate source maps for the JupyterLab core extensions, you can run the following command:
+Then build a JupyterLite distribution with the extension installed:
 
 ```bash
-jupyter lab build --minimize=False
+jupyter lite build
 ```
 
-### Development uninstall
+And serve it:
 
 ```bash
-pip uninstall jupyterlite_terminal
+jupyter lite serve
 ```
-
-In development mode, you will also need to remove the symlink created by `jupyter labextension develop`
-command. To find its location, you can run `jupyter labextension list` to figure out where the `labextensions`
-folder is located. Then you can remove the symlink named `jupyterlite-terminal` within that folder.
-
-### Testing the extension
-
-#### Frontend tests
-
-This extension is using [Jest](https://jestjs.io/) for JavaScript code testing.
-
-To execute them, execute:
-
-```sh
-jlpm
-jlpm test
-```
-
-#### Integration tests
-
-This extension uses [Playwright](https://playwright.dev/docs/intro) for the integration tests (aka user level tests).
-More precisely, the JupyterLab helper [Galata](https://github.com/jupyterlab/jupyterlab/tree/master/galata) is used to handle testing the extension in JupyterLab.
-
-More information are provided within the [ui-tests](./ui-tests/README.md) README.
 
 ### Packaging the extension
 
