@@ -1,5 +1,5 @@
 {
-    "name": "jupyterlite-terminal",
+    "name": "@jupyterlite/terminal",
     "version": "0.1.0",
     "description": "A terminal for JupyterLite",
     "keywords": [
