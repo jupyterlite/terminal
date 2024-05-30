@@ -52,7 +52,7 @@ const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
 
     // GET /api/terminals - List the running terminals
     app.router.get('/api/terminals', async (req: Router.IRequest) => {
-      const res = terminals.list();
+      const res = await terminals.list();
       // Should return last_activity for each too,
       return new Response(JSON.stringify(res));
     });
