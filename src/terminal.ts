@@ -11,6 +11,7 @@ import {
 } from 'mock-socket';
 
 import { ITerminal } from './tokens';
+import { Local } from './local';
 
 export class Terminal implements ITerminal {
   /**
@@ -20,6 +21,7 @@ export class Terminal implements ITerminal {
     this._name = options.name;
     this._fs = new JupyterFileSystem(options.contentsManager);
     console.log('==> new Terminal', this._name, this._fs);
+    this._local = new Local();
   }
 
   /**
@@ -46,6 +48,8 @@ export class Terminal implements ITerminal {
 
       this._shell = new Shell(this._fs, outputCallback);
       console.log('==> shell', this._shell);
+
+      await this._local.init();
 
       socket.on('message', async (message: any) => {
         const data = JSON.parse(message) as JSONPrimitive[];
@@ -82,4 +86,5 @@ export class Terminal implements ITerminal {
   private _name: string;
   private _fs: IFileSystem;
   private _shell?: Shell;
+  private _local: Local;
 }

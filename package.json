@@ -63,6 +63,7 @@
         "@jupyterlite/cockle": "^0.0.3",
         "@jupyterlite/server": "^0.3.0",
         "@lumino/coreutils": "^2.1.2",
+        "comlink": "^4.4.1",
         "mock-socket": "^9.3.1"
     },
     "devDependencies": {
