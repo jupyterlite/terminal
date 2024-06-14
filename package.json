@@ -30,12 +30,13 @@
         "url": "https://github.com/jupyterlite/terminal.git"
     },
     "scripts": {
-        "build": "jlpm build:lib && jlpm build:labextension:dev",
+        "build": "jlpm build:lib && jlpm build:worker && jlpm build:labextension:dev",
         "build:prod": "jlpm clean && jlpm build:lib:prod && jlpm build:labextension",
         "build:labextension": "jupyter labextension build .",
         "build:labextension:dev": "jupyter labextension build --development True .",
         "build:lib": "tsc --sourceMap",
         "build:lib:prod": "tsc",
+        "build:worker": "webpack --config worker.webpack.config.js --mode=development",
         "clean": "jlpm clean:lib",
         "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
         "clean:lintcache": "rimraf .eslintcache .stylelintcache",
@@ -91,6 +92,8 @@
         "stylelint-csstree-validator": "^3.0.0",
         "stylelint-prettier": "^4.0.0",
         "typescript": "~5.0.2",
+        "webpack": "^5.87.0",
+        "webpack-cli": "^5.1.4",
         "yjs": "^13.5.0"
     },
     "sideEffects": [
