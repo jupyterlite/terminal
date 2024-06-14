@@ -1,5 +1,5 @@
-import { expose } from "comlink";
-import { IMyClass } from "./defs";
+import { expose } from 'comlink';
+import { IMyClass } from './defs';
 
 class MyClass implements IMyClass {
   get counter(): number {
