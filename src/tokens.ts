@@ -1,9 +1,12 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { Contents, TerminalAPI } from '@jupyterlab/services';
+import { TerminalAPI } from '@jupyterlab/services';
 
 import { Token } from '@lumino/coreutils';
+
+import { Remote } from 'comlink';
+
 
 /**
  * The token for the Terminals service.
@@ -49,7 +52,34 @@ export namespace ITerminal {
      * The name of the terminal.
      */
     name: string;
-
-    contentsManager: Contents.IManager;
   }
 }
+
+export interface IWorkerTerminal {
+  input(text: string): Promise<void>;
+  setSize(rows: number, columns: number): Promise<void>;
+  start(): Promise<void>;
+}
+
+export namespace IWorkerTerminal {
+  /**
+   * Initialization options for a worker.
+   */
+  export interface IOptions {
+  }
+}
+
+
+
+export interface IRemote extends IWorkerTerminal {
+  /**
+   * Handle any lazy initialization activities.
+   */
+  initialize(options: IWorkerTerminal.IOptions): Promise<void>;
+}
+
+
+/**
+ * An convenience interface for Pyodide workers wrapped by a comlink Remote.
+ */
+export type IRemoteWorkerTerminal = Remote<IRemote>;

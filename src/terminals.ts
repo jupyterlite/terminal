@@ -1,7 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { Contents, TerminalAPI } from '@jupyterlab/services';
+import { TerminalAPI } from '@jupyterlab/services';
 
 import { Terminal } from './terminal';
 import { ITerminals } from './tokens';
@@ -13,14 +13,9 @@ export class Terminals implements ITerminals {
   /**
    * Construct a new Terminals object.
    */
-  constructor(wsUrl: string, contentsManager: Contents.IManager) {
+  constructor(wsUrl: string) {
     this._wsUrl = wsUrl;
-    this._contentsManager = contentsManager;
-    console.log(
-      '==> Terminals.constructor',
-      this._wsUrl,
-      this._contentsManager
-    );
+    console.log('==> Terminals.constructor', this._wsUrl);
   }
 
   /**
@@ -40,7 +35,7 @@ export class Terminals implements ITerminals {
   async startNew(): Promise<TerminalAPI.IModel> {
     const name = this._nextAvailableName();
     console.log('==> Terminals.new', name);
-    const term = new Terminal({ name, contentsManager: this._contentsManager });
+    const term = new Terminal({ name });
     this._terminals.set(name, term);
 
     const url = `${this._wsUrl}terminals/websocket/${name}`;
@@ -59,6 +54,5 @@ export class Terminals implements ITerminals {
   }
 
   private _wsUrl: string;
-  private _contentsManager: Contents.IManager;
   private _terminals: Map<string, Terminal> = new Map();
 }

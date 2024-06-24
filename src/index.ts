@@ -24,7 +24,7 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
     );
 
     const { serviceManager } = app;
-    const { contents, serverSettings, terminals } = serviceManager;
+    const { serverSettings, terminals } = serviceManager;
     console.log('terminals available:', terminals.isAvailable());
     console.log('terminals ready:', terminals.isReady); // Not ready
     console.log('terminals active:', terminals.isActive);
@@ -33,7 +33,7 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
     await terminals.ready;
     console.log('terminals ready after await:', terminals.isReady); // Ready
 
-    return new Terminals(serverSettings.wsUrl, contents);
+    return new Terminals(serverSettings.wsUrl);
   }
 };
 
