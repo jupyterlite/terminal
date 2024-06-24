@@ -7,7 +7,6 @@ import { Token } from '@lumino/coreutils';
 
 import { Remote } from 'comlink';
 
-
 /**
  * The token for the Terminals service.
  */
@@ -65,11 +64,8 @@ export namespace IWorkerTerminal {
   /**
    * Initialization options for a worker.
    */
-  export interface IOptions {
-  }
+  export interface IOptions {}
 }
-
-
 
 export interface IRemote extends IWorkerTerminal {
   /**
@@ -77,7 +73,6 @@ export interface IRemote extends IWorkerTerminal {
    */
   initialize(options: IWorkerTerminal.IOptions): Promise<void>;
 }
-
 
 /**
  * An convenience interface for Pyodide workers wrapped by a comlink Remote.

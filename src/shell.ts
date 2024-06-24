@@ -1,38 +1,44 @@
-import * as CoreutilsModule from "./coreutils"
-import * as FsModule from "./fs"
+import * as CoreutilsModule from './coreutils';
+import * as FsModule from './fs';
 
-export interface OutputCallback { (output: string): Promise<void> }
+export interface IOutputCallback {
+  (output: string): Promise<void>;
+}
 
 export class Shell {
-  constructor(outputCallback: OutputCallback) {
-    this._currentLine = "";
+  constructor(outputCallback: IOutputCallback) {
+    this._currentLine = '';
     this._outputCallback = outputCallback;
-    this._prompt = "\x1b[1;31mjs-shell:$\x1b[1;0m ";
+    this._prompt = '\x1b[1;31mjs-shell:$\x1b[1;0m ';
   }
 
   async input(char: string): Promise<void> {
     // Might be a multi-char string if begins with escape code.
     const code = char.charCodeAt(0);
-    if (code == 13) {  // \r
-      await this.output("\r\n");
+    if (code === 13) {
+      // \r
+      await this.output('\r\n');
       const cmdText = this._currentLine.trimStart();
-      this._currentLine = "";
+      this._currentLine = '';
       await this._runCommands(cmdText);
       await this.output(this._prompt);
-    } else if (code == 127) {  // Backspace
+    } else if (code === 127) {
+      // Backspace
       if (this._currentLine.length > 0) {
         this._currentLine = this._currentLine.slice(0, -1);
-        const backspace = "\x1B[1D";
+        const backspace = '\x1B[1D';
         await this.output(backspace + ' ' + backspace);
       }
-    } else if (code == 9) {  // Tab \t
+    } else if (code === 9) {
+      // Tab \t
       // No tab completion
-    } else if (code == 27) {  // Escape following by 1+ more characters
+    } else if (code === 27) {
+      // Escape following by 1+ more characters
       const remainder = char.slice(1);
-      if (remainder == "[A" || remainder == "[1A") {  // Up arrow
-
-      } else if (remainder == "[B" || remainder == "[1B") {  // Down arrow
-
+      if (remainder === '[A' || remainder === '[1A') {
+        // Up arrow
+      } else if (remainder === '[B' || remainder === '[1B') {
+        // Down arrow
       }
     } else {
       this._currentLine += char;
@@ -44,8 +50,8 @@ export class Shell {
     if (!text) {
       return;
     }
-    const lines = text.split("\n");
-    const joined = lines.join("\r\n");
+    const lines = text.split('\n');
+    const joined = lines.join('\r\n');
     await this._outputCallback(joined);
   }
 
@@ -57,28 +63,28 @@ export class Shell {
     this._fs = this._fsModule.FS;
 
     // Add some dummy files.
-    this._fs.mkdir("/drive", 0o777);
-    this._fs.chdir("/drive")
+    this._fs.mkdir('/drive', 0o777);
+    this._fs.chdir('/drive');
 
     this._fs.writeFile('file.txt', 'This is the contents of the file');
     // Check file contents read directly from FS.
     const contents = this._fs.readFile('file.txt', { encoding: 'utf8' });
-    console.log("Read file.txt", contents);
+    console.log('Read file.txt', contents);
 
     await this.output(this._prompt);
   }
 
   private async _runCommands(cmdText: string): Promise<void> {
-    console.log("==> runCommands", cmdText);
+    console.log('==> runCommands', cmdText);
 
-    const args = cmdText.trim().split(" ");
+    const args = cmdText.trim().split(' ');
     const cmdName = args.shift();
     if (!cmdName) {
       return;
     }
 
     // Some bash built-in commands use FS directly.
-    if (cmdName == "cd") {
+    if (cmdName === 'cd') {
       if (args.length < 1) {
         // Do nothing.
         return;
@@ -90,9 +96,9 @@ export class Shell {
       return;
     }
 
-    this._stdin = "";
-    this._stdout = "";
-    this._stderr = "";
+    this._stdin = '';
+    this._stdout = '';
+    this._stderr = '';
 
     // Cannot auto-run command as need to attach FS first.
     const start = Date.now();
@@ -118,29 +124,29 @@ export class Shell {
       stdout: this._stdout,
       stderr: this._stderr,*/
       noInitialRun: true,
-      printWithColors: true,
+      printWithColors: true
     });
-    console.log("Loaded module", module, this._stdin);
-    console.log("Load time:", Date.now() - start, "ms");
+    console.log('Loaded module', module, this._stdin);
+    console.log('Load time:', Date.now() - start, 'ms');
 
     // Need to use PROXYFS so that command sees the shared FS.
     const FS = module.FS;
-    FS.mkdir("/drive", 0o777);
-    console.log("module FS", FS);
-    FS.mount(module.PROXYFS, {root: "/drive", fs: this._fs}, "/drive");
+    FS.mkdir('/drive', 0o777);
+    console.log('module FS', FS);
+    FS.mount(module.PROXYFS, { root: '/drive', fs: this._fs }, '/drive');
     FS.chdir(this._fs.cwd());
 
     module.callMain(args);
 
     try {
-      console.log("... closing streams")
+      console.log('... closing streams');
       FS.close(FS.streams[1]);
       FS.close(FS.streams[2]);
     } catch (error: any) {
       // Re-open stdout/stderr (fix error "error closing standard output: -1")
-      console.log("... reopening streams")
-      FS.streams[1] = FS.open("/dev/stdout", "w", 0o777);
-      FS.streams[2] = FS.open("/dev/stderr", "w", 0o777);
+      console.log('... reopening streams');
+      FS.streams[1] = FS.open('/dev/stdout', 'w', 0o777);
+      FS.streams[2] = FS.open('/dev/stderr', 'w', 0o777);
     }
 
     if (this._stdout) {
@@ -149,7 +155,7 @@ export class Shell {
     }
     if (this._stderr) {
       //console.log("STDERR:", this._stderr);
-      this.output("\x1b[1;31m" + this._stderr + "\x1b[1;0m");
+      this.output('\x1b[1;31m' + this._stderr + '\x1b[1;0m');
     }
 
     // Do I need to unmount the proxy filesystem?
@@ -158,9 +164,9 @@ export class Shell {
   private _currentLine: string;
   private _fs: any;
   private _fsModule: any;
-  private _outputCallback: OutputCallback;
+  private _outputCallback: IOutputCallback;
   private _prompt: string;
-  private _stdin: string = "";
-  private _stdout: string = "";
-  private _stderr: string = "";
+  private _stdin: string = '';
+  private _stdout: string = '';
+  private _stderr: string = '';
 }

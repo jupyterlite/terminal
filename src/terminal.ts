@@ -36,7 +36,7 @@ export class Terminal implements ITerminal {
    * @param msg The worker message to process.
    */
   private _processWorkerMessage(msg: any, socket: WebSocketClient): void {
-    if (msg.type == 'output') {
+    if (msg.type === 'output') {
       const ret = JSON.stringify(['stdout', msg.text]);
       socket.send(ret);
     }
@@ -59,7 +59,7 @@ export class Terminal implements ITerminal {
 
       this._worker!.onmessage = e => {
         this._processWorkerMessage(e.data, socket);
-      }
+      };
 
       socket.on('message', async (message: any) => {
         const data = JSON.parse(message) as JSONPrimitive[];

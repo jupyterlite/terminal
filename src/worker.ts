@@ -7,7 +7,7 @@ import { IWorkerTerminal } from './tokens';
 class WorkerTerminal implements IWorkerTerminal {
   async initialize(options: IWorkerTerminal.IOptions): Promise<void> {
     this._options = options;
-    console.log("WorkerTerminal.initialize", this._options);
+    console.log('WorkerTerminal.initialize', this._options);
   }
 
   async input(text: string): Promise<void> {
@@ -26,12 +26,12 @@ class WorkerTerminal implements IWorkerTerminal {
   private async output(text: string): Promise<void> {
     postMessage({
       type: 'output',
-      text: text,
+      text: text
     });
   }
 
   private _options: IWorkerTerminal.IOptions | null = null;
-  private _shell?: Shell
+  private _shell?: Shell;
 }
 
 const obj = new WorkerTerminal();
