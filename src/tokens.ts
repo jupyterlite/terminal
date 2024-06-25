@@ -51,6 +51,8 @@ export namespace ITerminal {
      * The name of the terminal.
      */
     name: string;
+
+    baseUrl: string;
   }
 }
 
@@ -64,7 +66,9 @@ export namespace IWorkerTerminal {
   /**
    * Initialization options for a worker.
    */
-  export interface IOptions {}
+  export interface IOptions {
+    baseUrl: string;
+  }
 }
 
 export interface IRemote extends IWorkerTerminal {

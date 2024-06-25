@@ -16,8 +16,7 @@ export class Terminal implements ITerminal {
   /**
    * Construct a new Terminal.
    */
-  constructor(options: ITerminal.IOptions) {
-    this._name = options.name;
+  constructor(readonly options: ITerminal.IOptions) {
     this._initWorker();
   }
 
@@ -27,7 +26,8 @@ export class Terminal implements ITerminal {
     });
 
     this._remote = wrap(this._worker);
-    await this._remote.initialize({});
+    const { baseUrl } = this.options;
+    await this._remote.initialize({ baseUrl });
   }
 
   /**
@@ -46,7 +46,7 @@ export class Terminal implements ITerminal {
    * Get the name of the terminal.
    */
   get name(): string {
-    return this._name;
+    return this.options.name;
   }
 
   async wsConnect(url: string) {
@@ -93,7 +93,6 @@ export class Terminal implements ITerminal {
     });
   }
 
-  private _name: string;
   private _worker?: Worker;
   private _remote?: IRemoteWorkerTerminal;
 }

@@ -1,3 +1,5 @@
+import { DriveFS } from '@jupyterlite/contents';
+
 import * as CoreutilsModule from './coreutils';
 import * as FsModule from './fs';
 
@@ -6,7 +8,8 @@ export interface IOutputCallback {
 }
 
 export class Shell {
-  constructor(outputCallback: IOutputCallback) {
+  constructor(outputCallback: IOutputCallback, baseUrl: string) {
+    this._baseUrl = baseUrl;
     this._currentLine = '';
     this._outputCallback = outputCallback;
     this._prompt = '\x1b[1;31mjs-shell:$\x1b[1;0m ';
@@ -58,18 +61,22 @@ export class Shell {
   async setSize(rows: number, columns: number): Promise<void> {}
 
   async start(): Promise<void> {
-    // Prepare FS from fs module.
+    // Prepare FS from fs module and mount file contents base directory into it.
     this._fsModule = await FsModule.default();
     this._fs = this._fsModule.FS;
 
-    // Add some dummy files.
-    this._fs.mkdir('/drive', 0o777);
-    this._fs.chdir('/drive');
-
-    this._fs.writeFile('file.txt', 'This is the contents of the file');
-    // Check file contents read directly from FS.
-    const contents = this._fs.readFile('file.txt', { encoding: 'utf8' });
-    console.log('Read file.txt', contents);
+    const { FS, PATH, ERRNO_CODES } = this._fsModule;
+    this._driveFS = new DriveFS({
+      FS,
+      PATH,
+      ERRNO_CODES,
+      baseUrl: this._baseUrl,
+      driveName: '',
+      mountpoint: this._mountpoint
+    });
+    FS.mkdir(this._mountpoint, 0o777);
+    FS.mount(this._driveFS, {}, this._mountpoint);
+    FS.chdir(this._mountpoint);
 
     await this.output(this._prompt);
   }
@@ -131,9 +138,10 @@ export class Shell {
 
     // Need to use PROXYFS so that command sees the shared FS.
     const FS = module.FS;
-    FS.mkdir('/drive', 0o777);
+    const mountpoint = this._mountpoint;
+    FS.mkdir(mountpoint, 0o777);
     console.log('module FS', FS);
-    FS.mount(module.PROXYFS, { root: '/drive', fs: this._fs }, '/drive');
+    FS.mount(module.PROXYFS, { root: mountpoint, fs: this._fs }, mountpoint);
     FS.chdir(this._fs.cwd());
 
     module.callMain(args);
@@ -169,4 +177,8 @@ export class Shell {
   private _stdin: string = '';
   private _stdout: string = '';
   private _stderr: string = '';
+
+  private _baseUrl: string;
+  private _driveFS?: DriveFS;
+  private _mountpoint: string = '/drive';
 }

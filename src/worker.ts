@@ -19,7 +19,7 @@ class WorkerTerminal implements IWorkerTerminal {
   }
 
   async start(): Promise<void> {
-    this._shell = new Shell(this.output);
+    this._shell = new Shell(this.output, this._options!.baseUrl);
     this._shell.start();
   }
 

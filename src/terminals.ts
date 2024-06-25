@@ -1,6 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
+import { PageConfig } from '@jupyterlab/coreutils';
 import { TerminalAPI } from '@jupyterlab/services';
 
 import { Terminal } from './terminal';
@@ -35,7 +36,8 @@ export class Terminals implements ITerminals {
   async startNew(): Promise<TerminalAPI.IModel> {
     const name = this._nextAvailableName();
     console.log('==> Terminals.new', name);
-    const term = new Terminal({ name });
+    const baseUrl = PageConfig.getBaseUrl();
+    const term = new Terminal({ name, baseUrl });
     this._terminals.set(name, term);
 
     const url = `${this._wsUrl}terminals/websocket/${name}`;
