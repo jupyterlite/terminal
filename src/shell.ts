@@ -84,7 +84,7 @@ export class Shell {
   private async _runCommands(cmdText: string): Promise<void> {
     console.log('==> runCommands', cmdText);
 
-    const args = cmdText.trim().split(' ');
+    let args = cmdText.trim().split(' ');
     const cmdName = args.shift();
     if (!cmdName) {
       return;
@@ -106,6 +106,13 @@ export class Shell {
     this._stdin = '';
     this._stdout = '';
     this._stderr = '';
+
+    // Support simple stdout redirect of the form "command > output_file".
+    let redirectFilename: string | undefined;
+    if (args.length >= 2 && args.at(-2) === '>') {
+      redirectFilename = args.at(-1);
+      args = args.slice(0, -2);
+    }
 
     // Cannot auto-run command as need to attach FS first.
     const start = Date.now();
@@ -155,6 +162,12 @@ export class Shell {
       console.log('... reopening streams');
       FS.streams[1] = FS.open('/dev/stdout', 'w', 0o777);
       FS.streams[2] = FS.open('/dev/stderr', 'w', 0o777);
+    }
+
+    if (redirectFilename) {
+      // TODO: deal with \r\n
+      this._fs.writeFile(redirectFilename, this._stdout);
+      this._stdout = '';
     }
 
     if (this._stdout) {
