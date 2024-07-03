@@ -13,6 +13,7 @@ export class Shell {
     this._currentLine = '';
     this._outputCallback = outputCallback;
     this._prompt = '\x1b[1;31mjs-shell:$\x1b[1;0m ';
+    console.log('==> _wantDriveFS', this._wantDriveFS);
   }
 
   async input(char: string): Promise<void> {
@@ -65,18 +66,29 @@ export class Shell {
     this._fsModule = await FsModule.default();
     this._fs = this._fsModule.FS;
 
-    const { FS, PATH, ERRNO_CODES } = this._fsModule;
-    this._driveFS = new DriveFS({
-      FS,
-      PATH,
-      ERRNO_CODES,
-      baseUrl: this._baseUrl,
-      driveName: '',
-      mountpoint: this._mountpoint
-    });
-    FS.mkdir(this._mountpoint, 0o777);
-    FS.mount(this._driveFS, {}, this._mountpoint);
-    FS.chdir(this._mountpoint);
+    if (this._wantDriveFS) {
+      const { FS, PATH, ERRNO_CODES } = this._fsModule;
+      this._driveFS = new DriveFS({
+        FS,
+        PATH,
+        ERRNO_CODES,
+        baseUrl: this._baseUrl,
+        driveName: '',
+        mountpoint: this._mountpoint
+      });
+      FS.mkdir(this._mountpoint, 0o777);
+      FS.mount(this._driveFS, {}, this._mountpoint);
+      FS.chdir(this._mountpoint);
+    } else {
+      // Add some dummy files.
+      this._fs.mkdir('/drive', 0o777);
+      this._fs.chdir('/drive');
+
+      this._fs.writeFile('file.txt', 'This is the contents of the file');
+      // Check file contents read directly from FS.
+      const contents = this._fs.readFile('file.txt', { encoding: 'utf8' });
+      console.log('Read file.txt', contents);
+    }
 
     await this.output(this._prompt);
   }
@@ -190,8 +202,10 @@ export class Shell {
   private _stdin: string = '';
   private _stdout: string = '';
   private _stderr: string = '';
+  private _mountpoint: string = '/drive';
+  private _wantDriveFS: boolean = true;
 
+  // The following are only needed if using DriveFS to connect to file browser.
   private _baseUrl: string;
   private _driveFS?: DriveFS;
-  private _mountpoint: string = '/drive';
 }
