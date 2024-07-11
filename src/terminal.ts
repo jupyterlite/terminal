@@ -1,8 +1,6 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { JupyterFileSystem, Shell, IFileSystem } from '@jupyterlite/cockle';
-
 import { JSONPrimitive } from '@lumino/coreutils';
 
 import {
@@ -10,55 +8,71 @@ import {
   Client as WebSocketClient
 } from 'mock-socket';
 
-import { ITerminal } from './tokens';
+import { wrap } from 'comlink';
+
+import { ITerminal, IRemoteWorkerTerminal } from './tokens';
 
 export class Terminal implements ITerminal {
   /**
    * Construct a new Terminal.
    */
-  constructor(options: ITerminal.IOptions) {
-    this._name = options.name;
-    this._fs = new JupyterFileSystem(options.contentsManager);
-    console.log('==> new Terminal', this._name, this._fs);
+  constructor(readonly options: ITerminal.IOptions) {
+    this._initWorker();
+  }
+
+  private async _initWorker(): Promise<void> {
+    this._worker = new Worker(new URL('./worker.js', import.meta.url), {
+      type: 'module'
+    });
+
+    this._remote = wrap(this._worker);
+    const { baseUrl } = this.options;
+    await this._remote.initialize({ baseUrl });
+  }
+
+  /**
+   * Process a message coming from the JavaScript web worker.
+   *
+   * @param msg The worker message to process.
+   */
+  private _processWorkerMessage(msg: any, socket: WebSocketClient): void {
+    if (msg.type === 'output') {
+      const ret = JSON.stringify(['stdout', msg.text]);
+      socket.send(ret);
+    }
   }
 
   /**
    * Get the name of the terminal.
    */
   get name(): string {
-    return this._name;
+    return this.options.name;
   }
 
   async wsConnect(url: string) {
     console.log('==> Terminal.wsConnect', url);
 
-    // const server = new WebSocketServer(url, { mock: false });
     const server = new WebSocketServer(url);
 
     server.on('connection', async (socket: WebSocketClient) => {
       console.log('==> server connection', this, socket);
 
-      const outputCallback = async (output: string) => {
-        console.log('==> recv from shell:', output);
-        const ret = JSON.stringify(['stdout', output]);
-        socket.send(ret);
+      this._worker!.onmessage = e => {
+        this._processWorkerMessage(e.data, socket);
       };
-
-      this._shell = new Shell(this._fs, outputCallback);
-      console.log('==> shell', this._shell);
 
       socket.on('message', async (message: any) => {
         const data = JSON.parse(message) as JSONPrimitive[];
-        console.log('==> socket message', data);
+        //console.log('==> socket message', data);
         const message_type = data[0];
         const content = data.slice(1);
 
         if (message_type === 'stdin') {
-          await this._shell!.input(content[0] as string);
+          await this._remote!.input(content[0] as string);
         } else if (message_type === 'set_size') {
           const rows = content[0] as number;
           const columns = content[1] as number;
-          await this._shell!.setSize(rows, columns);
+          await this._remote!.setSize(rows, columns);
         }
       });
 
@@ -75,11 +89,10 @@ export class Terminal implements ITerminal {
       console.log('==> Returning handshake via socket', res);
       socket.send(res);
 
-      await this._shell!.start();
+      await this._remote!.start();
     });
   }
 
-  private _name: string;
-  private _fs: IFileSystem;
-  private _shell?: Shell;
+  private _worker?: Worker;
+  private _remote?: IRemoteWorkerTerminal;
 }
