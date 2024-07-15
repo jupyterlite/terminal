@@ -3,9 +3,11 @@
 
 import { TerminalAPI } from '@jupyterlab/services';
 
+import { IOutputCallback } from '@jupyterlite/cockle';
+
 import { Token } from '@lumino/coreutils';
 
-import { Remote } from 'comlink';
+import { ProxyMarked, Remote } from 'comlink';
 
 /**
  * The token for the Terminals service.
@@ -71,11 +73,17 @@ export namespace IWorkerTerminal {
   }
 }
 
+export namespace IRemote {
+  export type OutputCallback = IOutputCallback & ProxyMarked;
+}
+
 export interface IRemote extends IWorkerTerminal {
   /**
    * Handle any lazy initialization activities.
    */
   initialize(options: IWorkerTerminal.IOptions): Promise<void>;
+
+  registerCallbacks(outputCallback: IRemote.OutputCallback): void;
 }
 
 /**
