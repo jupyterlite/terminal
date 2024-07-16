@@ -3,7 +3,7 @@ import { DriveFS } from '@jupyterlite/contents';
 
 import { expose } from 'comlink';
 
-import { IWorkerTerminal } from './tokens';
+import { IRemote, IWorkerTerminal } from './tokens';
 
 class WorkerTerminal implements IWorkerTerminal {
   async initialize(options: IWorkerTerminal.IOptions): Promise<void> {
@@ -15,12 +15,16 @@ class WorkerTerminal implements IWorkerTerminal {
     await this._shell!.input(text);
   }
 
+  registerCallbacks(outputCallback: IRemote.OutputCallback) {
+    this._outputCallback = outputCallback;
+  }
+
   async setSize(rows: number, columns: number): Promise<void> {
     await this._shell!.setSize(rows, columns);
   }
 
   async start(): Promise<void> {
-    this._shell = new Shell(this.output, this._mountpoint);
+    this._shell = new Shell(this.output.bind(this), this._mountpoint);
     const { FS, PATH, ERRNO_CODES } = await this._shell.initFilesystem();
 
     if (this._wantDriveFS) {
@@ -45,10 +49,9 @@ class WorkerTerminal implements IWorkerTerminal {
   }
 
   private async output(text: string): Promise<void> {
-    postMessage({
-      type: 'output',
-      text: text
-    });
+    if (this._outputCallback) {
+      await this._outputCallback(text);
+    }
   }
 
   private _options: IWorkerTerminal.IOptions | null = null;
@@ -56,6 +59,8 @@ class WorkerTerminal implements IWorkerTerminal {
   private _mountpoint: string = '/drive';
   private _wantDriveFS: boolean = true;
   private _driveFS?: DriveFS;
+
+  private _outputCallback?: IRemote.OutputCallback;
 }
 
 const obj = new WorkerTerminal();

@@ -3,12 +3,12 @@
 
 import { JSONPrimitive } from '@lumino/coreutils';
 
+import { proxy, wrap } from 'comlink';
+
 import {
   Server as WebSocketServer,
   Client as WebSocketClient
 } from 'mock-socket';
-
-import { wrap } from 'comlink';
 
 import { ITerminal, IRemoteWorkerTerminal } from './tokens';
 
@@ -28,17 +28,13 @@ export class Terminal implements ITerminal {
     this._remote = wrap(this._worker);
     const { baseUrl } = this.options;
     await this._remote.initialize({ baseUrl });
+    this._remote.registerCallbacks(proxy(this._outputCallback.bind(this)));
   }
 
-  /**
-   * Process a message coming from the JavaScript web worker.
-   *
-   * @param msg The worker message to process.
-   */
-  private _processWorkerMessage(msg: any, socket: WebSocketClient): void {
-    if (msg.type === 'output') {
-      const ret = JSON.stringify(['stdout', msg.text]);
-      socket.send(ret);
+  private async _outputCallback(text: string): Promise<void> {
+    if (this._socket) {
+      const ret = JSON.stringify(['stdout', text]);
+      this._socket.send(ret);
     }
   }
 
@@ -56,10 +52,7 @@ export class Terminal implements ITerminal {
 
     server.on('connection', async (socket: WebSocketClient) => {
       console.log('==> server connection', this, socket);
-
-      this._worker!.onmessage = e => {
-        this._processWorkerMessage(e.data, socket);
-      };
+      this._socket = socket;
 
       socket.on('message', async (message: any) => {
         const data = JSON.parse(message) as JSONPrimitive[];
@@ -95,4 +88,5 @@ export class Terminal implements ITerminal {
 
   private _worker?: Worker;
   private _remote?: IRemoteWorkerTerminal;
+  private _socket?: WebSocketClient;
 }
