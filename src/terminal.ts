@@ -10,6 +10,7 @@ import {
   Client as WebSocketClient
 } from 'mock-socket';
 
+import { MainBufferedStdin } from './buffered_stdin';
 import { ITerminal, IRemoteWorkerTerminal } from './tokens';
 
 export class Terminal implements ITerminal {
@@ -17,6 +18,7 @@ export class Terminal implements ITerminal {
    * Construct a new Terminal.
    */
   constructor(readonly options: ITerminal.IOptions) {
+    this._bufferedStdin = new MainBufferedStdin();
     this._initWorker();
   }
 
@@ -27,8 +29,22 @@ export class Terminal implements ITerminal {
 
     this._remote = wrap(this._worker);
     const { baseUrl } = this.options;
-    await this._remote.initialize({ baseUrl });
-    this._remote.registerCallbacks(proxy(this._outputCallback.bind(this)));
+    const { sharedArrayBuffer } = this._bufferedStdin;
+    await this._remote.initialize({ baseUrl, sharedArrayBuffer });
+    this._remote.registerCallbacks(
+      proxy(this._outputCallback.bind(this)),
+      proxy(this._enableBufferedStdinCallback.bind(this))
+    );
+
+    this._bufferedStdin.registerSendStdinNow(this._remote.input);
+  }
+
+  private async _enableBufferedStdinCallback(enable: boolean) {
+    if (enable) {
+      await this._bufferedStdin.enable();
+    } else {
+      await this._bufferedStdin.disable();
+    }
   }
 
   private async _outputCallback(text: string): Promise<void> {
@@ -61,7 +77,12 @@ export class Terminal implements ITerminal {
         const content = data.slice(1);
 
         if (message_type === 'stdin') {
-          await this._remote!.input(content[0] as string);
+          const text = content[0] as string;
+          if (this._bufferedStdin.enabled) {
+            await this._bufferedStdin.push(text);
+          } else {
+            await this._remote!.input(text);
+          }
         } else if (message_type === 'set_size') {
           const rows = content[0] as number;
           const columns = content[1] as number;
@@ -89,4 +110,5 @@ export class Terminal implements ITerminal {
   private _worker?: Worker;
   private _remote?: IRemoteWorkerTerminal;
   private _socket?: WebSocketClient;
+  private _bufferedStdin: MainBufferedStdin;
 }

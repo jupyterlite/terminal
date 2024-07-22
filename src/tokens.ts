@@ -3,7 +3,10 @@
 
 import { TerminalAPI } from '@jupyterlab/services';
 
-import { IOutputCallback } from '@jupyterlite/cockle';
+import {
+  IEnableBufferedStdinCallback,
+  IOutputCallback
+} from '@jupyterlite/cockle';
 
 import { Token } from '@lumino/coreutils';
 
@@ -70,11 +73,14 @@ export namespace IWorkerTerminal {
    */
   export interface IOptions {
     baseUrl: string;
+    sharedArrayBuffer: SharedArrayBuffer;
   }
 }
 
 export namespace IRemote {
   export type OutputCallback = IOutputCallback & ProxyMarked;
+  export type EnableBufferedStdinCallback = IEnableBufferedStdinCallback &
+    ProxyMarked;
 }
 
 export interface IRemote extends IWorkerTerminal {
@@ -83,7 +89,10 @@ export interface IRemote extends IWorkerTerminal {
    */
   initialize(options: IWorkerTerminal.IOptions): Promise<void>;
 
-  registerCallbacks(outputCallback: IRemote.OutputCallback): void;
+  registerCallbacks(
+    outputCallback: IRemote.OutputCallback,
+    enableBufferedStdinCallback: IRemote.EnableBufferedStdinCallback
+  ): void;
 }
 
 /**

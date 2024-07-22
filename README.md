@@ -85,8 +85,10 @@ jupyter lite build
 And serve it:
 
 ```bash
-jupyter lite serve
+jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
 ```
+
+Note the setting of `extra_http_headers` which are required to support `SharedArrayBuffer`.
 
 ### Packaging the extension
 
