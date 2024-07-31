@@ -24,7 +24,10 @@ class WorkerTerminal implements IWorkerTerminal {
   }
 
   async start(): Promise<void> {
-    this._shell = new Shell(this.output.bind(this), this._mountpoint);
+    this._shell = new Shell({
+      mountpoint: this._mountpoint,
+      outputCallback: this.output.bind(this)
+    });
     const { FS, PATH, ERRNO_CODES } = await this._shell.initFilesystem();
 
     if (this._wantDriveFS) {
