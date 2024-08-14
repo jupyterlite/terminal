@@ -18,9 +18,11 @@ const resolve = {
 
 module.exports = [
   {
-    entry: './lib/worker.js',
+    //entry: './lib/shell_worker.js',
+    entry: './node_modules/@jupyterlite/cockle/lib/shell_worker.js',
     output: {
-      filename: 'worker.js',
+      //filename: 'worker.js',
+      //filename: 'shell_worker.js',
       path: path.resolve(__dirname, 'lib'),
       libraryTarget: 'amd'
     },

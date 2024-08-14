@@ -1,34 +1,32 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
+import { Shell } from '@jupyterlite/cockle';
 import { JSONPrimitive } from '@lumino/coreutils';
-
-import { proxy, wrap } from 'comlink';
 
 import {
   Server as WebSocketServer,
   Client as WebSocketClient
 } from 'mock-socket';
 
-import { ITerminal, IRemoteWorkerTerminal } from './tokens';
+import { ITerminal } from './tokens';
 
 export class Terminal implements ITerminal {
   /**
    * Construct a new Terminal.
    */
   constructor(readonly options: ITerminal.IOptions) {
-    this._initWorker();
-  }
 
-  private async _initWorker(): Promise<void> {
-    this._worker = new Worker(new URL('./worker.js', import.meta.url), {
-      type: 'module'
+    console.log("OPTIONS", options)
+    console.log("HREF", window.location.href)
+    console.log("terminal import.meta.url", import.meta.url);
+
+    this._shell = new Shell({
+      mountpoint: '/drive',
+      driveFsBaseUrl: options.baseUrl,
+      wasmBaseUrl: window.location.href,   // should probably be PageConfig
+      outputCallback: this._outputCallback.bind(this),
     });
-
-    this._remote = wrap(this._worker);
-    const { baseUrl } = this.options;
-    await this._remote.initialize({ baseUrl });
-    this._remote.registerCallbacks(proxy(this._outputCallback.bind(this)));
   }
 
   private async _outputCallback(text: string): Promise<void> {
@@ -61,11 +59,11 @@ export class Terminal implements ITerminal {
         const content = data.slice(1);
 
         if (message_type === 'stdin') {
-          await this._remote!.input(content[0] as string);
+          await this._shell.input(content[0] as string);
         } else if (message_type === 'set_size') {
           const rows = content[0] as number;
           const columns = content[1] as number;
-          await this._remote!.setSize(rows, columns);
+          await this._shell.setSize(rows, columns);
         }
       });
 
@@ -82,11 +80,10 @@ export class Terminal implements ITerminal {
       console.log('==> Returning handshake via socket', res);
       socket.send(res);
 
-      await this._remote!.start();
+      await this._shell.start();
     });
   }
 
-  private _worker?: Worker;
-  private _remote?: IRemoteWorkerTerminal;
   private _socket?: WebSocketClient;
+  private _shell: Shell;
 }
