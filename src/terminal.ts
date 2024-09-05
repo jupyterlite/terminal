@@ -16,16 +16,15 @@ export class Terminal implements ITerminal {
    * Construct a new Terminal.
    */
   constructor(readonly options: ITerminal.IOptions) {
-
-    console.log("OPTIONS", options)
-    console.log("HREF", window.location.href)
-    console.log("terminal import.meta.url", import.meta.url);
+    console.log('OPTIONS', options);
+    console.log('HREF', window.location.href);
+    console.log('terminal import.meta.url', import.meta.url);
 
     this._shell = new Shell({
       mountpoint: '/drive',
       driveFsBaseUrl: options.baseUrl,
-      wasmBaseUrl: window.location.href,   // should probably be PageConfig
-      outputCallback: this._outputCallback.bind(this),
+      wasmBaseUrl: window.location.href, // should probably be PageConfig
+      outputCallback: this._outputCallback.bind(this)
     });
   }
 
