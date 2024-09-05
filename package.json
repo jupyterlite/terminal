@@ -106,7 +106,10 @@
     },
     "jupyterlab": {
         "extension": true,
-        "outputDir": "jupyterlite_terminal/labextension"
+        "outputDir": "jupyterlite_terminal/labextension",
+        "singletonPackages": [
+            "@jupyterlite/contents"
+        ]
     },
     "jupyterlite": {
         "liteExtension": true
