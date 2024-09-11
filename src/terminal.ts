@@ -19,7 +19,8 @@ export class Terminal implements ITerminal {
     this._shell = new Shell({
       mountpoint: '/drive',
       driveFsBaseUrl: options.baseUrl,
-      wasmBaseUrl: options.baseUrl + 'extensions/@jupyterlite/terminal/static/wasm/',
+      wasmBaseUrl:
+        options.baseUrl + 'extensions/@jupyterlite/terminal/static/wasm/',
       outputCallback: this._outputCallback.bind(this)
     });
   }
