@@ -3,11 +3,7 @@
 
 import { TerminalAPI } from '@jupyterlab/services';
 
-import { IOutputCallback } from '@jupyterlite/cockle';
-
 import { Token } from '@lumino/coreutils';
-
-import { ProxyMarked, Remote } from 'comlink';
 
 /**
  * The token for the Terminals service.
@@ -57,36 +53,3 @@ export namespace ITerminal {
     baseUrl: string;
   }
 }
-
-export interface IWorkerTerminal {
-  input(text: string): Promise<void>;
-  setSize(rows: number, columns: number): Promise<void>;
-  start(): Promise<void>;
-}
-
-export namespace IWorkerTerminal {
-  /**
-   * Initialization options for a worker.
-   */
-  export interface IOptions {
-    baseUrl: string;
-  }
-}
-
-export namespace IRemote {
-  export type OutputCallback = IOutputCallback & ProxyMarked;
-}
-
-export interface IRemote extends IWorkerTerminal {
-  /**
-   * Handle any lazy initialization activities.
-   */
-  initialize(options: IWorkerTerminal.IOptions): Promise<void>;
-
-  registerCallbacks(outputCallback: IRemote.OutputCallback): void;
-}
-
-/**
- * An convenience interface for Pyodide workers wrapped by a comlink Remote.
- */
-export type IRemoteWorkerTerminal = Remote<IRemote>;
