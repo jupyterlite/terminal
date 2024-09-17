@@ -7,7 +7,7 @@ A terminal for JupyterLite.
 
 ⚠️ This extension is still in development and not yet ready for general use. ⚠️
 
-![a screenshot showing a terminal running in JupyterLite](https://github.com/jupyterlite/terminal/assets/591645/1b4ff620-e8f2-4abf-b608-6badd66370ac)
+![a screenshot showing a terminal running in JupyterLite](https://raw.githubusercontent.com/jupyterlite/terminal/main/screenshot.png)
 
 ## Requirements
 
@@ -85,8 +85,10 @@ jupyter lite build
 And serve it:
 
 ```bash
-jupyter lite serve
+jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
 ```
+
+The extra HTTP headers are require to ensure that `SharedArrayBuffer` is available.
 
 ### Packaging the extension
 
