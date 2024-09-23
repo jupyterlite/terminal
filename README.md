@@ -82,7 +82,13 @@ Then build a JupyterLite distribution with the extension installed:
 jupyter lite build
 ```
 
-And serve it:
+And serve it either using:
+
+```bash
+npx static-handler --cors --coop --coep --corp _output/
+```
+
+or:
 
 ```bash
 jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
