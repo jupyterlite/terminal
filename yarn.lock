@@ -2808,13 +2808,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/cockle@npm:^0.0.8":
-  version: 0.0.8
-  resolution: "@jupyterlite/cockle@npm:0.0.8"
+"@jupyterlite/cockle@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@jupyterlite/cockle@npm:0.0.9"
   dependencies:
     "@jupyterlite/contents": ^0.4.1
     comlink: ^4.4.1
-  checksum: 60a24a9b73e48a37725eabe60c88db1d2776e2a9df64857be1240c3e1de637e7eb6da4e96bd109be243b34bae3308d20d3eb65f534476edb1b4a21026238b6ec
+  checksum: 5456bf2a56ce20de57c08e7238ea4f009d5349a5cc9e180ec8076cfb6db17b9dc34c44d921cf9a18d7697cce865418b848c664acbe2f955cfb0eb27981dad703
   languageName: node
   linkType: hard
 
@@ -2922,7 +2922,7 @@ __metadata:
     "@jupyterlab/terminal": ^4.2.4
     "@jupyterlab/terminal-extension": ^4.2.4
     "@jupyterlab/testutils": ^4.2.4
-    "@jupyterlite/cockle": ^0.0.8
+    "@jupyterlite/cockle": ^0.0.9
     "@jupyterlite/contents": ^0.4.0
     "@jupyterlite/server": ^0.4.0
     "@lumino/coreutils": ^2.2.0
