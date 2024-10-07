@@ -26,6 +26,9 @@ dependencies = [
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
+[project.entry-points."jupyterlite.addon.v0"]
+jupyterlite-terminal = "jupyterlite_terminal.add_on:TerminalAddon"
+
 [tool.hatch.version]
 source = "nodejs"
 
