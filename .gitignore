@@ -128,4 +128,3 @@ dmypy.json
 _output/
 cockle_wasm_env/
 cockle-config.json
-demo/dist

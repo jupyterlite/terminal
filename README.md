@@ -50,12 +50,11 @@ jupyter lite build
 
 If you would like to deploy a JupyterLite site with the terminal extension, you will need to configure your server to add the `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers.
 
-As an example, this repository deploys the JupyterLite terminal to [Vercel](https://vercel.com), using the following files in the `demo` folder:
+As an example, this repository deploys the JupyterLite terminal to [Vercel](https://vercel.com), using the following files:
 
 - `vercel.json`: configure the COOP / COEP server headers
 - `requirements-deploy.txt`: dependencies for the JupyterLite deployment
 - `deploy.sh`: script to deploy to Vercel, using micromamba to have full control on the Python versions and isolate the build in a virtual environment
-- the `contents` directory contains a couple of demo files to try some commands such as `grep`, `echo` and `lua`
 
 For more information, have a look at the JupyterLite documentation: https://jupyterlite.readthedocs.io/
 
