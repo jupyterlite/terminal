@@ -2,6 +2,34 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.2
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.1...03a24763b3e14e04fe09373b8ed0f2ee040b729f))
+
+### Enhancements made
+
+- Update to cockle 0.0.10 [#30](https://github.com/jupyterlite/terminal/pull/30) ([@ianthomas23](https://github.com/ianthomas23))
+- Obtain wasm packages from emscripten-forge when building deployment [#27](https://github.com/jupyterlite/terminal/pull/27) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Add config files to deploy to Vercel with the COOP / COEP headers [#28](https://github.com/jupyterlite/terminal/pull/28) ([@jtpio](https://github.com/jtpio))
+
+### Documentation improvements
+
+- Update link to the demo, add demo files [#29](https://github.com/jupyterlite/terminal/pull/29) ([@jtpio](https://github.com/jtpio))
+- Add use of static-handler to README [#26](https://github.com/jupyterlite/terminal/pull/26) ([@ianthomas23](https://github.com/ianthomas23))
+- Update readme with screenshot and extra http headers [#25](https://github.com/jupyterlite/terminal/pull/25) ([@ianthomas23](https://github.com/ianthomas23))
+- Add better screenshot [#24](https://github.com/jupyterlite/terminal/pull/24) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2024-09-16&to=2024-10-23&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2024-09-16..2024-10-23&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2024-09-16..2024-10-23&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2024-09-16..2024-10-23&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.1
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.0...f730b658ac11ee7299f697bb81781e2746c83655))
@@ -31,8 +59,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2024-05-29&to=2024-09-16&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2024-05-29..2024-09-16&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2024-05-29..2024-09-16&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.0
 
