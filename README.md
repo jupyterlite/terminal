@@ -91,7 +91,7 @@ jupyter lab
 Then build a JupyterLite distribution with the extension installed:
 
 ```bash
-jupyter lite build
+jupyter lite build --contents demo/contents
 ```
 
 And serve it either using:
