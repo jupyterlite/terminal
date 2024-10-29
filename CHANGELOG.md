@@ -2,6 +2,22 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.3
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.2...8f8a93f74b9dfd29775badf53e9dbd67406e2213))
+
+### Enhancements made
+
+- Support use of em-forge wasm files in standalone JupyterLite deployment [#31](https://github.com/jupyterlite/terminal/pull/31) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2024-10-23&to=2024-10-29&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2024-10-23..2024-10-29&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.2
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.1...03a24763b3e14e04fe09373b8ed0f2ee040b729f))
@@ -27,8 +43,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2024-09-16&to=2024-10-23&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2024-09-16..2024-10-23&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2024-09-16..2024-10-23&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2024-09-16..2024-10-23&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.1
 
