@@ -7,9 +7,6 @@ and [Galata](https://github.com/jupyterlab/jupyterlab/tree/main/galata) helper.
 
 The Playwright configuration is defined in [playwright.config.js](./playwright.config.js).
 
-The JupyterLab server configuration to use for the integration test is defined
-in [jupyter_server_test_config.py](./jupyter_server_test_config.py).
-
 The default configuration will produce video for failing tests and an HTML report.
 
 > There is a new experimental UI mode that you may fall in love with; see [that video](https://www.youtube.com/watch?v=jF0yA-JLQW0).
@@ -34,6 +31,7 @@ jlpm build:prod
 ```sh
 cd ./ui-tests
 jlpm install
+jlpm build
 jlpm playwright install
 cd ..
 ```
@@ -42,7 +40,7 @@ cd ..
 
 ```sh
 cd ./ui-tests
-jlpm playwright test
+jlpm test
 ```
 
 Test results will be shown in the terminal. In case of any test failures, the test report
@@ -71,6 +69,7 @@ jlpm build:prod
 ```sh
 cd ./ui-tests
 jlpm install
+jlpm build
 jlpm playwright install
 cd ..
 ```
@@ -79,7 +78,7 @@ cd ..
 
 ```sh
 cd ./ui-tests
-jlpm playwright test -u
+jlpm test -u
 ```
 
 > Some discrepancy may occurs between the snapshots generated on your computer and
@@ -107,6 +106,7 @@ jlpm build:prod
 ```sh
 cd ./ui-tests
 jlpm install
+jlpm build
 jlpm playwright install
 cd ..
 ```
@@ -145,6 +145,7 @@ jlpm build:prod
 ```sh
 cd ./ui-tests
 jlpm install
+jlpm build
 jlpm playwright install
 cd ..
 ```
@@ -153,7 +154,7 @@ cd ..
 
 ```sh
 cd ./ui-tests
-jlpm playwright test --debug
+jlpm test --debug
 ```
 
 ## Upgrade Playwright and the browsers

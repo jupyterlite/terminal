@@ -20,7 +20,7 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
   provides: ITerminals,
   activate: async (app: JupyterLiteServer) => {
     console.log(
-      'JupyterLab extension @jupyterlite/terminal:plugin is activated!'
+      'JupyterLite extension @jupyterlite/terminal:plugin is activated!'
     );
 
     const { serviceManager } = app;
@@ -46,7 +46,7 @@ const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
   requires: [ITerminals],
   activate: (app: JupyterLiteServer, terminals: ITerminals) => {
     console.log(
-      'JupyterLab extension @jupyterlite/terminal:routes-plugin is activated!',
+      'JupyterLite extension @jupyterlite/terminal:routes-plugin is activated!',
       terminals
     );
 
