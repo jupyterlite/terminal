@@ -70,7 +70,7 @@ test.describe('Images', () => {
 
     // Hide modification times.
     const modified = page.locator('span.jp-DirListing-itemModified');
-    await modified.evaluateAll(els => els.map(el => el.innerHTML = ''));
+    await modified.evaluateAll(els => els.map(el => (el.innerHTML = '')));
 
     const imageName = 'initial.png';
     expect(await page.screenshot()).toMatchSnapshot(imageName.toLowerCase());
@@ -107,7 +107,7 @@ test.describe('Images', () => {
 
     // Hide modification times.
     const modified = page.locator('span.jp-DirListing-itemModified');
-    await modified.evaluateAll(els => els.map(el => el.innerHTML = ''));
+    await modified.evaluateAll(els => els.map(el => (el.innerHTML = '')));
 
     const imageName = 'various-commands.png';
     expect(await page.screenshot()).toMatchSnapshot(imageName.toLowerCase());
