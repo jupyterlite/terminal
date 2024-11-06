@@ -106,6 +106,7 @@ jobs:
     - name: Install the extension
       run: |
         set -eux
+        python -m pip install --pre jupyterlite-core
         python -m pip install "jupyterlab>=4.0.0,<5" jupyterlite_terminal*.whl
 
     - name: Install dependencies
