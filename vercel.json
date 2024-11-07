@@ -1,6 +1,4 @@
 {
-  "buildCommand": "cd deploy && bash ./deploy.sh",
-  "outputDirectory": "deploy/dist",
   "headers": [
     {
       "source": "/(.*)",
