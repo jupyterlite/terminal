@@ -22,8 +22,7 @@ jobs:
 
       - name: Install the dependencies
         run: |
-          # need the latest JupyterLite 0.4.0 pre-release
-          python -m pip install --pre jupyterlite-core jupyterlite-pyodide-kernel
+          python -m pip install --pre "jupyterlite-core>=0.4,<0.5" jupyterlite-pyodide-kernel
 
           # install a dev version of the terminal extension
           python -m pip install .
@@ -32,13 +31,14 @@ jobs:
         uses: mamba-org/setup-micromamba@main
 
       - name: Build the JupyterLite site
+        working-directory: deploy
         run: |
           jupyter lite build --output-dir dist
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./deploy/dist
 
   deploy:
     needs: build

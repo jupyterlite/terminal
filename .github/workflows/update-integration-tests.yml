@@ -42,6 +42,15 @@ jobs:
           jlpm
           python -m pip install .
 
+      - name: Micromamba needed for cockle_wasm_env
+        uses: mamba-org/setup-micromamba@main
+
+      - name: Install dependencies
+        working-directory: ui-tests
+        run: |
+          jlpm install
+          jlpm build
+
       - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
