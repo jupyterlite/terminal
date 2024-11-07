@@ -11,7 +11,7 @@ cmd = [
     "lite",
     "build",
     "--contents",
-    "../demo/contents",
+    "contents",
     f"--FederatedExtensionAddon.extra_labextensions_path={extra_labextensions_path}",
 ]
 run(cmd, check=True)

@@ -53,8 +53,8 @@ If you would like to deploy a JupyterLite site with the terminal extension, you 
 As an example, this repository deploys the JupyterLite terminal to [Vercel](https://vercel.com), using the following files:
 
 - `vercel.json`: configure the COOP / COEP server headers
-- `requirements-deploy.txt`: dependencies for the JupyterLite deployment
-- `deploy.sh`: script to deploy to Vercel, using micromamba to have full control on the Python versions and isolate the build in a virtual environment
+- `deploy/requirements-deploy.txt`: dependencies for the JupyterLite deployment
+- `deploy/deploy.sh`: script to deploy to Vercel, using micromamba to have full control on the Python versions and isolate the build in a virtual environment
 
 For more information, have a look at the JupyterLite documentation: https://jupyterlite.readthedocs.io/
 
@@ -91,7 +91,8 @@ jupyter lab
 Then build a JupyterLite distribution with the extension installed:
 
 ```bash
-jupyter lite build --contents demo/contents
+cd deploy
+jupyter lite build --contents contents
 ```
 
 And serve it either using:
