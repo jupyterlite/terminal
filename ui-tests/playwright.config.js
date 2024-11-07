@@ -10,6 +10,7 @@ module.exports = {
     autoGoto: false,
     baseURL: 'http://localhost:8000'
   },
+  retries: 2,
   webServer: {
     command: 'jlpm start',
     port: 8000,
