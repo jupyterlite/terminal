@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd deploy.sh && bash ./deploy.sh",
+  "buildCommand": "cd deploy && bash ./deploy.sh",
   "outputDirectory": "deploy/dist",
   "headers": [
     {
