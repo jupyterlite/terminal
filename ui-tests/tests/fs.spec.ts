@@ -50,8 +50,8 @@ test.describe('Filesystem', () => {
     await inputLine(page, 'cp months.txt other.txt');
     await page.filebrowser.refresh();
 
-    expect(page.contents.fileExists('months.txt')).toBeTruthy();
-    expect(page.contents.fileExists('other.txt')).toBeTruthy();
+    expect(await page.contents.fileExists('months.txt')).toBeTruthy();
+    expect(await page.contents.fileExists('other.txt')).toBeTruthy();
 
     const other = await page.contents.getContentMetadata('other.txt');
     expect(other?.content).toEqual(MONTHS_TXT);
@@ -61,14 +61,14 @@ test.describe('Filesystem', () => {
     await inputLine(page, 'rm fact.lua');
     await page.filebrowser.refresh();
 
-    expect(page.contents.fileExists('fact.lua')).toBeFalsy();
+    expect(await page.contents.fileExists('fact.lua')).toBeFalsy();
   });
 
   test('should support touch', async ({ page }) => {
     await inputLine(page, 'touch touched.txt');
     await page.filebrowser.refresh();
 
-    expect(page.contents.fileExists('touched.txt')).toBeTruthy();
+    expect(await page.contents.fileExists('touched.txt')).toBeTruthy();
 
     const other = await page.contents.getContentMetadata('touched.txt');
     expect(other?.content).toEqual('');
