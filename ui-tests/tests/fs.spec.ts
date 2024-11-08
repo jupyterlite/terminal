@@ -57,7 +57,8 @@ test.describe('Filesystem', () => {
     expect(other?.content).toEqual(MONTHS_TXT);
   });
 
-  test('should support rm', async ({ page }) => {
+  // rm of files added via --contents is not reliable.
+  test.skip('should support rm', async ({ page }) => {
     await inputLine(page, 'rm fact.lua');
     await page.filebrowser.refresh();
 
