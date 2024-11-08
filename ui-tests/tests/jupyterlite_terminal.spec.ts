@@ -1,14 +1,5 @@
 import { expect, test } from '@jupyterlab/galata';
-
-const TERMINAL_SELECTOR = '.jp-Terminal';
-
-async function inputLine(page, text: string) {
-  for (const char of text) {
-    await page.keyboard.type(char);
-    await page.waitForTimeout(10);
-  }
-  await page.keyboard.press('Enter');
-}
+import { TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
 
 test.describe('Terminal extension', () => {
   test('should emit activation console messages', async ({ page }) => {
@@ -82,28 +73,26 @@ test.describe('Images', () => {
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
 
-    const wait = 100; // milliseconds
-
     await inputLine(page, 'ls'); // avoid timestamps
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'cp months.txt other.txt');
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'ls'); // avoid timestamps
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'una\t'); // tab complete command name
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'grep ember mon\t'); // tab complete filename
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await page.keyboard.press('Tab'); // list all commands
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'abc'); // no such command
-    await page.waitForTimeout(wait);
+    await page.waitForTimeout(WAIT_MS);
 
     // Hide modification times.
     const modified = page.locator('span.jp-DirListing-itemModified');
