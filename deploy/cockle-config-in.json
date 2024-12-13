@@ -1,5 +1,11 @@
 [
   {
     "package": "lua"
+  },
+  {
+    "package": "tree"
+  },
+  {
+    "package": "vim"
   }
 ]
