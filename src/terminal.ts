@@ -25,7 +25,7 @@ export class Terminal implements ITerminal {
     });
   }
 
-  private async _outputCallback(text: string): Promise<void> {
+  private _outputCallback(text: string): void {
     if (this._socket) {
       const ret = JSON.stringify(['stdout', text]);
       this._socket.send(ret);
