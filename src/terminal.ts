@@ -3,6 +3,7 @@
 
 import { Shell } from '@jupyterlite/cockle';
 import { JSONPrimitive } from '@lumino/coreutils';
+import { ISignal, Signal } from '@lumino/signaling';
 
 import {
   Server as WebSocketServer,
@@ -23,6 +24,7 @@ export class Terminal implements ITerminal {
         options.baseUrl + 'extensions/@jupyterlite/terminal/static/wasm/',
       outputCallback: this._outputCallback.bind(this)
     });
+    this._shell.disposed.connect(() => this.dispose());
   }
 
   private _outputCallback(text: string): void {
@@ -30,6 +32,38 @@ export class Terminal implements ITerminal {
       const ret = JSON.stringify(['stdout', text]);
       this._socket.send(ret);
     }
+  }
+
+  dispose(): void {
+    if (this._isDisposed) {
+      return;
+    }
+
+    console.log('Terminal.dispose');
+    this._isDisposed = true;
+
+    if (this._socket !== undefined) {
+      // Disconnect from frontend.
+      this._socket.send(JSON.stringify(['disconnect']));
+      this._socket.close();
+      this._socket = undefined;
+    }
+
+    if (this._server !== undefined) {
+      this._server.close();
+      this._server = undefined;
+    }
+
+    this._shell.dispose();
+    this._disposed.emit();
+  }
+
+  get disposed(): ISignal<this, void> {
+    return this._disposed;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
   }
 
   /**
@@ -41,11 +75,15 @@ export class Terminal implements ITerminal {
 
   async wsConnect(url: string) {
     console.log('==> Terminal.wsConnect', url);
+    this._server = new WebSocketServer(url);
 
-    const server = new WebSocketServer(url);
-
-    server.on('connection', async (socket: WebSocketClient) => {
-      console.log('==> server connection', this, socket);
+    this._server.on('connection', async (socket: WebSocketClient) => {
+      console.log('==> server connection');
+      if (this._socket !== undefined) {
+        this._socket.send(JSON.stringify(['disconnect']));
+        this._socket.close();
+        this._socket = undefined;
+      }
       this._socket = socket;
 
       socket.on('message', async (message: any) => {
@@ -63,11 +101,11 @@ export class Terminal implements ITerminal {
         }
       });
 
-      socket.on('close', async () => {
+      socket.on('close', () => {
         console.log('==> socket close');
       });
 
-      socket.on('error', async () => {
+      socket.on('error', () => {
         console.log('==> socket error');
       });
 
@@ -76,10 +114,17 @@ export class Terminal implements ITerminal {
       console.log('==> Returning handshake via socket', res);
       socket.send(res);
 
-      await this._shell.start();
+      if (!this._running) {
+        this._running = true;
+        await this._shell.start();
+      }
     });
   }
 
+  private _disposed = new Signal<this, void>(this);
+  private _isDisposed = false;
+  private _server?: WebSocketServer;
   private _socket?: WebSocketClient;
   private _shell: Shell;
+  private _running = false;
 }

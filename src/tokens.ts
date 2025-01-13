@@ -4,6 +4,7 @@
 import { TerminalAPI } from '@jupyterlab/services';
 
 import { Token } from '@lumino/coreutils';
+import { IObservableDisposable } from '@lumino/disposable';
 
 /**
  * The token for the Terminals service.
@@ -17,9 +18,19 @@ export const ITerminalManager = new Token<ITerminalManager>(
  */
 export interface ITerminalManager {
   /**
+   * Return whether the named terminal exists.
+   */
+  has(name: string): boolean;
+
+  /**
    * List the running terminals.
    */
   listRunning: () => Promise<TerminalAPI.IModel[]>;
+
+  /**
+   * Shutdown a terminal by name.
+   */
+  shutdownTerminal: (name: string) => Promise<void>;
 
   /**
    * Start a new kernel.
@@ -30,7 +41,7 @@ export interface ITerminalManager {
 /**
  * An interface for a server-side terminal running in the browser.
  */
-export interface ITerminal {
+export interface ITerminal extends IObservableDisposable {
   /**
    * The name of the server-side terminal.
    */

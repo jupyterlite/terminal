@@ -9,6 +9,7 @@
     "clean:all": "jlpm clean && rimraf cockle_wasm_env .cockle_temp",
     "start": "npx static-handler -p 8000 --cors --coop --coep --corp ./dist",
     "test": "jlpm playwright test",
+    "test:ui": "jlpm playwright test --ui",
     "test:update": "jlpm playwright test --update-snapshots"
   },
   "devDependencies": {

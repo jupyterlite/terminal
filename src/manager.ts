@@ -22,6 +22,13 @@ export class TerminalManager implements ITerminalManager {
   }
 
   /**
+   * Return whether the named terminal exists.
+   */
+  has(name: string): boolean {
+    return this._terminals.has(name);
+  }
+
+  /**
    * List the running terminals.
    */
   async listRunning(): Promise<TerminalAPI.IModel[]> {
@@ -32,17 +39,31 @@ export class TerminalManager implements ITerminalManager {
   }
 
   /**
+   * Shutdown a terminal by name.
+   */
+  async shutdownTerminal(name: string): Promise<void> {
+    const terminal = this._terminals.get(name);
+    if (terminal !== undefined) {
+      console.log('==> TerminalManager.shutdownTerminal', name);
+      this._terminals.delete(name);
+      terminal.dispose();
+    }
+  }
+
+  /**
    * Start a new kernel.
    */
   async startNew(): Promise<TerminalAPI.IModel> {
     const name = this._nextAvailableName();
     console.log('==> TerminalManager.startNew', name);
     const baseUrl = PageConfig.getBaseUrl();
-    const term = new Terminal({ name, baseUrl });
-    this._terminals.set(name, term);
+    const terminal = new Terminal({ name, baseUrl });
+    this._terminals.set(name, terminal);
+
+    terminal.disposed.connect(() => this.shutdownTerminal(name));
 
     const url = `${this._wsUrl}terminals/websocket/${name}`;
-    await term.wsConnect(url);
+    await terminal.wsConnect(url);
 
     return { name };
   }

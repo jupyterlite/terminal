@@ -46,6 +46,16 @@ test.describe('Filesystem', () => {
     expect(decode64(fact?.content)).toEqual(FACT_LUA);
   });
 
+  test('should create a new file', async ({ page }) => {
+    await page.goto();
+    await page.menu.clickMenuItem('File>New>Terminal');
+    await page.locator(TERMINAL_SELECTOR).waitFor();
+    await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
+
+    await inputLine(page, 'echo Hello > out.txt');
+    await page.getByTitle('Name: out.txt').waitFor();
+  });
+
   test('should support cp', async ({ page }) => {
     await inputLine(page, 'cp months.txt other.txt');
     await page.filebrowser.refresh();
