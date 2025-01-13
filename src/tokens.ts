@@ -19,7 +19,7 @@ export interface ITerminalManager {
   /**
    * List the running terminals.
    */
-  running: () => Promise<TerminalAPI.IModel[]>;
+  listRunning: () => Promise<TerminalAPI.IModel[]>;
 
   /**
    * Start a new kernel.

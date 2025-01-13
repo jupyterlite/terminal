@@ -8,7 +8,9 @@ import { Terminal } from './terminal';
 import { ITerminalManager } from './tokens';
 
 /**
- * A class to handle requests to /api/terminals
+ * A class to handle requests to /api/terminals.
+ * Although this looks similar to a JupyterLab TerminalManager, it is really a class that
+ * implements the terminal REST API.
  */
 export class TerminalManager implements ITerminalManager {
   /**
@@ -22,7 +24,7 @@ export class TerminalManager implements ITerminalManager {
   /**
    * List the running terminals.
    */
-  async running(): Promise<TerminalAPI.IModel[]> {
+  async listRunning(): Promise<TerminalAPI.IModel[]> {
     const ret = [...this._terminals.values()].map(terminal => ({
       name: terminal.name
     }));
