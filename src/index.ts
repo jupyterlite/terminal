@@ -7,17 +7,17 @@ import {
   Router
 } from '@jupyterlite/server';
 
-import { ITerminals } from './tokens';
-import { Terminals } from './terminals';
+import { TerminalManager } from './manager';
+import { ITerminalManager } from './tokens';
 
 /**
  * The terminals service plugin.
  */
-const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
+const terminalsPlugin: JupyterLiteServerPlugin<ITerminalManager> = {
   id: '@jupyterlite/terminal:plugin',
   description: 'A terminal for JupyterLite',
   autoStart: true,
-  provides: ITerminals,
+  provides: ITerminalManager,
   activate: async (app: JupyterLiteServer) => {
     console.log(
       'JupyterLite extension @jupyterlite/terminal:plugin is activated!'
@@ -33,7 +33,7 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
     await terminals.ready;
     console.log('terminals ready after await:', terminals.isReady); // Ready
 
-    return new Terminals(serverSettings.wsUrl);
+    return new TerminalManager(serverSettings.wsUrl);
   }
 };
 
@@ -43,23 +43,23 @@ const terminalsPlugin: JupyterLiteServerPlugin<ITerminals> = {
 const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
   id: '@jupyterlite/terminal:routes-plugin',
   autoStart: true,
-  requires: [ITerminals],
-  activate: (app: JupyterLiteServer, terminals: ITerminals) => {
+  requires: [ITerminalManager],
+  activate: (app: JupyterLiteServer, terminalManager: ITerminalManager) => {
     console.log(
       'JupyterLite extension @jupyterlite/terminal:routes-plugin is activated!',
-      terminals
+      terminalManager
     );
 
     // GET /api/terminals - List the running terminals
     app.router.get('/api/terminals', async (req: Router.IRequest) => {
-      const res = await terminals.list();
+      const res = await terminalManager.listRunning();
       // Should return last_activity for each too,
       return new Response(JSON.stringify(res));
     });
 
     // POST /api/terminals - Start a terminal
     app.router.post('/api/terminals', async (req: Router.IRequest) => {
-      const res = await terminals.startNew();
+      const res = await terminalManager.startNew();
       // Should return last_activity too.
       return new Response(JSON.stringify(res));
     });
