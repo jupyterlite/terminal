@@ -63,6 +63,22 @@ const terminalsRoutesPlugin: JupyterLiteServerPlugin<void> = {
       // Should return last_activity too.
       return new Response(JSON.stringify(res));
     });
+
+    // DELETE /api/terminals/{terminal name} - Delete a terminal
+    app.router.delete(
+      '/api/terminals/(.+)',
+      async (req: Router.IRequest, name: string) => {
+        const exists = terminalManager.has(name);
+        if (exists) {
+          await terminalManager.shutdownTerminal(name);
+        } else {
+          const msg = `The terminal session "${name}"" does not exist`;
+          console.warn(msg);
+        }
+
+        return new Response(null, { status: exists ? 204 : 404 });
+      }
+    );
   }
 };
 
