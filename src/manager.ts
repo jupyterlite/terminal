@@ -5,28 +5,27 @@ import { PageConfig } from '@jupyterlab/coreutils';
 import { TerminalAPI } from '@jupyterlab/services';
 
 import { Terminal } from './terminal';
-import { ITerminals } from './tokens';
+import { ITerminalManager } from './tokens';
 
 /**
  * A class to handle requests to /api/terminals
  */
-export class Terminals implements ITerminals {
+export class TerminalManager implements ITerminalManager {
   /**
-   * Construct a new Terminals object.
+   * Construct a new TerminalManager object.
    */
   constructor(wsUrl: string) {
     this._wsUrl = wsUrl;
-    console.log('==> Terminals.constructor', this._wsUrl);
+    console.log('==> TerminalManager.constructor', this._wsUrl);
   }
 
   /**
    * List the running terminals.
    */
-  async list(): Promise<TerminalAPI.IModel[]> {
+  async running(): Promise<TerminalAPI.IModel[]> {
     const ret = [...this._terminals.values()].map(terminal => ({
       name: terminal.name
     }));
-    console.log('==> Terminals.list', ret);
     return ret;
   }
 
@@ -35,7 +34,7 @@ export class Terminals implements ITerminals {
    */
   async startNew(): Promise<TerminalAPI.IModel> {
     const name = this._nextAvailableName();
-    console.log('==> Terminals.new', name);
+    console.log('==> TerminalManager.startNew', name);
     const baseUrl = PageConfig.getBaseUrl();
     const term = new Terminal({ name, baseUrl });
     this._terminals.set(name, term);

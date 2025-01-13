@@ -8,18 +8,18 @@ import { Token } from '@lumino/coreutils';
 /**
  * The token for the Terminals service.
  */
-export const ITerminals = new Token<ITerminals>(
-  '@jupyterlite/terminal:ITerminals'
+export const ITerminalManager = new Token<ITerminalManager>(
+  '@jupyterlite/terminal:ITerminalManager'
 );
 
 /**
- * An interface for the Terminals service.
+ * An interface for the TerminalManager service.
  */
-export interface ITerminals {
+export interface ITerminalManager {
   /**
    * List the running terminals.
    */
-  list: () => Promise<TerminalAPI.IModel[]>;
+  running: () => Promise<TerminalAPI.IModel[]>;
 
   /**
    * Start a new kernel.
