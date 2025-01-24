@@ -11,6 +11,7 @@ module.exports = {
     baseURL: 'http://localhost:8000'
   },
   retries: 2,
+  workers: 1,
   webServer: {
     command: 'jlpm start',
     port: 8000,
