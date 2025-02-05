@@ -1,11 +1,10 @@
-[
-  {
-    "package": "lua"
+{
+  "packages": {
+    "lua": {},
+    "tree": {},
+    "vim": {}
   },
-  {
-    "package": "tree"
-  },
-  {
-    "package": "vim"
+  "aliases": {
+    "vi": "vim"
   }
-]
+}
