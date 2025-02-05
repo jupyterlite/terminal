@@ -41,9 +41,10 @@ class TerminalAddon(FederatedExtensionAddon):
             for source in f:
                 source = Path(source.strip())
                 basename = source.name
+                packageName = next(f).strip()
                 yield dict(
                     name=f"copy:{basename}",
-                    actions=[(self.copy_one, [source, assetDir / basename])],
+                    actions=[(self.copy_one, [source, assetDir / packageName / basename])],
                 )
 
         os.remove(tempFilename)
