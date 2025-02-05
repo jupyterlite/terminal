@@ -44,6 +44,8 @@ jobs:
 
       - name: Micromamba needed for cockle_wasm_env
         uses: mamba-org/setup-micromamba@main
+        with:
+          micromamba-version: '2.0.5-0'
 
       - name: Install dependencies
         working-directory: ui-tests
