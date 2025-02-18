@@ -1,7 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import { Shell } from '@jupyterlite/cockle';
+import { IShell } from '@jupyterlite/cockle';
 import { JSONPrimitive } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 
@@ -10,6 +10,7 @@ import {
   Client as WebSocketClient
 } from 'mock-socket';
 
+import { Shell } from './shell';
 import { ITerminal } from './tokens';
 
 export class Terminal implements ITerminal {
@@ -74,11 +75,11 @@ export class Terminal implements ITerminal {
   }
 
   async wsConnect(url: string) {
-    console.log('==> Terminal.wsConnect', url);
+    console.log('Terminal wsConnect', url);
     this._server = new WebSocketServer(url);
 
     this._server.on('connection', async (socket: WebSocketClient) => {
-      console.log('==> server connection');
+      console.log('Terminal server connection');
       if (this._socket !== undefined) {
         this._socket.send(JSON.stringify(['disconnect']));
         this._socket.close();
@@ -102,16 +103,16 @@ export class Terminal implements ITerminal {
       });
 
       socket.on('close', () => {
-        console.log('==> socket close');
+        console.log('Terminal socket close');
       });
 
       socket.on('error', () => {
-        console.log('==> socket error');
+        console.log('Terminal socket error');
       });
 
       // Return handshake.
       const res = JSON.stringify(['setup']);
-      console.log('==> Returning handshake via socket', res);
+      console.log('Terminal returning handshake via socket');
       socket.send(res);
 
       if (!this._running) {
@@ -125,6 +126,6 @@ export class Terminal implements ITerminal {
   private _isDisposed = false;
   private _server?: WebSocketServer;
   private _socket?: WebSocketClient;
-  private _shell: Shell;
+  private _shell: IShell;
   private _running = false;
 }
