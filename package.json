@@ -30,12 +30,14 @@
         "url": "https://github.com/jupyterlite/terminal.git"
     },
     "scripts": {
-        "build": "jlpm build:lib && jlpm build:labextension:dev",
-        "build:prod": "jlpm clean && jlpm build:lib:prod && jlpm build:labextension",
+        "build": "jlpm build:lib && jlpm build:labextension:dev && jlpm build:webworker",
+        "build:prod": "jlpm clean && jlpm build:lib:prod && jlpm build:labextension && jlpm build:webworker:prod",
         "build:labextension": "jupyter labextension build .",
         "build:labextension:dev": "jupyter labextension build --development True .",
         "build:lib": "tsc --sourceMap",
         "build:lib:prod": "tsc",
+        "build:webworker": "webpack -c webpack.worker.config.js --env=dev",
+        "build:webworker:prod": "webpack -c webpack.worker.config.js",
         "clean": "jlpm clean:lib",
         "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
         "clean:lintcache": "rimraf .eslintcache .stylelintcache",
@@ -61,7 +63,7 @@
         "@jupyterlab/services": "^7.3.5",
         "@jupyterlab/terminal": "^4.3.5",
         "@jupyterlab/terminal-extension": "^4.3.5",
-        "@jupyterlite/cockle": "^0.0.15",
+        "@jupyterlite/cockle": "^0.0.16",
         "@jupyterlite/contents": "^0.5.1",
         "@jupyterlite/server": "^0.5.1",
         "@lumino/coreutils": "^2.2.0",
@@ -91,6 +93,7 @@
         "stylelint-config-standard": "^34.0.0",
         "stylelint-csstree-validator": "^3.0.0",
         "stylelint-prettier": "^4.0.0",
+        "ts-loader": "^9.5.2",
         "typescript": "~5.0.2",
         "webpack": "^5.87.0",
         "webpack-cli": "^5.1.4",
@@ -106,8 +109,7 @@
     },
     "jupyterlab": {
         "extension": true,
-        "outputDir": "jupyterlite_terminal/labextension",
-        "webpackConfig": "./webpack.extra.config.js"
+        "outputDir": "jupyterlite_terminal/labextension"
     },
     "jupyterlite": {
         "liteExtension": true
