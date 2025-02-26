@@ -2,6 +2,22 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.1.6
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.5...a3ffc6b6c3c9dfdd3d4920ae7f76435f3d0bc9f3))
+
+### Enhancements made
+
+- Build and use own shell web worker using DriveFS [#47](https://github.com/jupyterlite/terminal/pull/47) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-02-05&to=2025-02-26&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-02-05..2025-02-26&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.1.5
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.4...02b85a5ca55ecdbe855deffafd4e3188f9f7395b))
@@ -22,8 +38,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2024-12-13&to=2025-02-05&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2024-12-13..2025-02-05&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2024-12-13..2025-02-05&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.4
 
