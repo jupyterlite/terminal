@@ -1,6 +1,7 @@
 {
   "packages": {
     "lua": {},
+    "nano": {},
     "tree": {},
     "vim": {}
   },
