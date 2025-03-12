@@ -63,7 +63,7 @@
         "@jupyterlab/services": "^7.3.5",
         "@jupyterlab/terminal": "^4.3.5",
         "@jupyterlab/terminal-extension": "^4.3.5",
-        "@jupyterlite/cockle": "^0.0.16",
+        "@jupyterlite/cockle": "^0.0.18",
         "@jupyterlite/contents": "^0.5.1",
         "@jupyterlite/server": "^0.5.1",
         "@lumino/coreutils": "^2.2.0",
