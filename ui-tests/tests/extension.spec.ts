@@ -11,8 +11,8 @@ test.describe('Terminal extension', () => {
 
     expect(
       logs.filter(s =>
-        s.match(/^JupyterLite extension @jupyterlite\/terminal:.*is activated!/)
+        s.match(/^JupyterLite extension @jupyterlite\/terminal:plugin is activated!/)
       )
-    ).toHaveLength(2);
+    ).toHaveLength(1);
   });
 });

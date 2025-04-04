@@ -1488,17 +1488,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@playwright/test@npm:^1.37.0":
-  version: 1.48.2
-  resolution: "@playwright/test@npm:1.48.2"
-  dependencies:
-    playwright: 1.48.2
-  bin:
-    playwright: cli.js
-  checksum: 926e9411c800bbbf188271fe399f93d2abb1e50aac7844a44a698b3c6dae6f874a3715b1bf6d2f367dd53adb87d9f5d80d03ef71060901a59b6e227d8ed23826
-  languageName: node
-  linkType: hard
-
 "@playwright/test@npm:^1.51.0":
   version: 1.51.1
   resolution: "@playwright/test@npm:1.51.1"
@@ -2913,7 +2902,7 @@ __metadata:
   resolution: "jupyterlite-terminal-ui-tests@workspace:."
   dependencies:
     "@jupyterlab/galata": ^5.4.0
-    "@playwright/test": ^1.37.0
+    "@playwright/test": ^1.51.0
     rimraf: ^6.0.1
   languageName: unknown
   linkType: soft
@@ -3287,36 +3276,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.48.2":
-  version: 1.48.2
-  resolution: "playwright-core@npm:1.48.2"
-  bin:
-    playwright-core: cli.js
-  checksum: a73ecea379f13f757ec38299871256a130d4abec5688369969a6b1ef6104c67f731a27c9a503a988c3e5b1141048552a3ed8c4d061cb631ff2ebab606835c10a
-  languageName: node
-  linkType: hard
-
 "playwright-core@npm:1.51.1":
   version: 1.51.1
   resolution: "playwright-core@npm:1.51.1"
   bin:
     playwright-core: cli.js
   checksum: 1eb37e22e97435a5ed6389b4caa666fbe618348861cae97e67586e20c8fed9ac3d3dc899ff3b9237d0ddfcf087d5b552b80be247e246fc45b75282f96be714bb
-  languageName: node
-  linkType: hard
-
-"playwright@npm:1.48.2":
-  version: 1.48.2
-  resolution: "playwright@npm:1.48.2"
-  dependencies:
-    fsevents: 2.3.2
-    playwright-core: 1.48.2
-  dependenciesMeta:
-    fsevents:
-      optional: true
-  bin:
-    playwright: cli.js
-  checksum: 69ffb28b5a94fc21a9bd3439feb363ffebb21c6b00e6d08ffc225787be49005d6b57072ebb043e78378252850f2b7712f8478e6685138a8e445d6fda94a31e28
   languageName: node
   linkType: hard
 
