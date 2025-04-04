@@ -119,9 +119,7 @@ export class LiteTerminalManager
    * @returns A promise that resolves when all of the sessions are shut down.
    */
   async shutdownAll(): Promise<void> {
-    await Promise.all(
-      this._models.map(model => this.shutdown(model.name))
-    );
+    await Promise.all(this._models.map(model => this.shutdown(model.name)));
     this.refreshRunning();
   }
 
