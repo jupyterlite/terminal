@@ -82,7 +82,7 @@ export class LiteTerminalManager
    * since the manager maintains its internal state.
    */
   async refreshRunning(): Promise<void> {
-    console.log('==> LiteTerminalManager.refreshRunning');
+    this._runningChanged.emit(this._models);
   }
 
   /**
@@ -105,11 +105,11 @@ export class LiteTerminalManager
    * Shut down a terminal session by name.
    */
   async shutdown(name: string): Promise<void> {
-    console.log('==> LiteTerminalManager.shutdown', name);
     const terminal = this._terminalConnections.get(name);
     if (terminal !== undefined) {
       this._terminalConnections.delete(name);
       terminal.dispose();
+      this.refreshRunning();
     }
   }
 
@@ -119,7 +119,10 @@ export class LiteTerminalManager
    * @returns A promise that resolves when all of the sessions are shut down.
    */
   async shutdownAll(): Promise<void> {
-    console.log('==> LiteTerminalManager.shutdownAll');
+    await Promise.all(
+      this._models.map(model => this.shutdown(model.name))
+    );
+    this.refreshRunning();
   }
 
   /**
@@ -137,13 +140,13 @@ export class LiteTerminalManager
     options: Terminal.ITerminal.IOptions
   ): Promise<Terminal.ITerminalConnection> {
     const name = options.name ?? this._nextAvailableName();
-    console.log('==> LiteTerminalManager.startNew', name);
     const model: Terminal.IModel = { name };
     const { serverSettings } = this;
 
     const terminal = new LiteTerminalConnection({ model, serverSettings });
     terminal.disposed.connect(() => this.shutdown(name));
     this._terminalConnections.set(name, terminal);
+    await this.refreshRunning();
     return terminal;
   }
 

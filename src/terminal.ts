@@ -11,7 +11,6 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
    * Construct a new terminal session.
    */
   constructor(options: Terminal.ITerminalConnection.IOptions) {
-    console.log('==> LiteTerminalConnection.constructor');
     this._name = options.model.name;
     this._serverSettings = options.serverSettings!;
     const { baseUrl } = this._serverSettings;
@@ -50,9 +49,8 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
     }
 
     this._isDisposed = true;
+    this._shell.dispose();
     this._disposed.emit();
-
-    console.log('==> LiteTerminalConnection disposing');
 
     this._updateConnectionStatus('disconnected');
 
