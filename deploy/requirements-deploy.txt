@@ -1,4 +1,4 @@
-jupyterlab==4.4.0b1
-jupyterlite-core==0.6.0a3
+jupyterlab
+jupyterlite-core==0.6.0a6
 jupyterlite-pyodide-kernel
 ..
