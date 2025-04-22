@@ -12,8 +12,9 @@ export class LiteTerminalManager
   /**
    * Construct a new terminal manager.
    */
-  constructor(options: TerminalManager.IOptions = {}) {
+  constructor(options: LiteTerminalManager.IOptions) {
     super(options);
+    this.browsingContextId = options.browsingContextId;
 
     // Initialize internal data.
     this._ready = (async () => {
@@ -44,9 +45,13 @@ export class LiteTerminalManager
     const { model } = options;
     const { name } = model;
     console.log('==> LiteTerminalManager.connectTo', name);
-    const { serverSettings } = this;
+    const { browsingContextId, serverSettings } = this;
 
-    const terminal = new LiteTerminalConnection({ model, serverSettings });
+    const terminal = new LiteTerminalConnection({
+      browsingContextId,
+      model,
+      serverSettings
+    });
     terminal.disposed.connect(() => this.shutdown(name));
     return terminal;
   }
@@ -139,9 +144,13 @@ export class LiteTerminalManager
   ): Promise<Terminal.ITerminalConnection> {
     const name = options.name ?? this._nextAvailableName();
     const model: Terminal.IModel = { name };
-    const { serverSettings } = this;
+    const { browsingContextId, serverSettings } = this;
 
-    const terminal = new LiteTerminalConnection({ model, serverSettings });
+    const terminal = new LiteTerminalConnection({
+      browsingContextId,
+      model,
+      serverSettings
+    });
     terminal.disposed.connect(() => this.shutdown(name));
     this._terminalConnections.set(name, terminal);
     await this.refreshRunning();
@@ -163,6 +172,7 @@ export class LiteTerminalManager
     }
   }
 
+  private readonly browsingContextId?: string;
   private _connectionFailure = new Signal<this, Error>(this);
   private _isReady = false;
   private _ready: Promise<void>;
@@ -171,4 +181,13 @@ export class LiteTerminalManager
     string,
     Terminal.ITerminalConnection
   >();
+}
+
+export namespace LiteTerminalManager {
+  export interface IOptions extends TerminalManager.IOptions {
+    /**
+     * The ID of the browsing context where the request originated.
+     */
+    browsingContextId?: string;
+  }
 }

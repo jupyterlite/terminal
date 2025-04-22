@@ -1,26 +1,7 @@
 import { expose } from 'comlink';
 
-import { BaseShellWorker, IFileSystem } from '@jupyterlite/cockle';
-import {
-  ContentsAPI,
-  DriveFS,
-  ServiceWorkerContentsAPI
-} from '@jupyterlite/contents';
-
-/**
- * Custom DriveFS implementation using the service worker.
- */
-class MyDriveFS extends DriveFS {
-  createAPI(options: DriveFS.IOptions): ContentsAPI {
-    return new ServiceWorkerContentsAPI(
-      options.baseUrl,
-      options.driveName,
-      options.mountpoint,
-      options.FS,
-      options.ERRNO_CODES
-    );
-  }
-}
+import { BaseShellWorker, IDriveFSOptions } from '@jupyterlite/cockle';
+import { DriveFS } from '@jupyterlite/contents';
 
 /**
  * Shell web worker that uses DriveFS via service worker.
@@ -28,24 +9,37 @@ class MyDriveFS extends DriveFS {
  */
 class ShellWorker extends BaseShellWorker {
   /**
-   * Initialize the DriveFS to mount an external file system.
+   * Initialize the DriveFS to mount an external file system, if available.
    */
-  protected override initDriveFS(
-    driveFsBaseUrl: string,
-    mountpoint: string,
-    fileSystem: IFileSystem
-  ): void {
-    console.log('Terminal initDriveFS', driveFsBaseUrl, mountpoint);
-    const { FS, ERRNO_CODES, PATH } = fileSystem;
-    const driveFS = new MyDriveFS({
-      FS,
-      PATH,
-      ERRNO_CODES,
-      baseUrl: driveFsBaseUrl,
-      driveName: '',
-      mountpoint
-    });
-    FS.mount(driveFS, {}, mountpoint);
+  protected override initDriveFS(options: IDriveFSOptions): void {
+    const { browsingContextId, driveFsBaseUrl, fileSystem, mountpoint } =
+      options;
+    console.log(
+      'Terminal initDriveFS',
+      driveFsBaseUrl,
+      mountpoint,
+      browsingContextId
+    );
+    if (
+      mountpoint !== '' &&
+      driveFsBaseUrl !== undefined &&
+      browsingContextId !== undefined
+    ) {
+      const { FS, ERRNO_CODES, PATH } = fileSystem;
+      const driveFS = new DriveFS({
+        FS,
+        PATH,
+        ERRNO_CODES,
+        baseUrl: driveFsBaseUrl,
+        driveName: '',
+        mountpoint,
+        browsingContextId
+      });
+      FS.mount(driveFS, {}, mountpoint);
+      console.log('Terminal connected to shared drive');
+    } else {
+      console.warn('Terminal not connected to shared drive');
+    }
   }
 }
 

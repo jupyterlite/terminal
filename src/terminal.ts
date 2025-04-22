@@ -10,16 +10,18 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
   /**
    * Construct a new terminal session.
    */
-  constructor(options: Terminal.ITerminalConnection.IOptions) {
+  constructor(options: LiteTerminalConnection.IOptions) {
     this._name = options.model.name;
     this._serverSettings = options.serverSettings!;
     const { baseUrl } = this._serverSettings;
+    const { browsingContextId } = options;
 
     this._shell = new Shell({
       mountpoint: '/drive',
       driveFsBaseUrl: baseUrl,
       wasmBaseUrl: baseUrl + 'extensions/@jupyterlite/terminal/static/wasm/',
-      outputCallback: this._outputCallback.bind(this)
+      outputCallback: this._outputCallback.bind(this),
+      browsingContextId
     });
     this._shell.disposed.connect(() => this.dispose());
 
@@ -181,4 +183,13 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
   private _messageReceived = new Signal<this, Terminal.IMessage>(this);
 
   private _shell: IShell;
+}
+
+export namespace LiteTerminalConnection {
+  export interface IOptions extends Terminal.ITerminalConnection.IOptions {
+    /**
+     * The ID of the browsing context where the request originated.
+     */
+    browsingContextId?: string;
+  }
 }
