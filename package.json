@@ -64,8 +64,8 @@
         "@jupyterlab/terminal": "^4.4.0",
         "@jupyterlab/terminal-extension": "^4.4.0",
         "@jupyterlite/cockle": "^0.0.18",
-        "@jupyterlite/contents": "0.6.0-alpha.6",
-        "@jupyterlite/server": "0.6.0-alpha.6",
+        "@jupyterlite/contents": "0.6.0-alpha.9",
+        "@jupyterlite/server": "0.6.0-alpha.9",
         "@lumino/coreutils": "^2.2.0",
         "mock-socket": "^9.3.1"
     },
