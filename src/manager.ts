@@ -3,23 +3,46 @@ import { ISignal, Signal } from '@lumino/signaling';
 import { LiteTerminalConnection } from './terminal';
 
 /**
+ * Interface for Lite terminal manager, supports setting browserContextId.
+ */
+interface ILiteTerminalManager extends Terminal.IManager {
+  browsingContextId: string;
+}
+
+/**
+ * Type guard for ILiteTerminalManager.
+ */
+export function isILiteTerminalManager(
+  obj: Terminal.IManager
+): obj is ILiteTerminalManager {
+  return 'browsingContextId' in obj;
+}
+
+/**
  * A terminal session manager.
  */
 export class LiteTerminalManager
   extends BaseManager
-  implements Terminal.IManager
+  implements ILiteTerminalManager
 {
   /**
    * Construct a new terminal manager.
    */
-  constructor(options: LiteTerminalManager.IOptions) {
+  constructor(options: TerminalManager.IOptions = {}) {
     super(options);
-    this.browsingContextId = options.browsingContextId;
 
     // Initialize internal data.
     this._ready = (async () => {
       this._isReady = true;
     })();
+  }
+
+  /**
+   * Set identifier for communicating with service worker.
+   */
+  set browsingContextId(browsingContextId: string) {
+    console.log('==> LiteTerminalManager browsingContextId', browsingContextId);
+    this._browsingContextId = browsingContextId;
   }
 
   /**
@@ -45,10 +68,10 @@ export class LiteTerminalManager
     const { model } = options;
     const { name } = model;
     console.log('==> LiteTerminalManager.connectTo', name);
-    const { browsingContextId, serverSettings } = this;
+    const { serverSettings } = this;
 
     const terminal = new LiteTerminalConnection({
-      browsingContextId,
+      browsingContextId: this._browsingContextId,
       model,
       serverSettings
     });
@@ -144,10 +167,10 @@ export class LiteTerminalManager
   ): Promise<Terminal.ITerminalConnection> {
     const name = options.name ?? this._nextAvailableName();
     const model: Terminal.IModel = { name };
-    const { browsingContextId, serverSettings } = this;
+    const { serverSettings } = this;
 
     const terminal = new LiteTerminalConnection({
-      browsingContextId,
+      browsingContextId: this._browsingContextId,
       model,
       serverSettings
     });
@@ -172,7 +195,7 @@ export class LiteTerminalManager
     }
   }
 
-  private readonly browsingContextId?: string;
+  private _browsingContextId?: string;
   private _connectionFailure = new Signal<this, Error>(this);
   private _isReady = false;
   private _ready: Promise<void>;
@@ -181,13 +204,4 @@ export class LiteTerminalManager
     string,
     Terminal.ITerminalConnection
   >();
-}
-
-export namespace LiteTerminalManager {
-  export interface IOptions extends TerminalManager.IOptions {
-    /**
-     * The ID of the browsing context where the request originated.
-     */
-    browsingContextId?: string;
-  }
 }
