@@ -22,7 +22,7 @@ jobs:
 
       - name: Install the dependencies
         run: |
-          python -m pip install --pre "jupyterlite-core==0.6.0a9" "jupyterlite-pyodide-kernel==0.6.0a5"
+          python -m pip install --pre "jupyterlite-core==0.6.0a10" "jupyterlite-pyodide-kernel==0.6.0a6"
 
           # install a dev version of the terminal extension
           python -m pip install .
