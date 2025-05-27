@@ -59,19 +59,19 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyterlab/coreutils": "^6.4.2",
-        "@jupyterlab/services": "^7.4.2",
-        "@jupyterlab/terminal": "^4.4.2",
-        "@jupyterlab/terminal-extension": "^4.4.2",
-        "@jupyterlite/cockle": "^0.0.19",
-        "@jupyterlite/contents": "0.6.0-beta.0",
-        "@jupyterlite/server": "0.6.0-beta.0",
+        "@jupyterlab/coreutils": "^6.4.3",
+        "@jupyterlab/services": "^7.4.3",
+        "@jupyterlab/terminal": "^4.4.3",
+        "@jupyterlab/terminal-extension": "^4.4.3",
+        "@jupyterlite/cockle": "^0.1.0-a0",
+        "@jupyterlite/contents": "0.6.0-rc.0",
+        "@jupyterlite/server": "0.6.0-rc.0",
         "@lumino/coreutils": "^2.2.0",
         "mock-socket": "^9.3.1"
     },
     "devDependencies": {
-        "@jupyterlab/builder": "^4.4.2",
-        "@jupyterlab/testutils": "^4.4.2",
+        "@jupyterlab/builder": "^4.4.3",
+        "@jupyterlab/testutils": "^4.4.3",
         "@types/jest": "^29.2.0",
         "@types/json-schema": "^7.0.11",
         "@types/react": "^18.0.26",
