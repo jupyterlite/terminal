@@ -47,6 +47,11 @@ const browsingContextIdSetter: JupyterFrontEndPlugin<void> = {
       if (isILiteTerminalManager(terminalManager)) {
         const { browsingContextId } = serviceWorkerManager;
         terminalManager.browsingContextId = browsingContextId;
+
+        serviceWorkerManager.registerStdinHandler(
+          'terminal',
+          terminalManager.handleStdin.bind(terminalManager)
+        );
       } else {
         console.warn(
           'Terminal manager does not support setting browsingContextId'

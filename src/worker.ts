@@ -12,17 +12,11 @@ class ShellWorker extends BaseShellWorker {
    * Initialize the DriveFS to mount an external file system, if available.
    */
   protected override initDriveFS(options: IDriveFSOptions): void {
-    const { browsingContextId, driveFsBaseUrl, fileSystem, mountpoint } =
-      options;
-    console.log(
-      'Terminal initDriveFS',
-      driveFsBaseUrl,
-      mountpoint,
-      browsingContextId
-    );
+    const { baseUrl, browsingContextId, fileSystem, mountpoint } = options;
+    console.log('Terminal initDriveFS', baseUrl, mountpoint, browsingContextId);
     if (
       mountpoint !== '' &&
-      driveFsBaseUrl !== undefined &&
+      baseUrl !== undefined &&
       browsingContextId !== undefined
     ) {
       const { FS, ERRNO_CODES, PATH } = fileSystem;
@@ -30,7 +24,7 @@ class ShellWorker extends BaseShellWorker {
         FS,
         PATH,
         ERRNO_CODES,
-        baseUrl: driveFsBaseUrl,
+        baseUrl,
         driveName: '',
         mountpoint,
         browsingContextId
