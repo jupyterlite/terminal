@@ -1,5 +1,10 @@
 import { BaseManager, Terminal, TerminalManager } from '@jupyterlab/services';
-import { IShellManager, IStdinReply, IStdinRequest, ShellManager } from '@jupyterlite/cockle';
+import {
+  IShellManager,
+  IStdinReply,
+  IStdinRequest,
+  ShellManager
+} from '@jupyterlite/cockle';
 import { ISignal, Signal } from '@lumino/signaling';
 import { LiteTerminalConnection } from './terminal';
 
