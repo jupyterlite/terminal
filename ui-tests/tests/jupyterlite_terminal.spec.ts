@@ -12,6 +12,7 @@ test.describe('Terminal', () => {
     await page.goto();
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
+    await page.waitForTimeout(WAIT_MS);
 
     expect(
       logs.filter(s => s.match(/^Service worker supports terminal stdin/))

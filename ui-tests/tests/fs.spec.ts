@@ -1,7 +1,7 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import { TERMINAL_SELECTOR, decode64, inputLine } from './utils/misc';
+import { TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
 
 const MONTHS_TXT =
   'January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember\n';
@@ -18,6 +18,7 @@ const FACT_LUA =
 test.describe('Filesystem', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto();
+    await page.waitForTimeout(WAIT_MS);
 
     // Overwrite the (read-only) page.contents with our own ContentsHelper.
     // @ts-ignore
@@ -26,6 +27,7 @@ test.describe('Filesystem', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
+    await page.waitForTimeout(WAIT_MS);
   });
 
   test('should have initial files', async ({ page }) => {
@@ -51,6 +53,7 @@ test.describe('Filesystem', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
+    await page.waitForTimeout(WAIT_MS);
 
     await inputLine(page, 'echo Hello > out.txt');
     await page.getByTitle('Name: out.txt').waitFor();
@@ -58,6 +61,7 @@ test.describe('Filesystem', () => {
 
   test('should support cp', async ({ page }) => {
     await inputLine(page, 'cp months.txt other.txt');
+    await page.waitForTimeout(WAIT_MS);
     await page.filebrowser.refresh();
 
     expect(await page.contents.fileExists('months.txt')).toBeTruthy();
@@ -67,16 +71,9 @@ test.describe('Filesystem', () => {
     expect(other?.content).toEqual(MONTHS_TXT);
   });
 
-  // rm of files added via --contents is not reliable.
-  test.skip('should support rm', async ({ page }) => {
-    await inputLine(page, 'rm fact.lua');
-    await page.filebrowser.refresh();
-
-    expect(await page.contents.fileExists('fact.lua')).toBeFalsy();
-  });
-
   test('should support touch', async ({ page }) => {
     await inputLine(page, 'touch touched.txt');
+    await page.waitForTimeout(WAIT_MS);
     await page.filebrowser.refresh();
 
     expect(await page.contents.fileExists('touched.txt')).toBeTruthy();
