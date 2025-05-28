@@ -1,5 +1,5 @@
 import { BaseManager, Terminal, TerminalManager } from '@jupyterlab/services';
-import { ShellManager } from '@jupyterlite/cockle';
+import { IShellManager, IStdinReply, IStdinRequest, ShellManager } from '@jupyterlite/cockle';
 import { ISignal, Signal } from '@lumino/signaling';
 import { LiteTerminalConnection } from './terminal';
 
@@ -94,9 +94,8 @@ export class LiteTerminalManager
   /**
    * Function that handles stdin requests received from service worker.
    */
-  //async handleStdin(request: IStdinRequest): Promise<IStdinReply> {
-  async handleStdin(request: any): Promise<any> {
-    return await this._shellManager.stdinHandler(request);
+  async handleStdin(request: IStdinRequest): Promise<IStdinReply> {
+    return await this._shellManager.handleStdin(request);
   }
 
   /**
@@ -221,7 +220,7 @@ export class LiteTerminalManager
   private _isReady = false;
   private _ready: Promise<void>;
   private _runningChanged = new Signal<this, Terminal.IModel[]>(this);
-  private _shellManager: ShellManager;
+  private _shellManager: IShellManager;
   private _terminalConnections = new Map<
     string,
     Terminal.ITerminalConnection

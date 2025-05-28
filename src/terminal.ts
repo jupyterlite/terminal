@@ -1,7 +1,7 @@
 import { ServerConnection, Terminal } from '@jupyterlab/services';
 import { ISignal, Signal } from '@lumino/signaling';
 import { Shell } from './shell';
-import { IShell, ShellManager } from '@jupyterlite/cockle';
+import { IShell, IShellManager } from '@jupyterlite/cockle';
 
 /**
  * An implementation of a terminal interface.
@@ -192,6 +192,6 @@ export namespace LiteTerminalConnection {
      */
     browsingContextId?: string;
 
-    shellManager: ShellManager;
+    shellManager: IShellManager;
   }
 }
