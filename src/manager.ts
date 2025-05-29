@@ -1,4 +1,10 @@
 import { BaseManager, Terminal, TerminalManager } from '@jupyterlab/services';
+import {
+  IShellManager,
+  IStdinReply,
+  IStdinRequest,
+  ShellManager
+} from '@jupyterlite/cockle';
 import { ISignal, Signal } from '@lumino/signaling';
 import { LiteTerminalConnection } from './terminal';
 
@@ -6,7 +12,15 @@ import { LiteTerminalConnection } from './terminal';
  * Interface for Lite terminal manager, supports setting browserContextId.
  */
 interface ILiteTerminalManager extends Terminal.IManager {
+  /**
+   * Identifier for communicating with service worker.
+   */
   browsingContextId: string;
+
+  /**
+   * Function that handles stdin requests received from service worker.
+   */
+  handleStdin(request: any): Promise<any>;
 }
 
 /**
@@ -15,7 +29,7 @@ interface ILiteTerminalManager extends Terminal.IManager {
 export function isILiteTerminalManager(
   obj: Terminal.IManager
 ): obj is ILiteTerminalManager {
-  return 'browsingContextId' in obj;
+  return 'browsingContextId' in obj && 'handleStdin' in obj;
 }
 
 /**
@@ -30,6 +44,8 @@ export class LiteTerminalManager
    */
   constructor(options: TerminalManager.IOptions = {}) {
     super(options);
+
+    this._shellManager = new ShellManager();
 
     // Initialize internal data.
     this._ready = (async () => {
@@ -73,10 +89,18 @@ export class LiteTerminalManager
     const terminal = new LiteTerminalConnection({
       browsingContextId: this._browsingContextId,
       model,
-      serverSettings
+      serverSettings,
+      shellManager: this._shellManager
     });
     terminal.disposed.connect(() => this.shutdown(name));
     return terminal;
+  }
+
+  /**
+   * Function that handles stdin requests received from service worker.
+   */
+  async handleStdin(request: IStdinRequest): Promise<IStdinReply> {
+    return await this._shellManager.handleStdin(request);
   }
 
   /**
@@ -172,7 +196,8 @@ export class LiteTerminalManager
     const terminal = new LiteTerminalConnection({
       browsingContextId: this._browsingContextId,
       model,
-      serverSettings
+      serverSettings,
+      shellManager: this._shellManager
     });
     terminal.disposed.connect(() => this.shutdown(name));
     this._terminalConnections.set(name, terminal);
@@ -200,6 +225,7 @@ export class LiteTerminalManager
   private _isReady = false;
   private _ready: Promise<void>;
   private _runningChanged = new Signal<this, Terminal.IModel[]>(this);
+  private _shellManager: IShellManager;
   private _terminalConnections = new Map<
     string,
     Terminal.ITerminalConnection

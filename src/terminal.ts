@@ -1,7 +1,7 @@
 import { ServerConnection, Terminal } from '@jupyterlab/services';
 import { ISignal, Signal } from '@lumino/signaling';
 import { Shell } from './shell';
-import { IShell } from '@jupyterlite/cockle';
+import { IShell, IShellManager } from '@jupyterlite/cockle';
 
 /**
  * An implementation of a terminal interface.
@@ -11,17 +11,18 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
    * Construct a new terminal session.
    */
   constructor(options: LiteTerminalConnection.IOptions) {
-    this._name = options.model.name;
     this._serverSettings = options.serverSettings!;
     const { baseUrl } = this._serverSettings;
-    const { browsingContextId } = options;
+    const { browsingContextId, shellManager } = options;
 
     this._shell = new Shell({
       mountpoint: '/drive',
-      driveFsBaseUrl: baseUrl,
+      baseUrl,
       wasmBaseUrl: baseUrl + 'extensions/@jupyterlite/terminal/static/wasm/',
-      outputCallback: this._outputCallback.bind(this),
-      browsingContextId
+      browsingContextId,
+      shellId: options.model.name,
+      shellManager,
+      outputCallback: this._outputCallback.bind(this)
     });
     this._shell.disposed.connect(() => this.dispose());
 
@@ -87,14 +88,14 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
    * Get the model for the terminal session.
    */
   get model(): Terminal.IModel {
-    return { name: this._name };
+    return { name: this._shell.shellId };
   }
 
   /**
    * Get the name of the terminal session.
    */
   get name(): string {
-    return this._name;
+    return this._shell.shellId;
   }
 
   /**
@@ -173,7 +174,6 @@ export class LiteTerminalConnection implements Terminal.ITerminalConnection {
   private _isDisposed = false;
   private _disposed = new Signal<this, void>(this);
 
-  private _name: string;
   private _serverSettings: ServerConnection.ISettings;
   private _connectionStatus: Terminal.ConnectionStatus = 'connecting';
   private _connectionStatusChanged = new Signal<
@@ -191,5 +191,7 @@ export namespace LiteTerminalConnection {
      * The ID of the browsing context where the request originated.
      */
     browsingContextId?: string;
+
+    shellManager: IShellManager;
   }
 }
