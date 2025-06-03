@@ -1,6 +1,7 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
 import { ServerConnection, Terminal } from '@jupyterlab/services';
 import {
+  IExternalCommand,
   IShellManager,
   IStdinReply,
   IStdinRequest,
@@ -68,6 +69,10 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     });
     this._shells.set(name, shell);
 
+    for (const externalCommand of this._externalCommands) {
+      shell.registerExternalCommand(externalCommand);
+    }
+
     // Hook to connect socket to shell.
     const hook = async (
       shell: Shell,
@@ -116,6 +121,10 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     return this._models;
   }
 
+  registerExternalCommand(options: IExternalCommand.IOptions): void {
+    this._externalCommands.push(options);
+  }
+
   async shutdown(name: string): Promise<void> {
     const shell = this._shells.get(name);
     if (shell !== undefined) {
@@ -142,6 +151,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   }
 
   private _browsingContextId?: string;
+  private _externalCommands: IExternalCommand.IOptions[] = [];
   private _shellManager: IShellManager;
   private _shells = new Map<string, Shell>();
 }
