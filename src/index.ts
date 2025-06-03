@@ -8,57 +8,94 @@ import {
 import {
   ITerminalManager,
   ServiceManagerPlugin,
-  Terminal
+  Terminal,
+  ServerConnection,
+  IServerSettings,
+  TerminalManager
 } from '@jupyterlab/services';
 import { IServiceWorkerManager } from '@jupyterlite/server';
 
-import { isILiteTerminalManager, LiteTerminalManager } from './manager';
+import { WebSocket } from 'mock-socket';
+
+import { LiteTerminalAPIClient } from './client';
+import { ILiteTerminalAPIClient } from './tokens';
 
 /**
- * The terminal manager plugin, replacing the JupyterLab terminal manager.
+ * Plugin containing client for in-browser terminals.
+ */
+const terminalClientPlugin: ServiceManagerPlugin<Terminal.ITerminalAPIClient> =
+  {
+    id: '@jupyterlite/terminal:client',
+    description: 'The client for Lite terminals',
+    autoStart: true,
+    provides: ILiteTerminalAPIClient,
+    optional: [IServerSettings],
+    activate: (
+      _: null,
+      serverSettings?: ServerConnection.ISettings
+    ): ILiteTerminalAPIClient => {
+      return new LiteTerminalAPIClient({
+        serverSettings: {
+          ...ServerConnection.makeSettings(),
+          ...serverSettings,
+          WebSocket
+        }
+      });
+    }
+  };
+
+/**
+ * Plugin containing manager for in-browser terminals.
  */
 const terminalManagerPlugin: ServiceManagerPlugin<Terminal.IManager> = {
-  id: '@jupyterlite/terminal:plugin',
+  id: '@jupyterlite/terminal:manager',
   description: 'A JupyterLite extension providing a custom terminal manager',
   autoStart: true,
   provides: ITerminalManager,
-  activate: (_: null): Terminal.IManager => {
+  requires: [ILiteTerminalAPIClient],
+  activate: (
+    _: null,
+    terminalAPIClient: Terminal.ITerminalAPIClient
+  ): Terminal.IManager => {
     console.log(
-      'JupyterLite extension @jupyterlite/terminal:plugin is activated!'
+      'JupyterLite extension @jupyterlite/terminal:manager activated'
     );
-    return new LiteTerminalManager();
+    return new TerminalManager({
+      terminalAPIClient,
+      serverSettings: terminalAPIClient.serverSettings
+    });
   }
 };
 
 /**
- * A plugin that sets the browsingContextId of the terminal manager.
+ * Plugin that connects in-browser terminals and service worker.
  */
-const browsingContextIdSetter: JupyterFrontEndPlugin<void> = {
-  id: '@jupyterlite/terminal:browsing-context-id',
+const terminalServiceWorkerPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyterlite/terminal:service-worker',
   autoStart: true,
+  requires: [ILiteTerminalAPIClient],
   optional: [IServiceWorkerManager],
-  requires: [ITerminalManager],
   activate: (
     _: JupyterFrontEnd,
-    terminalManager: Terminal.IManager,
+    liteTerminalAPIClient: ILiteTerminalAPIClient,
     serviceWorkerManager?: IServiceWorkerManager
   ): void => {
     if (serviceWorkerManager !== undefined) {
-      if (isILiteTerminalManager(terminalManager)) {
-        const { browsingContextId } = serviceWorkerManager;
-        terminalManager.browsingContextId = browsingContextId;
+      liteTerminalAPIClient.browsingContextId =
+        serviceWorkerManager.browsingContextId;
 
-        serviceWorkerManager.registerStdinHandler(
-          'terminal',
-          terminalManager.handleStdin.bind(terminalManager)
-        );
-      } else {
-        console.warn(
-          'Terminal manager does not support setting browsingContextId'
-        );
-      }
+      serviceWorkerManager.registerStdinHandler(
+        'terminal',
+        liteTerminalAPIClient.handleStdin.bind(liteTerminalAPIClient)
+      );
+    } else {
+      console.warn('Service worker is not available for terminals');
     }
   }
 };
 
-export default [terminalManagerPlugin, browsingContextIdSetter];
+export default [
+  terminalClientPlugin,
+  terminalManagerPlugin,
+  terminalServiceWorkerPlugin
+];

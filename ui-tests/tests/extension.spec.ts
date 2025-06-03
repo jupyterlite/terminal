@@ -12,7 +12,7 @@ test.describe('Terminal extension', () => {
     expect(
       logs.filter(s =>
         s.match(
-          /^JupyterLite extension @jupyterlite\/terminal:plugin is activated!/
+          /^JupyterLite extension @jupyterlite\/terminal:manager activated/
         )
       )
     ).toHaveLength(1);

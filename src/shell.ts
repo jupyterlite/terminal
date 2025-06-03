@@ -1,5 +1,7 @@
 import { BaseShell, IShell } from '@jupyterlite/cockle';
 
+import { Client as WebSocketClient } from 'mock-socket';
+
 /**
  * Shell class that uses web worker that plugs into a DriveFS via the service worker.
  */
@@ -22,4 +24,6 @@ export class Shell extends BaseShell {
       type: 'module'
     });
   }
+
+  socket?: WebSocketClient;
 }
