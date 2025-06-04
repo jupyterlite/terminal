@@ -11,7 +11,7 @@ A terminal for JupyterLite.
 
 ## Requirements
 
-- JupyterLite >= 0.4.0
+- JupyterLite >= 0.6.0
 
 ## Install
 
@@ -45,18 +45,6 @@ Then build a new JupyterLite site:
 ```bash
 jupyter lite build
 ```
-
-## Deployment
-
-If you would like to deploy a JupyterLite site with the terminal extension, you will need to configure your server to add the `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers.
-
-As an example, this repository deploys the JupyterLite terminal to [Vercel](https://vercel.com), using the following files:
-
-- `vercel.json`: configure the COOP / COEP server headers
-- `deploy/requirements-deploy.txt`: dependencies for the JupyterLite deployment
-- `deploy/deploy.sh`: script to deploy to Vercel, using micromamba to have full control on the Python versions and isolate the build in a virtual environment
-
-For more information, have a look at the JupyterLite documentation: https://jupyterlite.readthedocs.io/
 
 ## Contributing
 
@@ -98,6 +86,18 @@ jupyter lite build --contents contents
 And serve it either using:
 
 ```bash
+npx static-handler _output/
+```
+
+or:
+
+```bash
+jupyter lite serve
+```
+
+To enable use of SharedArrayBuffer rather than ServiceWorker for `stdin` you will have to configure your server to add the `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers. Do this using either:
+
+```bash
 npx static-handler --cors --coop --coep --corp _output/
 ```
 
@@ -106,8 +106,6 @@ or:
 ```bash
 jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
 ```
-
-The extra HTTP headers are require to ensure that `SharedArrayBuffer` is available.
 
 ### Packaging the extension
 
