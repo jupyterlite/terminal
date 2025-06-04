@@ -2,6 +2,36 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.0
+
+This release is a significant rewrite to work with JupyterLite 0.6.0 and to add support for using the JupyterLite ServiceWorker to provide `stdin` whilst commands are running, as an alternative to the existing SharedArrayBuffer implementation. Use of a ServiceWorker means it is no longer necessary to serve the terminal extension using cross-origin headers.
+
+If served with cross-origin headers both the SharedArrayBuffer and ServiceWorker stdin implementations will be available, with SharedArrayBuffer used by default. The user can switch between them at runtime using the shell command `cockle-config -s`.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/312424ac...9b840f74385fda59b84fe68086a11bfb51e08a3c))
+
+### Enhancements made
+
+- Update to cockle 0.1.0 [#55](https://github.com/jupyterlite/terminal/pull/55) ([@ianthomas23](https://github.com/ianthomas23))
+- Add experimental support for registering external commands [#54](https://github.com/jupyterlite/terminal/pull/54) ([@ianthomas23](https://github.com/ianthomas23))
+- Implement extension using `ITerminalAPIClient` [#53](https://github.com/jupyterlite/terminal/pull/53) ([@ianthomas23](https://github.com/ianthomas23))
+- Support use of service worker to handle stdin [#51](https://github.com/jupyterlite/terminal/pull/51) ([@ianthomas23](https://github.com/ianthomas23))
+- Rewrite as JupyterLab frontend plugin [#49](https://github.com/jupyterlite/terminal/pull/49) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to cockle 0.0.18 to support nano and sed commands [#48](https://github.com/jupyterlite/terminal/pull/48) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update to jupyterlite 0.6.0 [#52](https://github.com/jupyterlite/terminal/pull/52) ([@ianthomas23](https://github.com/ianthomas23))
+- Remove micromamba pin in CI [#50](https://github.com/jupyterlite/terminal/pull/50) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-02-26&to=2025-06-04&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-02-26..2025-06-04&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-02-26..2025-06-04&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-02-26..2025-06-04&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.0a0
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.1.6...24a17cd549c024b9f7325c11012c92c70ba6d038))
@@ -20,8 +50,6 @@
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-02-26&to=2025-05-19&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-02-26..2025-05-19&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-02-26..2025-05-19&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-02-26..2025-05-19&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.1.6
 
