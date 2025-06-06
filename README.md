@@ -24,7 +24,7 @@ pip install jupyterlite-terminal
 You will also need to install the JupyterLite CLI:
 
 ```bash
-python -m pip install --pre jupyterlite-core
+python -m pip install jupyterlite-core
 ```
 
 ## Usage
