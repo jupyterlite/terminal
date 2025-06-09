@@ -99,3 +99,6 @@ export default [
   terminalManagerPlugin,
   terminalServiceWorkerPlugin
 ];
+
+// Export ILiteTerminalAPIClient so that other extensions can register external commands.
+export { ILiteTerminalAPIClient };
