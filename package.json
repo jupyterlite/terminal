@@ -61,9 +61,9 @@
     "dependencies": {
         "@jupyterlab/coreutils": "^6.4.3",
         "@jupyterlab/services": "^7.4.3",
-        "@jupyterlite/cockle": "^0.1.0",
-        "@jupyterlite/contents": "0.6.0",
-        "@jupyterlite/server": "0.6.0",
+        "@jupyterlite/cockle": "^0.1.1",
+        "@jupyterlite/contents": "^0.6.0",
+        "@jupyterlite/server": "^0.6.0",
         "@lumino/coreutils": "^2.2.0",
         "mock-socket": "^9.3.1"
     },
@@ -110,7 +110,17 @@
     },
     "jupyterlab": {
         "extension": true,
-        "outputDir": "jupyterlite_terminal/labextension"
+        "outputDir": "jupyterlite_terminal/labextension",
+        "sharedPackages": {
+            "@jupyterlite/contents": {
+                "bundled": false,
+                "singleton": true
+            },
+            "@jupyterlite/server": {
+                "bundled": false,
+                "singleton": true
+            }
+        }
     },
     "eslintIgnore": [
         "node_modules",
