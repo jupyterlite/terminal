@@ -2,6 +2,24 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.1
+
+This is a bug fix release to fix bugs in URLs and the use of ServiceWorker for `stdin` from `cockle 0.1.1`.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.2.0...4a27983d45168a80eff58c4be27b606db6874088))
+
+### Maintenance and upkeep improvements
+
+- Bump cockle to 0.1.1 [#56](https://github.com/jupyterlite/terminal/pull/56) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-06-04&to=2025-06-09&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-06-04..2025-06-09&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.0
 
 This release is a significant rewrite to work with JupyterLite 0.6.0 and to add support for using the JupyterLite ServiceWorker to provide `stdin` whilst commands are running, as an alternative to the existing SharedArrayBuffer implementation. Use of a ServiceWorker means it is no longer necessary to serve the terminal extension using cross-origin headers.
@@ -29,8 +47,6 @@ If served with cross-origin headers both the SharedArrayBuffer and ServiceWorker
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-02-26&to=2025-06-04&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-02-26..2025-06-04&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-02-26..2025-06-04&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-02-26..2025-06-04&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.0a0
 
