@@ -35,6 +35,7 @@ After installing `jupyterlite-core` and `jupyterlite-terminal`, create a `jupyte
 {
   "jupyter-lite-schema-version": 0,
   "jupyter-config-data": {
+    "disabledExtensions": ["@jupyterlab/services-extension:terminal-manager"],
     "terminalsAvailable": true
   }
 }
