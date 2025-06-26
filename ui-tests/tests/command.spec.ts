@@ -24,7 +24,9 @@ test.describe('individual command', () => {
   test.describe('nano', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page }) => {
+      test(`should create new file using ${stdinOption} for stdin`, async ({
+        page
+      }) => {
         await inputLine(page, `cockle-config -s ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
@@ -44,12 +46,14 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('mnopqrst\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page }) => {
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({
+        page
+      }) => {
         await inputLine(page, `cockle-config -s ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         // Prepare file to delete from.
-        await inputLine(page, 'echo mnopqrst > b.txt')
+        await inputLine(page, 'echo mnopqrst > b.txt');
         await page.waitForTimeout(WAIT_MS);
 
         await inputLine(page, 'nano b.txt');
@@ -75,7 +79,9 @@ test.describe('individual command', () => {
   test.describe('vim', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page }) => {
+      test(`should create new file using ${stdinOption} for stdin`, async ({
+        page
+      }) => {
         await inputLine(page, `cockle-config -s ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
@@ -94,12 +100,14 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('abcdefgh\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page }) => {
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({
+        page
+      }) => {
         await inputLine(page, `cockle-config -s ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         // Prepare file to delete from.
-        await inputLine(page, 'echo abcdefgh > d.txt')
+        await inputLine(page, 'echo abcdefgh > d.txt');
         await page.waitForTimeout(WAIT_MS);
 
         await inputLine(page, 'vim d.txt');
