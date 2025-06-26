@@ -60,6 +60,9 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
         'extensions/@jupyterlite/terminal/static/wasm/'
       ),
       browsingContextId: this._browsingContextId,
+      aliases: this._aliases,
+      environment: this._environment,
+      externalCommands: this._externalCommands,
       shellId: name,
       shellManager: this._shellManager,
       outputCallback: text => {
@@ -68,10 +71,6 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       }
     });
     this._shells.set(name, shell);
-
-    for (const externalCommand of this._externalCommands) {
-      shell.registerExternalCommand(externalCommand);
-    }
 
     // Hook to connect socket to shell.
     const hook = async (
@@ -121,6 +120,20 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     return this._models;
   }
 
+  registerAlias(key: string, value: string): void {
+    if (this._aliases === undefined) {
+      this._aliases = {};
+    }
+    this._aliases[key] = value;
+  }
+
+  registerEnvironmentVariable(key: string, value: string | undefined): void {
+    if (this._environment === undefined) {
+      this._environment = {};
+    }
+    this._environment[key] = value;
+  }
+
   registerExternalCommand(options: IExternalCommand.IOptions): void {
     this._externalCommands.push(options);
   }
@@ -150,6 +163,8 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     }
   }
 
+  private _aliases?: { [key: string]: string };
+  private _environment?: { [key: string]: string | undefined };
   private _browsingContextId?: string;
   private _externalCommands: IExternalCommand.IOptions[] = [];
   private _shellManager: IShellManager;
