@@ -2,6 +2,33 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.2.2
+
+This release adds support for the `less` command (with limitations), various enhancements to external commands (TypeScript commands that run in the main UI thread), and initial support to determine the terminal background color to identify dark mode.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v0.2.1...5c8447f9b3c8a147b829d8e83fa8145f628cc9f0))
+
+### Enhancements made
+
+- Update to cockle 0.1.2 [#61](https://github.com/jupyterlite/terminal/pull/61) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Bugs fixed
+
+- Revert PR 57 [#58](https://github.com/jupyterlite/terminal/pull/58) ([@ianthomas23](https://github.com/ianthomas23))
+- Disable jupyterlab's terminal-manager extension [#57](https://github.com/jupyterlite/terminal/pull/57) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Add UI tests for `nano` and `vim` commands [#60](https://github.com/jupyterlite/terminal/pull/60) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-06-09&to=2025-06-27&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-06-09..2025-06-27&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-06-09..2025-06-27&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-06-09..2025-06-27&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.2.1
 
 This is a bug fix release to fix bugs in URLs and the use of ServiceWorker for `stdin` from `cockle 0.1.1`.
@@ -17,8 +44,6 @@ This is a bug fix release to fix bugs in URLs and the use of ServiceWorker for `
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-06-04&to=2025-06-09&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-06-04..2025-06-09&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.0
 
