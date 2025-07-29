@@ -5,15 +5,17 @@ import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { IThemeManager } from '@jupyterlab/apputils';
 import {
+  IServerSettings,
   ITerminalManager,
+  ServerConnection,
   ServiceManagerPlugin,
   Terminal,
-  ServerConnection,
-  IServerSettings,
   TerminalManager
 } from '@jupyterlab/services';
 import { IServiceWorkerManager } from '@jupyterlite/server';
+import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 import { WebSocket } from 'mock-socket';
 
@@ -94,10 +96,52 @@ const terminalServiceWorkerPlugin: JupyterFrontEndPlugin<void> = {
   }
 };
 
+const terminalThemeChangePlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyterlite/terminal:theme-change',
+  autoStart: true,
+  requires: [ILiteTerminalAPIClient, ISettingRegistry],
+  optional: [IThemeManager],
+  activate: (
+    _: JupyterFrontEnd,
+    liteTerminalAPIClient: ILiteTerminalAPIClient,
+    settingRegistry: ISettingRegistry,
+    themeManager?: IThemeManager
+  ): void => {
+    // Cache latest terminal theme so can identify if it has changed.
+    let terminalTheme: string | undefined;
+
+    themeManager?.themeChanged.connect(async (_, changedArgs) => {
+      // An overall Lab theme change only affects terminals if the terminaTheme is 'inherit'.
+      if (terminalTheme === 'inherit') {
+        const isDarkMode = !themeManager.isLight(changedArgs.newValue);
+        liteTerminalAPIClient.themeChange(isDarkMode);
+      }
+    });
+
+    // There is no signal for a terminal theme change, so use settings change.
+    settingRegistry
+      .load('@jupyterlab/terminal-extension:plugin')
+      .then(setting => {
+        terminalTheme = setting.composite.theme as string;
+
+        setting.changed.connect(() => {
+          // This signal is fired for any change to the terminal settings, not just the theme.
+          // Hence compare with the cached terminalTheme to identify if it has changed.
+          const newTerminalTheme = setting.composite.theme as string;
+          if (newTerminalTheme !== terminalTheme) {
+            liteTerminalAPIClient.themeChange();
+            terminalTheme = newTerminalTheme;
+          }
+        });
+      });
+  }
+};
+
 export default [
   terminalClientPlugin,
   terminalManagerPlugin,
-  terminalServiceWorkerPlugin
+  terminalServiceWorkerPlugin,
+  terminalThemeChangePlugin
 ];
 
 // Export ILiteTerminalAPIClient so that other extensions can register external commands.

@@ -38,4 +38,9 @@ export interface ILiteTerminalAPIClient extends Terminal.ITerminalAPIClient {
    * Register an external command that will be available in all terminals.
    */
   registerExternalCommand(options: IExternalCommand.IOptions): void;
+
+  /**
+   * Inform all terminals that the theme has changed so that they can react to it if they wish.
+   */
+  themeChange(isDarkMode?: boolean): void;
 }
