@@ -79,7 +79,7 @@ test.describe('Terminal', () => {
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(WAIT_MS);
 
-    await inputLine(page, 'cockle-config -s');
+    await inputLine(page, 'cockle-config stdin');
     await page.waitForTimeout(WAIT_MS);
 
     const term = page.locator('div.xterm-viewport');
@@ -93,7 +93,7 @@ test.describe('Terminal', () => {
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(WAIT_MS);
 
-    await inputLine(page, 'cockle-config -s sw');
+    await inputLine(page, 'cockle-config stdin sw');
     await page.waitForTimeout(WAIT_MS);
 
     const term = page.locator('div.xterm-viewport');
@@ -109,7 +109,7 @@ test.describe('Terminal', () => {
       await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
       await page.waitForTimeout(WAIT_MS);
 
-      await inputLine(page, `cockle-config -s ${stdinOption}`);
+      await inputLine(page, `cockle-config stdin ${stdinOption}`);
       await page.waitForTimeout(WAIT_MS);
 
       // Start interactive grep command.

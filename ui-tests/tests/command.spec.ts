@@ -27,7 +27,7 @@ test.describe('individual command', () => {
       test(`should create new file using ${stdinOption} for stdin`, async ({
         page
       }) => {
-        await inputLine(page, `cockle-config -s ${stdinOption}`);
+        await inputLine(page, `cockle-config stdin ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         await inputLine(page, 'nano a.txt');
@@ -49,7 +49,7 @@ test.describe('individual command', () => {
       test(`should delete data from file using ${stdinOption} for stdin`, async ({
         page
       }) => {
-        await inputLine(page, `cockle-config -s ${stdinOption}`);
+        await inputLine(page, `cockle-config stdin ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         // Prepare file to delete from.
@@ -82,7 +82,7 @@ test.describe('individual command', () => {
       test(`should create new file using ${stdinOption} for stdin`, async ({
         page
       }) => {
-        await inputLine(page, `cockle-config -s ${stdinOption}`);
+        await inputLine(page, `cockle-config stdin ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         await inputLine(page, 'vim c.txt');
@@ -103,7 +103,7 @@ test.describe('individual command', () => {
       test(`should delete data from file using ${stdinOption} for stdin`, async ({
         page
       }) => {
-        await inputLine(page, `cockle-config -s ${stdinOption}`);
+        await inputLine(page, `cockle-config stdin ${stdinOption}`);
         await page.waitForTimeout(WAIT_MS);
 
         // Prepare file to delete from.
