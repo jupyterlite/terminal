@@ -148,6 +148,15 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     }
   }
 
+  themeChange(isDarkMode?: boolean): void {
+    for (const shell of this._shells.values()) {
+      // Can pass isDarkMode when cockle is released with PR #232.
+      //shell.themeChange(isDarkMode);
+
+      shell.themeChange();
+    }
+  }
+
   private get _models(): Terminal.IModel[] {
     return Array.from(this._shells.keys(), name => {
       return { name };
