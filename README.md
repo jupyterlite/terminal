@@ -53,10 +53,9 @@ include imports from both `jupyterlite-terminal` and `cockle`, such as if you ar
 `cockle` external commands, you should ensure that you are using the correct version combination.
 
 | `jupyterlite-terminal` | `cockle` | `jupyterlite-core` |
-| ----- | ----- | ------------- |
-| 1.0.0 | 1.0.0 | >= 0.6, < 0.7 |
-| 0.2.2 | 0.1.3 | >= 0.6, < 0.7 |
-
+| ---------------------- | -------- | ------------------ |
+| 1.0.0                  | 1.0.0    | >= 0.6, < 0.7      |
+| 0.2.2                  | 0.1.3    | >= 0.6, < 0.7      |
 
 ## Contributing
 
