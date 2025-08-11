@@ -46,6 +46,18 @@ Then build a new JupyterLite site:
 jupyter lite build
 ```
 
+## Version compatibility
+
+Each `jupyterlite-terminal` release is built against a specific version of `cockle`. If you need to
+include imports from both `jupyterlite-terminal` and `cockle`, such as if you are implementing
+`cockle` external commands, you should ensure that you are using the correct version combination.
+
+| `jupyterlite-terminal` | `cockle` | `jupyterlite-core` |
+| ----- | ----- | ------------- |
+| 1.0.0 | 1.0.0 | >= 0.6, < 0.7 |
+| 0.2.2 | 0.1.3 | >= 0.6, < 0.7 |
+
+
 ## Contributing
 
 ### Development install
