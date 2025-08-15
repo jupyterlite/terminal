@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: Build for deployment
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,6 +28,10 @@ jobs:
           # install a dev version of the terminal extension
           python -m pip install .
 
+      - name: List installed packages
+        run: |
+        python -m pip list
+
       - name: Micromamba needed for cockle_wasm_env
         uses: mamba-org/setup-micromamba@main
 
@@ -41,6 +46,7 @@ jobs:
           path: ./deploy/dist
 
   deploy:
+    name: Deploy to github pages
     needs: build
     if: github.ref == 'refs/heads/main'
     permissions:

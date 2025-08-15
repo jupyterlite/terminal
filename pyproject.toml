@@ -23,7 +23,8 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "jupyterlite-core>=0.6,<0.8.0a0"
+    # Changes here should be synchronised with .github/workflows/build.yml
+    "jupyterlite-core>=0.6,<0.8.0"
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
