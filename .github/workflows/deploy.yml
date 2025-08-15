@@ -30,7 +30,7 @@ jobs:
 
       - name: List installed packages
         run: |
-        python -m pip list
+          python -m pip list
 
       - name: Micromamba needed for cockle_wasm_env
         uses: mamba-org/setup-micromamba@main
