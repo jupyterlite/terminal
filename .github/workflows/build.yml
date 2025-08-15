@@ -14,7 +14,7 @@ env:
   # Min and max limits of jupyterlite-core versions that this should work on.
   # Changes here should be synchronised with pyproject.toml dependencies section.
   MIN_LITE_VERSION: jupyterlite-core==0.6.0
-  MAX_LITE_VERSION: --pre jupyterlite-core<0.8.0a0
+  MAX_LITE_VERSION: --pre jupyterlite-core<0.8.0
 
   LAB_VERSION: jupyterlab>=4.0.0,<5
 
@@ -51,6 +51,10 @@ jobs:
 
         jupyter labextension list
         jupyter labextension list 2>&1 | grep -ie "@jupyterlite/terminal.*OK"
+
+    - name: List installed packages
+      run: |
+        python -m pip list
 
     - name: Package the extension
       run: |

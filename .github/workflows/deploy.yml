@@ -28,6 +28,10 @@ jobs:
           # install a dev version of the terminal extension
           python -m pip install .
 
+      - name: List installed packages
+        run: |
+        python -m pip list
+
       - name: Micromamba needed for cockle_wasm_env
         uses: mamba-org/setup-micromamba@main
 
