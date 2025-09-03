@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.0.1
+
+This is a maintenance release to support JupyterLite 0.7 as well as 0.6.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.0.0...84fedfaec1965a7d1ebac77b69c0543a63199495))
+
+### Maintenance and upkeep improvements
+
+- Run CI on earliest and latest supported jupyterlite-core [#65](https://github.com/jupyterlite/terminal/pull/65) ([@ianthomas23](https://github.com/ianthomas23))
+- Allow for JupyterLite 0.7 pre-releases [#64](https://github.com/jupyterlite/terminal/pull/64) ([@jtpio](https://github.com/jtpio))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-08-11&to=2025-09-03&type=c))
+
+[@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-08-11..2025-09-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-08-11..2025-09-03&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-08-11..2025-09-03&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.0.0
 
 This is a major release introducing support for tab completion in built-in, external and javascript commands via `CommandArguments` classes. There are also new built-in commands `false`, `true`, `help` and `which`, and support for handling theme changes.
@@ -20,8 +39,6 @@ The changes in external commands, command contexts and command argument classes 
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-06-27&to=2025-08-11&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-06-27..2025-08-11&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-06-27..2025-08-11&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.2.2
 
