@@ -11,7 +11,7 @@ A terminal for JupyterLite.
 
 ## Requirements
 
-- JupyterLite >= 0.6.0
+- JupyterLite >= 0.6.0, < 0.8.0
 
 ## Install
 
@@ -54,6 +54,7 @@ include imports from both `jupyterlite-terminal` and `cockle`, such as if you ar
 
 | `jupyterlite-terminal` | `cockle` | `jupyterlite-core` |
 | ---------------------- | -------- | ------------------ |
+| 1.0.1                  | 1.0.0    | >= 0.6, < 0.8      |
 | 1.0.0                  | 1.0.0    | >= 0.6, < 0.7      |
 | 0.2.2                  | 0.1.3    | >= 0.6, < 0.7      |
 
