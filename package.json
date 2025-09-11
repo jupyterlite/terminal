@@ -59,13 +59,13 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyterlab/apputils": "^4.5.3",
-        "@jupyterlab/coreutils": "^6.4.3",
-        "@jupyterlab/services": "^7.4.3",
-        "@jupyterlab/settingregistry": "^4.4.3",
+        "@jupyterlab/apputils": "^4.5.3 || ^4.6.0-alpha.3",
+        "@jupyterlab/coreutils": "^6.4.3 || ^6.5.0-alpha.3",
+        "@jupyterlab/services": "^7.4.3 || ^7.5.0-alpha.3",
+        "@jupyterlab/settingregistry": "^4.4.3 || ^4.5.0-alpha.3",
         "@jupyterlite/cockle": "^1.0.0",
-        "@jupyterlite/contents": "^0.6.0",
-        "@jupyterlite/server": "^0.6.0",
+        "@jupyterlite/contents": "^0.6.0 || ^0.7.0-alpha.5",
+        "@jupyterlite/server": "^0.6.0 || ^0.7.0-alpha.5",
         "@lumino/coreutils": "^2.2.0",
         "mock-socket": "^9.3.1"
     },
