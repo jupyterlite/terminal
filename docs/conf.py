@@ -21,5 +21,11 @@ html_static_path = ['_static']
 html_theme = "pydata_sphinx_theme"
 html_theme_options = {
     "github_url": PACKAGE_JSON["homepage"],
+    "logo": {
+        "alt_text": "JupyterLite Terminal - Home",
+        "image_dark": "_static/terminal_logo_dark.svg",
+        "image_light": "_static/terminal_logo_light.svg",
+        "text": "JupyterLite Terminal",
+   }
 }
 html_title = "JupyterLite Terminal"
