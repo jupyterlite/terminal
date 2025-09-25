@@ -119,6 +119,25 @@ or:
 jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
 ```
 
+### Building the documentation
+
+The project documentation includes a demo deployment, and is built on every PR so that the changes can be checked manually before merging. To build the documentation and demo locally use:
+
+```bash
+micromamba create -f docs/environment-docs.yml
+micromamba activate terminal-docs
+pip install -v .
+cd docs
+make html
+```
+
+To serve this locally use:
+
+```bash
+cd _build/html
+python -m http.server
+```
+
 ### Packaging the extension
 
 See [RELEASE](RELEASE.md)
