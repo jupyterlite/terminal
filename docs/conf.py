@@ -11,6 +11,7 @@ copyright = f"2024-{date.today().year}, {author}"
 release = PACKAGE_JSON["version"]
 
 extensions = [
+    "jupyterlite_sphinx",
     "myst_parser"
 ]
 
@@ -29,3 +30,8 @@ html_theme_options = {
    }
 }
 html_title = "JupyterLite Terminal"
+
+# jupyterlite_sphonx settings
+jupyterlite_contents = "../deploy/contents/"
+jupyterlite_dir = "../deploy/"
+jupyterlite_silence = False

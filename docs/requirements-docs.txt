@@ -1,3 +1,4 @@
+jupyterlite-sphinx
 myst-parser
 pydata-sphinx-theme
 sphinx

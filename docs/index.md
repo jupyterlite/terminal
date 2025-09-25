@@ -9,3 +9,5 @@ Blah blah blah.
 
 changelog
 ```
+
+Link to <a href="lite">deployment</a>.
