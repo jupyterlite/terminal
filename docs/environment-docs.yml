@@ -1,0 +1,17 @@
+name: terminal-docs
+channels:
+  - conda-forge
+dependencies:
+  # General build dependencies
+  - micromamba
+  - nodejs =20
+  - python =3.13
+
+  # Jupyter dependencies
+  - jupyterlite-core >=0.6,<0.8.0
+
+  # Docs dependencies
+  - jupyterlite-sphinx
+  - myst-parser
+  - pydata-sphinx-theme
+  - sphinx
