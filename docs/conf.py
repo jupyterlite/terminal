@@ -18,14 +18,14 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+html_favicon = "_static/terminal_logo.svg"
+html_logo = "_static/terminal_logo.svg"
 html_static_path = ['_static']
 html_theme = "pydata_sphinx_theme"
 html_theme_options = {
     "github_url": PACKAGE_JSON["homepage"],
     "logo": {
         "alt_text": "JupyterLite Terminal - Home",
-        "image_dark": "_static/terminal_logo_dark.svg",
-        "image_light": "_static/terminal_logo_light.svg",
         "text": "JupyterLite Terminal",
    }
 }
