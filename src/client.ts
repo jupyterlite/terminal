@@ -8,6 +8,7 @@ import {
   ShellManager
 } from '@jupyterlite/cockle';
 import { JSONPrimitive } from '@lumino/coreutils';
+import { ISignal, Signal } from '@lumino/signaling';
 
 import {
   Server as WebSocketServer,
@@ -111,6 +112,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     shell.disposed.connect(() => {
       this.shutdown(name);
       wsServer.close();
+      this._terminalDisposed.emit(shell.shellId);
     });
 
     return { name };
@@ -148,6 +150,10 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     }
   }
 
+  get terminalDisposed(): ISignal<this, string> {
+    return this._terminalDisposed;
+  }
+
   themeChange(isDarkMode?: boolean): void {
     for (const shell of this._shells.values()) {
       // Can pass isDarkMode when cockle is released with PR #232.
@@ -178,4 +184,5 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   private _externalCommands: IExternalCommand.IOptions[] = [];
   private _shellManager: IShellManager;
   private _shells = new Map<string, Shell>();
+  private _terminalDisposed = new Signal<this, string>(this);
 }

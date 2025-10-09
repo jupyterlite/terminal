@@ -5,6 +5,7 @@ import {
   IStdinRequest
 } from '@jupyterlite/cockle';
 import { Token } from '@lumino/coreutils';
+import { ISignal } from '@lumino/signaling';
 
 export const ILiteTerminalAPIClient = new Token<ILiteTerminalAPIClient>(
   '@jupyterlite/terminal:client'
@@ -38,6 +39,12 @@ export interface ILiteTerminalAPIClient extends Terminal.ITerminalAPIClient {
    * Register an external command that will be available in all terminals.
    */
   registerExternalCommand(options: IExternalCommand.IOptions): void;
+
+  /**
+   * Signal emitted when a terminal is disposed.
+   * The string argument is the terminal `name` which is the same as the Shell's `shellId`.
+   */
+  terminalDisposed: ISignal<this, string>;
 
   /**
    * Inform all terminals that the theme has changed so that they can react to it if they wish.
