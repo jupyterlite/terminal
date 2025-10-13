@@ -19,6 +19,7 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { WebSocket } from 'mock-socket';
 
 import { LiteTerminalAPIClient } from './client';
+import { LiteCommand } from './lite_command';
 import { ILiteTerminalAPIClient } from './tokens';
 
 /**
@@ -136,11 +137,32 @@ const terminalThemeChangePlugin: JupyterFrontEndPlugin<void> = {
   }
 };
 
+const liteCommandPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyterlite/terminal:lite-command',
+  autoStart: true,
+  requires: [ILiteTerminalAPIClient],
+  activate: (
+    app: JupyterFrontEnd,
+    liteTerminalAPIClient: ILiteTerminalAPIClient
+  ): void => {
+    const liteCommand = new LiteCommand(app.commands);
+    const command = liteCommand.run.bind(liteCommand);
+    const tabComplete = liteCommand.tabComplete.bind(liteCommand);
+
+    liteTerminalAPIClient.registerExternalCommand({
+      name: 'lite-command',
+      command,
+      tabComplete
+    });
+  }
+};
+
 export default [
   terminalClientPlugin,
   terminalManagerPlugin,
   terminalServiceWorkerPlugin,
-  terminalThemeChangePlugin
+  terminalThemeChangePlugin,
+  liteCommandPlugin
 ];
 
 // Export ILiteTerminalAPIClient so that other extensions can register external commands.
