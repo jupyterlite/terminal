@@ -13,7 +13,7 @@ concurrency:
 env:
   # Min and max limits of jupyterlite-core versions that this should work on.
   # Changes here should be synchronised with pyproject.toml dependencies section.
-  MIN_LITE_VERSION: jupyterlite-core==0.6.0
+  MIN_LITE_VERSION: jupyterlite-core==0.7.0rc0
   MAX_LITE_VERSION: --pre jupyterlite-core<0.8.0
 
   LAB_VERSION: jupyterlab>=4.0.0,<5
