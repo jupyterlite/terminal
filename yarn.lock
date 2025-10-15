@@ -2669,9 +2669,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/cockle@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@jupyterlite/cockle@npm:1.1.0"
+"@jupyterlite/cockle@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@jupyterlite/cockle@npm:1.2.0"
   dependencies:
     "@lumino/coreutils": ^2.2.0
     "@lumino/disposable": ^2.1.3
@@ -2680,7 +2680,7 @@ __metadata:
     deepmerge-ts: ^7.1.4
     rimraf: ^6.0.1
     zod: ^3.23.8
-  checksum: 7297181547d4ddec9158804aaadad6d8db2b112490cd757a0ffa9f51cf7b25bcedbd2e8e2160e45803462a807c2311ea35a8679279c00879c780e15f89d48225
+  checksum: 766b1f14f8e4e7a3530b1ea497bcd5077caaa9eb73c2866fab2c5a9b4a76a8569415e59468c5d3b54a07a910435f94ef4e3d4acdcfefa92329e7eae20238ba0a
   languageName: node
   linkType: hard
 
@@ -2788,7 +2788,7 @@ __metadata:
     "@jupyterlab/services": ^7.4.3
     "@jupyterlab/settingregistry": ^4.4.3
     "@jupyterlab/testutils": ^4.4.3
-    "@jupyterlite/cockle": ^1.1.0
+    "@jupyterlite/cockle": ^1.2.0
     "@jupyterlite/contents": ^0.6.0
     "@jupyterlite/server": ^0.6.0
     "@lumino/coreutils": ^2.2.1
