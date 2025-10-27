@@ -52,11 +52,12 @@ Each `jupyterlite-terminal` release is built against a specific version of `cock
 include imports from both `jupyterlite-terminal` and `cockle`, such as if you are implementing
 `cockle` external commands, you should ensure that you are using the correct version combination.
 
-| `jupyterlite-terminal` | `cockle` | `jupyterlite-core` |
-| ---------------------- | -------- | ------------------ |
-| 1.0.1                  | 1.0.0    | >= 0.6, < 0.8      |
-| 1.0.0                  | 1.0.0    | >= 0.6, < 0.7      |
-| 0.2.2                  | 0.1.3    | >= 0.6, < 0.7      |
+| `jupyterlite-terminal` | `cockle` | `jupyterlite-core` | Release date |
+| ---------------------- | -------- | ------------------ | ------------ |
+| 1.1.0                  | 1.2.0    | >= 0.6, < 0.8      | 2025-10-27   |
+| 1.0.1                  | 1.0.0    | >= 0.6, < 0.8      | 2025-09-03   |
+| 1.0.0                  | 1.0.0    | >= 0.6, < 0.7      | 2025-08-11   |
+| 0.2.2                  | 0.1.3    | >= 0.6, < 0.7      | 2025-06-27   |
 
 ## Contributing
 
