@@ -2,6 +2,46 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.1.0
+
+This updates from `cockle` 1.0.0 to 1.2.0 bringing the following enhancements:
+
+- Support `termios` settings in `JavaScript` and `External` commands.
+- New environment variable `COCKLE_DARK_MODE` to indicate if terminal is currently dark or light mode.
+- Include `shellId` in all run and tab completion contexts.
+- Various improvements to tab completion.
+
+For full details see the [Cockle changelog](https://github.com/jupyterlite/cockle/blob/main/CHANGELOG.md).
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.0.1...dee237ce758e2bbfba208a6a9cffa55b4d95c61a))
+
+### Enhancements made
+
+- Update to cockle 1.2.0 [#77](https://github.com/jupyterlite/terminal/pull/77) ([@ianthomas23](https://github.com/ianthomas23))
+- Pass on themeChanged boolean to cockle [#75](https://github.com/jupyterlite/terminal/pull/75) ([@ianthomas23](https://github.com/ianthomas23))
+- Add terminalDisposed Signal to ILiteTerminalAPIClient [#74](https://github.com/jupyterlite/terminal/pull/74) ([@ianthomas23](https://github.com/ianthomas23))
+- Support use of `lite_dir` when deploying [#70](https://github.com/jupyterlite/terminal/pull/70) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update to cockle 1.1.0 [#72](https://github.com/jupyterlite/terminal/pull/72) ([@ianthomas23](https://github.com/ianthomas23))
+- Add github action containing link to Read the Docs PR preview [#71](https://github.com/jupyterlite/terminal/pull/71) ([@ianthomas23](https://github.com/ianthomas23))
+- Remove use of vercel for demo deployment [#69](https://github.com/jupyterlite/terminal/pull/69) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Documentation improvements
+
+- Add log and favicon to docs [#73](https://github.com/jupyterlite/terminal/pull/73) ([@ianthomas23](https://github.com/ianthomas23))
+- Add infrastructure for project docs [#68](https://github.com/jupyterlite/terminal/pull/68) ([@ianthomas23](https://github.com/ianthomas23))
+- Update docs for 1.0.1 release [#66](https://github.com/jupyterlite/terminal/pull/66) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-09-03&to=2025-10-27&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Agithub-actions+updated%3A2025-09-03..2025-10-27&type=Issues) | [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-09-03..2025-10-27&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-09-03..2025-10-27&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-09-03..2025-10-27&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.0.1
 
 This is a maintenance release to support JupyterLite 0.7 as well as 0.6.
@@ -18,8 +58,6 @@ This is a maintenance release to support JupyterLite 0.7 as well as 0.6.
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-08-11&to=2025-09-03&type=c))
 
 [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-08-11..2025-09-03&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-08-11..2025-09-03&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-08-11..2025-09-03&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.0.0
 
