@@ -1,7 +1,7 @@
 import { expose } from 'comlink';
 
 import { BaseShellWorker, IDriveFSOptions } from '@jupyterlite/cockle';
-import { DriveFS } from '@jupyterlite/contents';
+import { DriveFS } from '@jupyterlite/services';
 
 /**
  * Shell web worker that uses DriveFS via service worker.

@@ -59,20 +59,21 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyterlab/apputils": "^4.5.3",
-        "@jupyterlab/coreutils": "^6.4.3",
-        "@jupyterlab/services": "^7.4.3",
-        "@jupyterlab/settingregistry": "^4.4.3",
+        "@jupyterlab/apputils": "^4.6.0",
+        "@jupyterlab/coreutils": "^6.5.0",
+        "@jupyterlab/pluginmanager": "^4.5.0",
+        "@jupyterlab/services": "^7.5.0",
+        "@jupyterlab/settingregistry": "^4.5.0",
+        "@jupyterlite/apputils": "^0.7.0-rc.0",
         "@jupyterlite/cockle": "^1.2.0",
-        "@jupyterlite/contents": "^0.6.0",
-        "@jupyterlite/server": "^0.6.0",
+        "@jupyterlite/services": "^0.7.0-rc.0",
         "@lumino/coreutils": "^2.2.1",
         "@lumino/signaling": "^2.1.4",
         "mock-socket": "^9.3.1"
     },
     "devDependencies": {
-        "@jupyterlab/builder": "^4.4.3",
-        "@jupyterlab/testutils": "^4.4.3",
+        "@jupyterlab/builder": "^4.5.0",
+        "@jupyterlab/testutils": "^4.5.0",
         "@types/jest": "^29.2.0",
         "@types/json-schema": "^7.0.11",
         "@types/react": "^18.0.26",
@@ -123,11 +124,11 @@
                 "bundled": false,
                 "singleton": true
             },
-            "@jupyterlite/contents": {
+            "@jupyterlite/apputils": {
                 "bundled": false,
                 "singleton": true
             },
-            "@jupyterlite/server": {
+            "@jupyterlite/services": {
                 "bundled": false,
                 "singleton": true
             }

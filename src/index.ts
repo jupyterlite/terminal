@@ -14,7 +14,7 @@ import {
   Terminal,
   TerminalManager
 } from '@jupyterlab/services';
-import { IServiceWorkerManager } from '@jupyterlite/server';
+import { IServiceWorkerManager } from '@jupyterlite/apputils';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
 
 import { WebSocket } from 'mock-socket';
