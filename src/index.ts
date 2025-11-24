@@ -1,17 +1,16 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import {
+import type {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { IThemeManager } from '@jupyterlab/apputils';
+import type { ServiceManagerPlugin, Terminal } from '@jupyterlab/services';
 import {
   IServerSettings,
   ITerminalManager,
   ServerConnection,
-  ServiceManagerPlugin,
-  Terminal,
   TerminalManager
 } from '@jupyterlab/services';
 import { IServiceWorkerManager } from '@jupyterlite/apputils';

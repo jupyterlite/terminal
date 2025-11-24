@@ -1,6 +1,7 @@
 import { expose } from 'comlink';
 
-import { BaseShellWorker, IDriveFSOptions } from '@jupyterlite/cockle';
+import type { IDriveFSOptions } from '@jupyterlite/cockle';
+import { BaseShellWorker } from '@jupyterlite/cockle';
 import { DriveFS } from '@jupyterlite/services';
 
 /**

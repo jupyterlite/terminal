@@ -1,11 +1,11 @@
-import { Terminal } from '@jupyterlab/services';
-import {
+import type { Terminal } from '@jupyterlab/services';
+import type {
   IExternalCommand,
   IStdinReply,
   IStdinRequest
 } from '@jupyterlite/cockle';
 import { Token } from '@lumino/coreutils';
-import { ISignal } from '@lumino/signaling';
+import type { ISignal } from '@lumino/signaling';
 
 export const ILiteTerminalAPIClient = new Token<ILiteTerminalAPIClient>(
   '@jupyterlite/terminal:client'
