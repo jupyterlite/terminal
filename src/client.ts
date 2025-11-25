@@ -1,22 +1,22 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import { ServerConnection, Terminal } from '@jupyterlab/services';
-import {
+import type { Terminal } from '@jupyterlab/services';
+import { ServerConnection } from '@jupyterlab/services';
+import type {
   IExternalCommand,
   IShellManager,
   IStdinReply,
-  IStdinRequest,
-  ShellManager
+  IStdinRequest
 } from '@jupyterlite/cockle';
-import { JSONPrimitive } from '@lumino/coreutils';
-import { ISignal, Signal } from '@lumino/signaling';
+import { ShellManager } from '@jupyterlite/cockle';
+import type { JSONPrimitive } from '@lumino/coreutils';
+import type { ISignal } from '@lumino/signaling';
+import { Signal } from '@lumino/signaling';
 
-import {
-  Server as WebSocketServer,
-  Client as WebSocketClient
-} from 'mock-socket';
+import type { Client as WebSocketClient } from 'mock-socket';
+import { Server as WebSocketServer } from 'mock-socket';
 
 import { Shell } from './shell';
-import { ILiteTerminalAPIClient } from './tokens';
+import type { ILiteTerminalAPIClient } from './tokens';
 
 export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   constructor(options: { serverSettings?: ServerConnection.ISettings } = {}) {
