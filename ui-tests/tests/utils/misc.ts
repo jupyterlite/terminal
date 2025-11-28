@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer';
 
+export const INITIAL_WAIT_MS = 300;
 export const WAIT_MS = 100;
 export const TERMINAL_SELECTOR = '.jp-Terminal';
 

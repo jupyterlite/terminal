@@ -1,6 +1,6 @@
 import { expect, test } from '@jupyterlab/galata';
 
-import { TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
+import { INITIAL_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
 
 test.describe('Terminal', () => {
   test('should emit service worker console message', async ({ page }) => {
@@ -12,7 +12,7 @@ test.describe('Terminal', () => {
     await page.goto();
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     expect(
       logs.filter(s => s.match(/^Service worker supports terminal stdin/))
@@ -24,7 +24,7 @@ test.describe('Terminal', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     // Hide modification times.
     const modified = page.locator('span.jp-DirListing-itemModified');
@@ -39,7 +39,7 @@ test.describe('Terminal', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     await inputLine(page, 'ls'); // avoid timestamps
     await page.waitForTimeout(WAIT_MS);
@@ -77,7 +77,7 @@ test.describe('Terminal', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     await inputLine(page, 'cockle-config stdin');
     await page.waitForTimeout(WAIT_MS);
@@ -91,7 +91,7 @@ test.describe('Terminal', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     await inputLine(page, 'cockle-config stdin sw');
     await page.waitForTimeout(WAIT_MS);
@@ -107,7 +107,7 @@ test.describe('Terminal', () => {
       await page.menu.clickMenuItem('File>New>Terminal');
       await page.locator(TERMINAL_SELECTOR).waitFor();
       await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-      await page.waitForTimeout(WAIT_MS);
+      await page.waitForTimeout(INITIAL_WAIT_MS);
 
       await inputLine(page, `cockle-config stdin ${stdinOption}`);
       await page.waitForTimeout(WAIT_MS);

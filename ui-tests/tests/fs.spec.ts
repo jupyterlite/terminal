@@ -1,7 +1,7 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import { TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
+import { INITIAL_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
 
 const MONTHS_TXT =
   'January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember\n';
@@ -27,7 +27,7 @@ test.describe('Filesystem', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
   });
 
   test('should have initial files', async ({ page }) => {
@@ -49,12 +49,6 @@ test.describe('Filesystem', () => {
   });
 
   test('should create a new file', async ({ page }) => {
-    await page.goto();
-    await page.menu.clickMenuItem('File>New>Terminal');
-    await page.locator(TERMINAL_SELECTOR).waitFor();
-    await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
-
     await inputLine(page, 'echo Hello > out.txt');
     await page.getByTitle('Name: out.txt').waitFor();
   });
