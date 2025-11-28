@@ -14,7 +14,7 @@ export const LONG_WAIT_MS = 300;
 test.describe('individual command', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto();
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(INITIAL_WAIT_MS);
 
     // Overwrite the (read-only) page.contents with our own ContentsHelper.
     // @ts-ignore
@@ -24,6 +24,16 @@ test.describe('individual command', () => {
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(INITIAL_WAIT_MS);
+  });
+
+  test.describe('which', () => {
+    test(`should support nano and vim`, async ({ page }) => {
+      await inputLine(page, 'which nano vim > out.txt');
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('out.txt');
+      expect(outputFile?.content).toEqual('nano\nvim\n');
+    });
   });
 
   test.describe('nano', () => {
@@ -39,12 +49,11 @@ test.describe('individual command', () => {
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Insert new characters.
-        await page.keyboard.type('mnopqrst');
+        await inputLine(page, 'mnopqrst', false);
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await page.keyboard.type('y');
-        await page.keyboard.press('Enter');
+        await inputLine(page, 'y', true);
         await page.waitForTimeout(LONG_WAIT_MS);
 
         const outputFile = await page.contents.getContentMetadata('a.txt');
@@ -67,12 +76,12 @@ test.describe('individual command', () => {
         // Delete first 4 characters.
         for (let i = 0; i < 4; i++) {
           await page.keyboard.press('Delete');
+          await page.waitForTimeout(20);
         }
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await page.keyboard.type('y');
-        await page.keyboard.press('Enter');
+        await inputLine(page, 'y', true);
         await page.waitForTimeout(LONG_WAIT_MS);
 
         const outputFile = await page.contents.getContentMetadata('b.txt');
@@ -94,7 +103,7 @@ test.describe('individual command', () => {
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Insert new characters.
-        await page.keyboard.type('iabcdefgh');
+        await inputLine(page, 'iabcdefgh', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');
@@ -119,7 +128,7 @@ test.describe('individual command', () => {
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Delete first 4 characters.
-        await page.keyboard.type('d4l');
+        await inputLine(page, 'd4l', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');

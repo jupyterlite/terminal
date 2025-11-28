@@ -23,6 +23,7 @@ export class ContentsHelper {
     path: string,
     type: 'file' | 'directory' = 'file'
   ): Promise<Contents.IModel | null> {
+    await this.page.waitForTimeout(100);
     return await this._get(path, true, type);
   }
 
