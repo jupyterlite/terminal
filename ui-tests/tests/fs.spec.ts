@@ -1,7 +1,13 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import { INITIAL_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
+import {
+  INITIAL_WAIT_MS,
+  TERMINAL_SELECTOR,
+  WAIT_MS,
+  decode64,
+  inputLine
+} from './utils/misc';
 
 const MONTHS_TXT =
   'January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember\n';

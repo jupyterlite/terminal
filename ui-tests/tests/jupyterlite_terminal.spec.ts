@@ -1,6 +1,11 @@
 import { expect, test } from '@jupyterlab/galata';
 
-import { INITIAL_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
+import {
+  INITIAL_WAIT_MS,
+  TERMINAL_SELECTOR,
+  WAIT_MS,
+  inputLine
+} from './utils/misc';
 
 test.describe('Terminal', () => {
   test('should emit service worker console message', async ({ page }) => {

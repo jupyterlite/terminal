@@ -1,7 +1,12 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import { INITIAL_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
+import {
+  INITIAL_WAIT_MS,
+  TERMINAL_SELECTOR,
+  WAIT_MS,
+  inputLine
+} from './utils/misc';
 
 // Long wait such as for starting/stopping a complex WebAssembly command.
 export const LONG_WAIT_MS = 300;
