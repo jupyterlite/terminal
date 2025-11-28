@@ -5,7 +5,8 @@ import {
   INITIAL_WAIT_MS,
   TERMINAL_SELECTOR,
   WAIT_MS,
-  inputLine
+  inputLine,
+  fileContent
 } from './utils/misc';
 
 // Long wait such as for starting/stopping a complex WebAssembly command.
@@ -58,6 +59,29 @@ test.describe('individual command', () => {
 
         const outputFile = await page.contents.getContentMetadata('a.txt');
         expect(outputFile?.content).toEqual('mnopqrst\n');
+      });
+
+      test(`EXPT should create new file using ${stdinOption} for stdin`, async ({
+        page
+      }) => {
+        await inputLine(page, `cockle-config stdin ${stdinOption}`);
+        await page.waitForTimeout(WAIT_MS);
+
+        const filename = 'a.txt';
+
+        await inputLine(page, `nano ${filename}`);
+        await page.waitForTimeout(LONG_WAIT_MS);
+
+        // Insert new characters.
+        await inputLine(page, 'mnopqrst', false);
+
+        // Save and quit.
+        await page.keyboard.press('Control+x');
+        await inputLine(page, 'y', true);
+        await page.waitForTimeout(LONG_WAIT_MS);
+
+        const content = await fileContent(page, filename);
+        expect(content).toEqual('mnopqrst\n');
       });
 
       test(`should delete data from file using ${stdinOption} for stdin`, async ({
