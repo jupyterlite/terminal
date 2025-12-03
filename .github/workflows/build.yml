@@ -27,6 +27,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.14'
+
     - name: Base Setup
       uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
@@ -77,11 +82,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install Python
+    - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
-        architecture: 'x64'
+        python-version: '3.14'
 
     - uses: actions/download-artifact@v4
       with:
@@ -100,7 +104,7 @@ jobs:
         jupyter labextension list 2>&1 | grep -ie "@jupyterlite/terminal.*OK"
 
   integration-tests:
-    name: Integration tests ${{ matrix.lite-version}}
+    name: Integration tests ${{ matrix.python-version}} ${{ matrix.lite-version}}
     needs: build
     runs-on: ubuntu-latest
 
@@ -108,6 +112,7 @@ jobs:
       fail-fast: false
       matrix:
         lite-version: ['min', 'normal', 'max']
+        python-version: ['3.10', '3.14']
 
     env:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers
@@ -115,6 +120,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: Setup Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
 
     - name: Base Setup
       uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1

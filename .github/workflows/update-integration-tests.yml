@@ -25,6 +25,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+
       - name: Checkout the branch from the PR that triggered the job
         run: gh pr checkout ${{ github.event.issue.number }}
         env:
