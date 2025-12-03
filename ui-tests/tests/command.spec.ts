@@ -1,15 +1,17 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import { TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
-
-// Long wait such as for starting/stopping a complex WebAssembly command.
-export const LONG_WAIT_MS = 300;
+import {
+  LONG_WAIT_MS,
+  TERMINAL_SELECTOR,
+  WAIT_MS,
+  inputLine
+} from './utils/misc';
 
 test.describe('individual command', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto();
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(LONG_WAIT_MS);
 
     // Overwrite the (read-only) page.contents with our own ContentsHelper.
     // @ts-ignore
@@ -18,7 +20,7 @@ test.describe('individual command', () => {
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(WAIT_MS);
+    await page.waitForTimeout(LONG_WAIT_MS);
   });
 
   test.describe('nano', () => {
@@ -28,18 +30,17 @@ test.describe('individual command', () => {
         page
       }) => {
         await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         await inputLine(page, 'nano a.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Insert new characters.
-        await page.keyboard.type('mnopqrst');
+        await inputLine(page, 'mnopqrst', false);
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await page.keyboard.type('y');
-        await page.keyboard.press('Enter');
+        await inputLine(page, 'y');
         await page.waitForTimeout(LONG_WAIT_MS);
 
         const outputFile = await page.contents.getContentMetadata('a.txt');
@@ -50,11 +51,11 @@ test.describe('individual command', () => {
         page
       }) => {
         await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         // Prepare file to delete from.
         await inputLine(page, 'echo mnopqrst > b.txt');
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         await inputLine(page, 'nano b.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
@@ -66,8 +67,7 @@ test.describe('individual command', () => {
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await page.keyboard.type('y');
-        await page.keyboard.press('Enter');
+        await inputLine(page, 'y');
         await page.waitForTimeout(LONG_WAIT_MS);
 
         const outputFile = await page.contents.getContentMetadata('b.txt');
@@ -83,13 +83,13 @@ test.describe('individual command', () => {
         page
       }) => {
         await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         await inputLine(page, 'vim c.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Insert new characters.
-        await page.keyboard.type('iabcdefgh');
+        await inputLine(page, 'iabcdefgh', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');
@@ -104,17 +104,17 @@ test.describe('individual command', () => {
         page
       }) => {
         await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         // Prepare file to delete from.
         await inputLine(page, 'echo abcdefgh > d.txt');
-        await page.waitForTimeout(WAIT_MS);
+        await page.waitForTimeout(LONG_WAIT_MS);
 
         await inputLine(page, 'vim d.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
 
         // Delete first 4 characters.
-        await page.keyboard.type('d4l');
+        await inputLine(page, 'd4l', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');

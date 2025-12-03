@@ -1,5 +1,7 @@
 import { expect, test } from '@jupyterlab/galata';
 
+import { LONG_WAIT_MS } from './utils/misc';
+
 test.describe('Terminal extension', () => {
   test('should emit activation console messages', async ({ page }) => {
     const logs: string[] = [];
@@ -8,6 +10,7 @@ test.describe('Terminal extension', () => {
     });
 
     await page.goto();
+    await page.waitForTimeout(LONG_WAIT_MS);
 
     expect(
       logs.filter(s =>

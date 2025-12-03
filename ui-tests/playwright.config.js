@@ -10,7 +10,7 @@ module.exports = {
     autoGoto: false,
     baseURL: 'http://localhost:8000'
   },
-  retries: 2,
+  retries: process.env.CI ? 2 : 0,
   workers: 1,
   webServer: {
     command: 'jlpm start',
