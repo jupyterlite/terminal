@@ -11,7 +11,7 @@ A terminal for JupyterLite.
 
 ## Requirements
 
-- JupyterLite >= 0.6.0, < 0.8.0
+- JupyterLite >= 0.7.0, < 0.8.0
 
 ## Install
 
