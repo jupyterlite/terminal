@@ -24,7 +24,7 @@ classifiers = [
 ]
 dependencies = [
     # Changes here should be synchronised with .github/workflows/build.yml
-    "jupyterlite-core>=0.7.0rc0,<0.8.0"
+    "jupyterlite-core>=0.7.0,<0.8.0"
 ]
 dynamic = ["version", "description", "authors", "urls", "keywords"]
 
