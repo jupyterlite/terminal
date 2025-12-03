@@ -2,6 +2,37 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.2.0
+
+This release updates to `jupyterlite 0.7.0` and `cockle 1.3.0`. The latter includes a fix for a significant bug when using the service worker for `stdin` when running interactive commands such as `vim`. For full details see the [Cockle changelog](https://github.com/jupyterlite/cockle/blob/main/CHANGELOG.md#130).
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.1.0...a9285fb3d615280f3d62502ff86e18a7ed874ec8))
+
+### Enhancements made
+
+- Update cockle from 1.2.0 to 1.3.0 [#85](https://github.com/jupyterlite/terminal/pull/85) ([@ianthomas23](https://github.com/ianthomas23))
+- Add git2cpp to deployment [#76](https://github.com/jupyterlite/terminal/pull/76) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update to jupyterlite 0.7.0 [#87](https://github.com/jupyterlite/terminal/pull/87) ([@ianthomas23](https://github.com/ianthomas23))
+- Make ui-tests more robust [#86](https://github.com/jupyterlite/terminal/pull/86) ([@ianthomas23](https://github.com/ianthomas23))
+- Add python 3.14, remove 3.9 [#84](https://github.com/jupyterlite/terminal/pull/84) ([@ianthomas23](https://github.com/ianthomas23))
+- Enforce type imports [#82](https://github.com/jupyterlite/terminal/pull/82) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to jupyterlite 0.7.0rc0 and jupyterlab 4.5.0 [#81](https://github.com/jupyterlite/terminal/pull/81) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Documentation improvements
+
+- Update README for 1.1.0 release [#80](https://github.com/jupyterlite/terminal/pull/80) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-10-27&to=2025-12-03&type=c))
+
+[@github-actions](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Agithub-actions+updated%3A2025-10-27..2025-12-03&type=Issues) | [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-10-27..2025-12-03&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.1.0
 
 This updates from `cockle` 1.0.0 to 1.2.0 bringing the following enhancements:
@@ -39,8 +70,6 @@ For full details see the [Cockle changelog](https://github.com/jupyterlite/cockl
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-09-03&to=2025-10-27&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Agithub-actions+updated%3A2025-09-03..2025-10-27&type=Issues) | [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-09-03..2025-10-27&type=Issues) | [@jtpio](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2025-09-03..2025-10-27&type=Issues) | [@vercel](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Avercel+updated%3A2025-09-03..2025-10-27&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.0.1
 
