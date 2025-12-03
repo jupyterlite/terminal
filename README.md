@@ -54,6 +54,7 @@ include imports from both `jupyterlite-terminal` and `cockle`, such as if you ar
 
 | `jupyterlite-terminal` | `cockle` | `jupyterlite-core` | Release date |
 | ---------------------- | -------- | ------------------ | ------------ |
+| 1.2.0                  | 1.3.0    | >= 0.7, < 0.8      | 2025-12-03   |
 | 1.1.0                  | 1.2.0    | >= 0.6, < 0.8      | 2025-10-27   |
 | 1.0.1                  | 1.0.0    | >= 0.6, < 0.8      | 2025-09-03   |
 | 1.0.0                  | 1.0.0    | >= 0.6, < 0.7      | 2025-08-11   |
