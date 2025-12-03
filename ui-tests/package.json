@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "build": "jlpm clean && python build.py",
-    "clean": "rimraf dist",
-    "clean:all": "jlpm clean && rimraf cockle_wasm_env .cockle_temp",
+    "clean": "rimraf cockle_wasm_env dist .cockle_temp .jupyterlite.doit.db",
     "start": "npx static-handler -p 8000 --cors --coop --coep --corp ./dist",
     "test": "jlpm playwright test",
     "test:ui": "jlpm playwright test --ui",
