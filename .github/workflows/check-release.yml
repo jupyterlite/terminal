@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Distributions
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: jupyterlite_terminal-releaser-dist-${{ github.run_number }}
           path: .jupyter_releaser_checkout/dist
