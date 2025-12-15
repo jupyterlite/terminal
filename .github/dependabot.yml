@@ -5,7 +5,7 @@ updates:
     schedule:
       interval: weekly
     labels:
-      - 'component: CI'
+      - 'maintenance'
     groups:
       actions:
         patterns:
