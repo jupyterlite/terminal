@@ -10,30 +10,19 @@ permissions:
 
 jobs:
   update-snapshots:
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'please update snapshots') }}
     runs-on: ubuntu-latest
 
-    steps:
-      - name: React to the triggering comment
-        run: |
-          gh api repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions --raw-field 'content=+1'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    if: github.event.issue.pull_request && contains(github.event.comment.body, 'please update snapshots')
 
-      - name: Checkout
-        uses: actions/checkout@v6
+    steps:
+      - uses: jupyterlab/maintainer-tools/.github/actions/update-snapshots-checkout@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.14'
-
-      - name: Checkout the branch from the PR that triggered the job
-        run: gh pr checkout ${{ github.event.issue.number }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
