@@ -23,6 +23,43 @@ test.describe('individual command', () => {
     await page.waitForTimeout(LONG_WAIT_MS);
   });
 
+  test.describe('uname', () => {
+    test(`should show emscripten build`, async ({ page }) => {
+      await inputLine(page, `uname -a > uname.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('uname.txt');
+      expect(outputFile?.content).toMatch(
+        /^Emscripten emscripten .* wasm32 GNU\/Linux\n$/
+      );
+    });
+  });
+
+  test.describe('git2cpp', () => {
+    test(`should print version`, async ({ page }) => {
+      await inputLine(page, `git -v > git0.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('git0.txt');
+      expect(outputFile?.content).toMatch(
+        /^git2cpp version .* \(libgit2 .*\)\n$/
+      );
+    });
+
+    test(`should run git init`, async ({ page }) => {
+      await inputLine(page, `git init .`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      await inputLine(page, `ls .git > git1.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('git1.txt');
+      expect(outputFile?.content).toMatch(
+        /^HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n$/
+      );
+    });
+  });
+
   test.describe('nano', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
