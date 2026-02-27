@@ -185,10 +185,10 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v6
       with:
-        name: jupyterlite_terminal-playwright-tests
+        name: playwright-tests_${{ matrix.python-version }}_${{ matrix.lite-version}}
         path: |
-          ui-tests/test-results_${{ matrix.lite-version}}
-          ui-tests/playwright-report_${{ matrix.lite-version}}
+          ui-tests/test-results
+          ui-tests/playwright-report
 
   check_links:
     name: Check Links
