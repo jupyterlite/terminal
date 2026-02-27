@@ -55,6 +55,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     const { baseUrl, wsUrl } = this.serverSettings;
     const shell = new Shell({
       mountpoint: '/drive',
+      cwd: options?.cwd,
       baseUrl,
       wasmBaseUrl: URLExt.join(
         baseUrl,
