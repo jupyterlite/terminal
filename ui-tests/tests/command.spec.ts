@@ -29,7 +29,9 @@ test.describe('individual command', () => {
       await page.waitForTimeout(LONG_WAIT_MS);
 
       const outputFile = await page.contents.getContentMetadata('uname.txt');
-      expect(outputFile?.content).toMatch(/^Emscripten emscripten .* wasm32 GNU\/Linux\n$/);
+      expect(outputFile?.content).toMatch(
+        /^Emscripten emscripten .* wasm32 GNU\/Linux\n$/
+      );
     });
   });
 
@@ -39,7 +41,9 @@ test.describe('individual command', () => {
       await page.waitForTimeout(LONG_WAIT_MS);
 
       const outputFile = await page.contents.getContentMetadata('git0.txt');
-      expect(outputFile?.content).toMatch(/^git2cpp version .* \(libgit2 .*\)\n$/);
+      expect(outputFile?.content).toMatch(
+        /^git2cpp version .* \(libgit2 .*\)\n$/
+      );
     });
 
     test(`should run git init`, async ({ page }) => {
@@ -50,7 +54,9 @@ test.describe('individual command', () => {
       await page.waitForTimeout(LONG_WAIT_MS);
 
       const outputFile = await page.contents.getContentMetadata('git1.txt');
-      expect(outputFile?.content).toMatch(/^HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n$/);
+      expect(outputFile?.content).toMatch(
+        /^HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n$/
+      );
     });
   });
 
