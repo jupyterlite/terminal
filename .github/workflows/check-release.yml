@@ -16,11 +16,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Temporarily preinstall hatch and virtualenv
-        run: |
-          python --version
-          python -m pip install hatch "virtualenv<21"
-
       - name: Base Setup
         uses: jupyterlab/maintainer-tools/.github/actions/base-setup@v1
 
