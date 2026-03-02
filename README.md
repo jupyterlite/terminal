@@ -5,8 +5,6 @@
 
 A terminal for JupyterLite.
 
-⚠️ This extension is still in development and not yet ready for general use. ⚠️
-
 ![a screenshot showing a terminal running in JupyterLite](https://raw.githubusercontent.com/jupyterlite/terminal/main/screenshot.png)
 
 ## Requirements
@@ -54,6 +52,7 @@ include imports from both `jupyterlite-terminal` and `cockle`, such as if you ar
 
 | `jupyterlite-terminal` | `cockle` | `jupyterlite-core` | Release date |
 | ---------------------- | -------- | ------------------ | ------------ |
+| 1.3.0                  | 1.4.0    | >= 0.7, < 0.8      | 2026-03-02   |
 | 1.2.0                  | 1.3.0    | >= 0.7, < 0.8      | 2025-12-03   |
 | 1.1.0                  | 1.2.0    | >= 0.6, < 0.8      | 2025-10-27   |
 | 1.0.1                  | 1.0.0    | >= 0.6, < 0.8      | 2025-09-03   |
