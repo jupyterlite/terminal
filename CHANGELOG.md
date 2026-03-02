@@ -2,6 +2,35 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.3.0
+
+This release updates `cockle` to 1.4.0 which switches from using WebAssembly command packages built using Emscripten 3.1.73 to Emscripten 4.0.9 that are available on the emscripten-forge-4x channel.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.2.0...4442dc4d566a8accb49163bfa33059e5dfe9f3bc))
+
+### Maintenance and upkeep improvements
+
+- Update README for 1.3.0 release [#97](https://github.com/jupyterlite/terminal/pull/97) ([@ianthomas23](https://github.com/ianthomas23))
+- Add basic git2cpp tests [#96](https://github.com/jupyterlite/terminal/pull/96) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to cockle 1.4.0 [#95](https://github.com/jupyterlite/terminal/pull/95) ([@ianthomas23](https://github.com/ianthomas23))
+- Update snapshots bot checkout and permission check [#94](https://github.com/jupyterlite/terminal/pull/94) ([@martinRenou](https://github.com/martinRenou), [@ianthomas23](https://github.com/ianthomas23))
+- Fix dependabot label [#92](https://github.com/jupyterlite/terminal/pull/92) ([@ianthomas23](https://github.com/ianthomas23))
+- Bump the actions group with 3 updates [#91](https://github.com/jupyterlite/terminal/pull/91) ([@ianthomas23](https://github.com/ianthomas23))
+- Bump the actions group with 7 updates [#90](https://github.com/jupyterlite/terminal/pull/90) ([@ianthomas23](https://github.com/ianthomas23))
+- Add dependabot for github actions [#89](https://github.com/jupyterlite/terminal/pull/89) ([@ianthomas23](https://github.com/ianthomas23))
+- Update README following 1.2.0 release [#88](https://github.com/jupyterlite/terminal/pull/88) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-12-03&to=2026-03-02&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-12-03..2026-03-02&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3AmartinRenou+updated%3A2025-12-03..2026-03-02&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.2.0
 
 This release updates to `jupyterlite 0.7.0` and `cockle 1.3.0`. The latter includes a fix for a significant bug when using the service worker for `stdin` when running interactive commands such as `vim`. For full details see the [Cockle changelog](https://github.com/jupyterlite/cockle/blob/main/CHANGELOG.md#130).
@@ -30,8 +59,6 @@ This release updates to `jupyterlite 0.7.0` and `cockle 1.3.0`. The latter inclu
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-10-27&to=2025-12-03&type=c))
 
 [@github-actions](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Agithub-actions+updated%3A2025-10-27..2025-12-03&type=Issues) | [@ianthomas23](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-10-27..2025-12-03&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.1.0
 
