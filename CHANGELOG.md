@@ -2,6 +2,33 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.3.1
+
+This is a bug fix release updating to `cockle 1.4.1` to include two bug fixes:
+
+- Use comma to separate multiple channels in COCKLE_WASM_EXTRA_CHANNEL env var https://github.com/jupyterlite/cockle/pull/293
+- Keep arguments with wildcards if filename expansion has no matches https://github.com/jupyterlite/cockle/pull/291
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.3.0...392a182881e2c08ba3564fc536a5f7d53b9ed24b))
+
+### Maintenance and upkeep improvements
+
+- Avoid jupyterlite 0.7.4 [#102](https://github.com/jupyterlite/terminal/pull/102) ([@ianthomas23](https://github.com/ianthomas23))
+- Run main CI on weekly schedule, and on demand via `workflow_dispatch` [#100](https://github.com/jupyterlite/terminal/pull/100) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to cockle 1.4.1 [#99](https://github.com/jupyterlite/terminal/pull/99) ([@ianthomas23](https://github.com/ianthomas23))
+- Bump the actions group with 2 updates [#98](https://github.com/jupyterlite/terminal/pull/98) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-03-02&to=2026-03-25&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-03-02..2026-03-25&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.3.0
 
 This release updates `cockle` to 1.4.0 which switches from using WebAssembly command packages built using Emscripten 3.1.73 to Emscripten 4.0.9 that are available on the emscripten-forge-4x channel.
@@ -28,8 +55,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2025-12-03&to=2026-03-02&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2025-12-03..2026-03-02&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3AmartinRenou+updated%3A2025-12-03..2026-03-02&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.2.0
 
