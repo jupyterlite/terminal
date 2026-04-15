@@ -42,7 +42,7 @@ jobs:
           jupyter lite build --output-dir dist
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./deploy/dist
 
