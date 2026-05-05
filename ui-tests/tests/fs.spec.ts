@@ -50,7 +50,11 @@ test.describe('Filesystem', () => {
     expect(months?.content).toEqual(MONTHS_TXT);
 
     // Note fact.lua contents are returned base64 encoded.
-    const fact = await page.contents.getContentMetadata('fact.lua');
+    const fact = await page.contents.getContentMetadata(
+      'fact.lua',
+      'file',
+      'base64'
+    );
     expect(decode64(fact?.content)).toEqual(FACT_LUA);
   });
 
