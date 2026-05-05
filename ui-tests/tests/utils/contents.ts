@@ -21,23 +21,26 @@ export class ContentsHelper {
 
   async getContentMetadata(
     path: string,
-    type: 'file' | 'directory' = 'file'
+    type: 'file' | 'directory' = 'file',
+    format: Contents.FileFormat = 'text'
   ): Promise<Contents.IModel | null> {
-    return await this._get(path, true, type);
+    return await this._get(path, true, type, format);
   }
 
   private async _get(
     path: string,
     wantContents: boolean,
-    type: 'file' | 'directory' = 'file'
+    type?: 'file' | 'directory',
+    format?: Contents.FileFormat
   ): Promise<Contents.IModel | null> {
+    type = type ?? 'file';
     const model = await this.page.evaluate(
-      async ({ path, wantContents, type }) => {
+      async ({ path, wantContents, format, type }) => {
         const contents = window.galata.app.serviceManager.contents;
         const options: Contents.IFetchOptions = {
           type,
           content: wantContents,
-          format: 'text'
+          format
         };
         try {
           return await contents.get(path, options);
@@ -45,7 +48,7 @@ export class ContentsHelper {
           return null;
         }
       },
-      { path, wantContents, type }
+      { path, wantContents, type, format }
     );
     return model;
   }
