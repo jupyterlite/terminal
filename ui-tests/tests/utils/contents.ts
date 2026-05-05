@@ -34,7 +34,11 @@ export class ContentsHelper {
     const model = await this.page.evaluate(
       async ({ path, wantContents, type }) => {
         const contents = window.galata.app.serviceManager.contents;
-        const options: Contents.IFetchOptions = { type, content: wantContents, format: 'text' };
+        const options: Contents.IFetchOptions = {
+          type,
+          content: wantContents,
+          format: 'text'
+        };
         try {
           return await contents.get(path, options);
         } catch (error) {
