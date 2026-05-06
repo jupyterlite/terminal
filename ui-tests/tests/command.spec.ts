@@ -50,13 +50,23 @@ test.describe('individual command', () => {
       await inputLine(page, `git init .`);
       await page.waitForTimeout(LONG_WAIT_MS);
 
-      await inputLine(page, `ls .git > git1.txt`);
+      await inputLine(page, `ls .git > git1.txt 2> err1.txt`);
       await page.waitForTimeout(LONG_WAIT_MS);
 
-      const outputFile = await page.contents.getContentMetadata('git1.txt');
-      expect(outputFile?.content).toMatch(
-        /^HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n$/
+      let outputFile = await page.contents.getContentMetadata('git1.txt');
+      expect(outputFile?.content).toBe(
+        'HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n'
       );
+      outputFile = await page.contents.getContentMetadata('err1.txt');
+      expect(outputFile?.content).toBe('');
+
+      await inputLine(page, `git status > git2.txt 2> err2.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      outputFile = await page.contents.getContentMetadata('git2.txt');
+      expect(outputFile?.content).toMatch(/^On branch master\nNo commit yet/);
+      outputFile = await page.contents.getContentMetadata('err2.txt');
+      expect(outputFile?.content).toBe('');
     });
   });
 
