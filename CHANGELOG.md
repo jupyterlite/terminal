@@ -2,6 +2,28 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.4.1
+
+This is a bug fix release to fix the use of backspace in WebAssembly commands, in particular `nano` and `vim`.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.4.0...7c1ca54de9049c2c2b151e56683a495793e6273f))
+
+### Maintenance and upkeep improvements
+
+- Update to cockle 1.5.1 [#109](https://github.com/jupyterlite/terminal/pull/109) ([@ianthomas23](https://github.com/ianthomas23))
+- Remove pyodide kernel from demo deployments [#108](https://github.com/jupyterlite/terminal/pull/108) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-06&to=2026-05-14&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-06..2026-05-14&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.4.0
 
 This release updates `cockle` to 1.5.0, which adds new commands `du` and `unset`, implements line vs character buffering on stdin, and introduces a yes/no prompt before displaying a large number of tab completion options. For the full `cockle` changelog see [cockle releases](https://github.com/jupyterlite/cockle/releases).
@@ -23,8 +45,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-03-25&to=2026-05-06&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-03-25..2026-05-06&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.3.1
 
