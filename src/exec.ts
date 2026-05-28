@@ -226,7 +226,7 @@ function registerCommands(
           code: {
             type: 'string',
             description:
-              'The bash command to execute. Runs as a single pipeline: pipes (|), sequential separators (;), and file redirections (>, >>, 2>, <) are supported. Not supported (cockle limitations): chaining with && or ||, command substitution ($(...) and backticks), environment variable expansion ($VAR), and file-descriptor duplication (2>&1).'
+              'The bash command to execute. Runs as a single pipeline: pipes (|), sequential separators (;), and file redirections (>, >>, 2>, <) are supported. Not supported (cockle limitations): chaining with && or ||, command substitution ($(...) and backticks), environment variable expansion ($VAR), and file-descriptor duplication (2>&1). Run `cockle-config command` to list the commands available in the shell.'
           },
           terminalName: {
             type: 'string',
