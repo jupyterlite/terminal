@@ -44,6 +44,58 @@ Then build a new JupyterLite site:
 jupyter lite build
 ```
 
+## Running commands programmatically
+
+Besides the interactive terminal, the extension registers JupyterLab commands that
+run bash in a _headless_ `cockle` shell: one that captures the output and exit code
+without opening a terminal widget. These are useful for other extensions or
+automation that need to run shell commands in JupyterLite.
+
+| Command                                   | Description                                            |
+| ----------------------------------------- | ------------------------------------------------------ |
+| `@jupyterlite/terminal:execute-bash`      | Run a bash command and return its output and exit code |
+| `@jupyterlite/terminal:start-terminal`    | Start a reusable headless shell                        |
+| `@jupyterlite/terminal:shutdown-terminal` | Shut down a headless shell by name                     |
+| `@jupyterlite/terminal:list-terminals`    | List the running headless shells                       |
+
+Run a single command (a throwaway shell is created and disposed automatically):
+
+```ts
+const result = await app.commands.execute(
+  '@jupyterlite/terminal:execute-bash',
+  {
+    code: 'echo hello'
+  }
+);
+console.log(result.exitCode); // 0
+console.log(result.output); // hello
+```
+
+Pass a `terminalName` to reuse a shell across calls so state such as the working
+directory persists:
+
+```ts
+const { terminalName } = await app.commands.execute(
+  '@jupyterlite/terminal:start-terminal'
+);
+await app.commands.execute('@jupyterlite/terminal:execute-bash', {
+  code: 'cd /drive',
+  terminalName
+});
+const result = await app.commands.execute(
+  '@jupyterlite/terminal:execute-bash',
+  {
+    code: 'pwd',
+    terminalName
+  }
+);
+console.log(result.output); // /drive
+```
+
+Each command runs as a single `cockle` pipeline, so `|`, `;` and redirections
+(`>`, `>>`, `2>`, `<`) work, but `&&`/`||`, command substitution and `$VAR`
+expansion are not supported.
+
 ## Version compatibility
 
 Each `jupyterlite-terminal` release is built against a specific version of `cockle`. If you need to

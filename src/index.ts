@@ -19,6 +19,7 @@ import { ISettingRegistry } from '@jupyterlab/settingregistry';
 import { WebSocket } from 'mock-socket';
 
 import { LiteTerminalAPIClient } from './client';
+import { terminalExecPlugin } from './exec';
 import { ILiteTerminalAPIClient } from './tokens';
 
 /**
@@ -140,7 +141,8 @@ export default [
   terminalClientPlugin,
   terminalManagerPlugin,
   terminalServiceWorkerPlugin,
-  terminalThemeChangePlugin
+  terminalThemeChangePlugin,
+  terminalExecPlugin
 ];
 
 // Export ILiteTerminalAPIClient so that other extensions can register external commands.

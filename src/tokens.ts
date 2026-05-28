@@ -1,6 +1,8 @@
 import type { Terminal } from '@jupyterlab/services';
 import type {
   IExternalCommand,
+  IOutputCallback,
+  IShell,
   IStdinReply,
   IStdinRequest
 } from '@jupyterlite/cockle';
@@ -39,6 +41,19 @@ export interface ILiteTerminalAPIClient extends Terminal.ITerminalAPIClient {
    * Register an external command that will be available in all terminals.
    */
   registerExternalCommand(options: IExternalCommand.IOptions): void;
+
+  /**
+   * Create a headless cockle shell that shares the client's stdin routing,
+   * aliases, environment variables, and external commands. The returned shell
+   * is already started and ready to receive input via `input()`.
+   */
+  createHeadlessShell(options: {
+    shellId: string;
+    cwd?: string;
+    environment?: { [key: string]: string | undefined };
+    outputCallback: IOutputCallback;
+    readyTimeoutMs?: number;
+  }): Promise<IShell>;
 
   /**
    * Signal emitted when a terminal is disposed.
