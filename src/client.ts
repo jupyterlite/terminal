@@ -22,8 +22,8 @@ import type { ILiteTerminalAPIClient } from './tokens';
 
 /**
  * Default time (in milliseconds) to wait for a new shell to become ready.
- * Cockle disposes the shell without rejecting `ready` if it fails to
- * initialize, so race the wait against this timeout to surface the failure.
+ * A shell that fails to start is disposed without its `ready` promise
+ * rejecting, so race the wait against this timeout to surface the failure.
  */
 const DEFAULT_READY_TIMEOUT_MS = 30000;
 

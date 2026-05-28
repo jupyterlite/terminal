@@ -110,9 +110,9 @@ class HeadlessShellPool {
 }
 
 /**
- * Normalize the captured TTY buffer for callers that expect pipe-like output.
- * Cockle translates `\n` to `\r\n` on TTY writes (ONLCR) and echoes the input
- * line back, so undo both: convert `\r\n` to `\n` and strip the leading echo.
+ * Normalize the raw shell output for callers that expect pipe-like text. The
+ * captured buffer echoes back the submitted command and uses `\r\n` line
+ * endings, so strip the echoed command line and convert `\r\n` to `\n`.
  */
 function cleanCapturedOutput(captured: string, code: string): string {
   const normalized = captured.replace(/\r\n/g, '\n');
@@ -129,8 +129,8 @@ async function runOnSession(
   timeout: number
 ): Promise<IExecuteBashResult> {
   const shellId = session.shell.shellId;
-  // Cockle runs the command on `\r`, so fold any CR/CRLF inside the command
-  // into `\n` to avoid executing a multi-line command one line too early.
+  // Fold any CR/CRLF inside the command to `\n` so it runs as a single command
+  // rather than one line at a time when submitted with a trailing `\r`.
   const command = code.trim().replace(/\r\n?/g, '\n');
   if (command.length === 0) {
     return {
@@ -144,9 +144,9 @@ async function runOnSession(
     };
   }
 
-  // A timed-out command keeps running in the worker, leaving the session in an
-  // unknown state, so refuse to reuse it. Also refuse overlapping commands,
-  // whose input and captured output would otherwise interleave.
+  // A timed-out command keeps running, so the session is left in an unknown
+  // state; refuse to reuse it. Also refuse overlapping commands, whose input
+  // and captured output would otherwise interleave.
   if (session.timedOut) {
     throw new Error(
       `Headless shell '${shellId}' is no longer usable after a command timed out`
@@ -159,9 +159,9 @@ async function runOnSession(
 
   const startTime = Date.now();
   const startLen = session.output.length;
-  // `input()` resolves once the worker has run the command, so it doubles as
-  // the "command finished" signal. Cockle has no interrupt, so race it against
-  // a timer to avoid hanging on a command that blocks (e.g. on stdin).
+  // `input()` resolves only after the command has finished, so it doubles as
+  // the "command finished" signal. A running command cannot be interrupted, so
+  // race it against a timer to avoid hanging on one that blocks (e.g. on stdin).
   const inputDone = session.shell.input(command + '\r').then(
     () => false,
     () => false // a late rejection (e.g. disposed shell) counts as finished
