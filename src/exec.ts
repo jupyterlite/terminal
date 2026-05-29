@@ -385,7 +385,7 @@ function registerCommands(
  */
 export const terminalExecPlugin: JupyterFrontEndPlugin<void> = {
   id: '@jupyterlite/terminal:exec',
-  description: 'AI-friendly headless shell exec commands backed by cockle',
+  description: 'Headless shell exec commands backed by cockle',
   autoStart: true,
   requires: [ILiteTerminalAPIClient],
   activate: (
