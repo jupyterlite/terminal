@@ -2,6 +2,31 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.4.2a1
+
+Pre-release to check changes work downstream.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.4.1...3a7b8a237a668de61ec4a3d88f49124adf3ba58b))
+
+### Enhancements made
+
+- Update to cockle 1.5.2-a0 [#112](https://github.com/jupyterlite/terminal/pull/112) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Bump Galata and Playwright [#111](https://github.com/jupyterlite/terminal/pull/111) ([@jtpio](https://github.com/jtpio), [@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-14&to=2026-05-29&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-14..2026-05-29&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2026-05-14..2026-05-29&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.4.1
 
 This is a bug fix release to fix the use of backspace in WebAssembly commands, in particular `nano` and `vim`.
@@ -21,8 +46,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-06&to=2026-05-14&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-06..2026-05-14&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.4.0
 
