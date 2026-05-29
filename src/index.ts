@@ -20,6 +20,7 @@ import { WebSocket } from 'mock-socket';
 
 import { LiteTerminalAPIClient } from './client';
 import { ILiteTerminalAPIClient } from './tokens';
+import { Shell } from './shell';
 
 /**
  * Plugin containing client for in-browser terminals.
@@ -144,4 +145,4 @@ export default [
 ];
 
 // Export ILiteTerminalAPIClient so that other extensions can register external commands.
-export { ILiteTerminalAPIClient };
+export { ILiteTerminalAPIClient, Shell };
