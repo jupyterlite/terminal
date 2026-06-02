@@ -47,22 +47,22 @@ jupyter lite build
 ## Running commands programmatically
 
 Besides the interactive terminal, the extension registers JupyterLab commands that
-run bash in a _headless_ `cockle` shell: one that captures the output and exit code
-without opening a terminal widget. These are useful for other extensions or
+run commands in a _headless_ `cockle` shell: one that captures the output and exit
+code without opening a terminal widget. These are useful for other extensions or
 automation that need to run shell commands in JupyterLite.
 
-| Command                                   | Description                                            |
-| ----------------------------------------- | ------------------------------------------------------ |
-| `@jupyterlite/terminal:execute-bash`      | Run a bash command and return its output and exit code |
-| `@jupyterlite/terminal:start-terminal`    | Start a reusable headless shell                        |
-| `@jupyterlite/terminal:shutdown-terminal` | Shut down a headless shell by name                     |
-| `@jupyterlite/terminal:list-terminals`    | List the running headless shells                       |
+| Command                                | Description                                       |
+| -------------------------------------- | ------------------------------------------------- |
+| `@jupyterlite/terminal:execute-shell`  | Run a command and return its output and exit code |
+| `@jupyterlite/terminal:start-shell`    | Start a reusable headless shell                   |
+| `@jupyterlite/terminal:shutdown-shell` | Shut down a headless shell by name                |
+| `@jupyterlite/terminal:list-shells`    | List the running headless shells                  |
 
 Run a single command (a throwaway shell is created and disposed automatically):
 
 ```ts
 const result = await app.commands.execute(
-  '@jupyterlite/terminal:execute-bash',
+  '@jupyterlite/terminal:execute-shell',
   {
     code: 'echo hello'
   }
@@ -71,22 +71,22 @@ console.log(result.exitCode); // 0
 console.log(result.output); // hello
 ```
 
-Pass a `terminalName` to reuse a shell across calls so state such as the working
+Pass a `shellName` to reuse a shell across calls so state such as the working
 directory persists:
 
 ```ts
-const { terminalName } = await app.commands.execute(
-  '@jupyterlite/terminal:start-terminal'
+const { shellName } = await app.commands.execute(
+  '@jupyterlite/terminal:start-shell'
 );
-await app.commands.execute('@jupyterlite/terminal:execute-bash', {
+await app.commands.execute('@jupyterlite/terminal:execute-shell', {
   code: 'cd /drive',
-  terminalName
+  shellName
 });
 const result = await app.commands.execute(
-  '@jupyterlite/terminal:execute-bash',
+  '@jupyterlite/terminal:execute-shell',
   {
     code: 'pwd',
-    terminalName
+    shellName
   }
 );
 console.log(result.output); // /drive

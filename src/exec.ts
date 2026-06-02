@@ -11,31 +11,31 @@ import type { CommandRegistry } from '@lumino/commands';
 import { ILiteTerminalAPIClient } from './tokens';
 
 /**
- * Default timeout (in milliseconds) for execute-bash commands.
+ * Default timeout (in milliseconds) for execute-shell commands.
  */
 const DEFAULT_TIMEOUT_MS = 30000;
 
-type BashExecutionStatus = 'ok' | 'error' | 'timeout';
+type ShellExecutionStatus = 'ok' | 'error' | 'timeout';
 
-interface IExecuteBashResult {
+interface IExecuteShellResult {
   success: boolean;
-  status: BashExecutionStatus;
+  status: ShellExecutionStatus;
   output: string;
   exitCode: number | null;
-  terminalName: string;
+  shellName: string;
   duration: number;
   message: string;
 }
 
-interface ITerminalListItem {
+interface IShellListItem {
   name: string;
 }
 
 const COMMAND_IDS = {
-  executeBash: '@jupyterlite/terminal:execute-bash',
-  startTerminal: '@jupyterlite/terminal:start-terminal',
-  shutdownTerminal: '@jupyterlite/terminal:shutdown-terminal',
-  listTerminals: '@jupyterlite/terminal:list-terminals'
+  executeShell: '@jupyterlite/terminal:execute-shell',
+  startShell: '@jupyterlite/terminal:start-shell',
+  shutdownShell: '@jupyterlite/terminal:shutdown-shell',
+  listShells: '@jupyterlite/terminal:list-shells'
 } as const;
 
 interface IHeadlessSession {
@@ -127,7 +127,7 @@ async function runOnSession(
   session: IHeadlessSession,
   code: string,
   timeout: number
-): Promise<IExecuteBashResult> {
+): Promise<IExecuteShellResult> {
   const shellId = session.shell.shellId;
   // Fold any CR/CRLF inside the command to `\n` so it runs as a single command
   // rather than one line at a time when submitted with a trailing `\r`.
@@ -138,7 +138,7 @@ async function runOnSession(
       status: 'error',
       output: '',
       exitCode: null,
-      terminalName: shellId,
+      shellName: shellId,
       duration: 0,
       message: 'No command to run'
     };
@@ -190,7 +190,7 @@ async function runOnSession(
       status: 'timeout',
       output,
       exitCode: null,
-      terminalName: shellId,
+      shellName: shellId,
       duration,
       message: `Command timed out after ${timeout}ms`
     };
@@ -202,7 +202,7 @@ async function runOnSession(
     status: exitCode === 0 ? 'ok' : 'error',
     output,
     exitCode,
-    terminalName: shellId,
+    shellName: shellId,
     duration,
     message:
       exitCode === 0
@@ -215,10 +215,10 @@ function registerCommands(
   commands: CommandRegistry,
   pool: HeadlessShellPool
 ): void {
-  commands.addCommand(COMMAND_IDS.executeBash, {
-    label: 'Execute Bash',
+  commands.addCommand(COMMAND_IDS.executeShell, {
+    label: 'Execute Shell',
     caption:
-      'Execute a bash command in a headless cockle shell and capture the output',
+      'Execute a command in a headless cockle shell and capture the output',
     describedBy: {
       args: {
         type: 'object',
@@ -226,9 +226,9 @@ function registerCommands(
           code: {
             type: 'string',
             description:
-              'The bash command to execute. Runs as a single pipeline: pipes (|), sequential separators (;), and file redirections (>, >>, 2>, <) are supported. Not supported (cockle limitations): chaining with && or ||, command substitution ($(...) and backticks), environment variable expansion ($VAR), and file-descriptor duplication (2>&1). Run `cockle-config command` to list the commands available in the shell.'
+              'The shell command to execute. Runs as a single pipeline: pipes (|), sequential separators (;), and file redirections (>, >>, 2>, <) are supported. Not supported (cockle limitations): chaining with && or ||, command substitution ($(...) and backticks), environment variable expansion ($VAR), and file-descriptor duplication (2>&1). Run `cockle-config command` to list the commands available in the shell.'
           },
-          terminalName: {
+          shellName: {
             type: 'string',
             description:
               'Name of an existing headless shell to reuse. If not provided, a new shell is created and shut down after execution.'
@@ -236,7 +236,7 @@ function registerCommands(
           cwd: {
             type: 'string',
             description:
-              'Working directory for a newly created headless shell. Ignored when reusing an existing session via terminalName.'
+              'Working directory for a newly created headless shell. Ignored when reusing an existing session via shellName.'
           },
           timeout: {
             type: 'number',
@@ -246,17 +246,17 @@ function registerCommands(
         required: ['code']
       }
     },
-    execute: async (args: any): Promise<IExecuteBashResult> => {
+    execute: async (args: any): Promise<IExecuteShellResult> => {
       const code = args?.code;
-      const terminalName = args?.terminalName;
+      const shellName = args?.shellName;
       const cwd = args?.cwd;
       const timeout = args?.timeout ?? DEFAULT_TIMEOUT_MS;
 
       if (typeof code !== 'string' || code.length === 0) {
         throw new Error('code is required and must be a non-empty string');
       }
-      if (terminalName !== undefined && typeof terminalName !== 'string') {
-        throw new Error('terminalName must be a string');
+      if (shellName !== undefined && typeof shellName !== 'string') {
+        throw new Error('shellName must be a string');
       }
       if (cwd !== undefined && typeof cwd !== 'string') {
         throw new Error('cwd must be a string');
@@ -272,12 +272,10 @@ function registerCommands(
       let session: IHeadlessSession;
       let disposeAfter = false;
 
-      if (terminalName) {
-        const existing = pool.get(terminalName);
+      if (shellName) {
+        const existing = pool.get(shellName);
         if (!existing) {
-          throw new Error(
-            `No headless shell found with name '${terminalName}'`
-          );
+          throw new Error(`No headless shell found with name '${shellName}'`);
         }
         session = existing;
       } else {
@@ -299,10 +297,10 @@ function registerCommands(
     }
   });
 
-  commands.addCommand(COMMAND_IDS.startTerminal, {
-    label: 'Start Headless Terminal',
+  commands.addCommand(COMMAND_IDS.startShell, {
+    label: 'Start Headless Shell',
     caption:
-      'Start a new headless cockle shell that can be reused via execute-bash',
+      'Start a new headless cockle shell that can be reused via execute-shell',
     describedBy: {
       args: {
         type: 'object',
@@ -324,54 +322,52 @@ function registerCommands(
       return {
         success: true,
         message: `Headless shell '${session.shell.shellId}' started successfully`,
-        terminalName: session.shell.shellId
+        shellName: session.shell.shellId
       };
     }
   });
 
-  commands.addCommand(COMMAND_IDS.shutdownTerminal, {
-    label: 'Shutdown Headless Terminal',
+  commands.addCommand(COMMAND_IDS.shutdownShell, {
+    label: 'Shutdown Headless Shell',
     caption: 'Shut down a running headless cockle shell by name',
     describedBy: {
       args: {
         type: 'object',
         properties: {
-          terminalName: {
+          shellName: {
             type: 'string',
             description: 'The name of the headless shell to shut down.'
           }
         },
-        required: ['terminalName']
+        required: ['shellName']
       }
     },
     execute: async (args: any) => {
-      const terminalName = args?.terminalName;
-      if (typeof terminalName !== 'string' || terminalName.length === 0) {
-        throw new Error(
-          'terminalName is required and must be a non-empty string'
-        );
+      const shellName = args?.shellName;
+      if (typeof shellName !== 'string' || shellName.length === 0) {
+        throw new Error('shellName is required and must be a non-empty string');
       }
-      await pool.shutdown(terminalName);
+      await pool.shutdown(shellName);
       return {
         success: true,
-        message: `Headless shell '${terminalName}' shut down successfully`,
-        terminalName
+        message: `Headless shell '${shellName}' shut down successfully`,
+        shellName
       };
     }
   });
 
-  commands.addCommand(COMMAND_IDS.listTerminals, {
-    label: 'List Headless Terminals',
+  commands.addCommand(COMMAND_IDS.listShells, {
+    label: 'List Headless Shells',
     caption:
       'List running headless cockle shells (does not include user-opened terminals)',
     describedBy: { args: { type: 'object', properties: {} } },
     execute: async () => {
       const names = pool.names();
-      const terminals: ITerminalListItem[] = names.map(name => ({ name }));
+      const shells: IShellListItem[] = names.map(name => ({ name }));
       return {
         success: true,
-        terminals,
-        count: terminals.length,
+        shells,
+        count: shells.length,
         available: true
       };
     }
@@ -380,7 +376,7 @@ function registerCommands(
 
 /**
  * Plugin that registers headless shell exec commands backed by cockle.
- * These run bash code in a headless shell and capture its output and exit
+ * These run commands in a headless shell and capture their output and exit
  * code, without opening a terminal widget in the UI.
  */
 export const terminalExecPlugin: JupyterFrontEndPlugin<void> = {
