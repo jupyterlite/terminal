@@ -3,6 +3,8 @@ import type { Terminal } from '@jupyterlab/services';
 import { ServerConnection } from '@jupyterlab/services';
 import type {
   IExternalCommand,
+  IOutputCallback,
+  IShell,
   IShellManager,
   IStdinReply,
   IStdinRequest
@@ -17,6 +19,13 @@ import { Server as WebSocketServer } from 'mock-socket';
 
 import { Shell } from './shell';
 import type { ILiteTerminalAPIClient } from './tokens';
+
+/**
+ * Default time (in milliseconds) to wait for a new shell to become ready.
+ * A shell that fails to start is disposed without its `ready` promise
+ * rejecting, so race the wait against this timeout to surface the failure.
+ */
+const DEFAULT_READY_TIMEOUT_MS = 30000;
 
 export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   constructor(options: { serverSettings?: ServerConnection.ISettings } = {}) {
@@ -139,6 +148,67 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
 
   registerExternalCommand(options: IExternalCommand.IOptions): void {
     this._externalCommands.push(options);
+  }
+
+  async createHeadlessShell(options: {
+    shellId: string;
+    cwd?: string;
+    environment?: { [key: string]: string | undefined };
+    outputCallback: IOutputCallback;
+    readyTimeoutMs?: number;
+  }): Promise<IShell> {
+    const { baseUrl } = this.serverSettings;
+    const environment =
+      options.environment !== undefined
+        ? { ...this._environment, ...options.environment }
+        : this._environment;
+    // `color: true` keeps TERM/TERMINFO populated for commands that need them.
+    const shell = new Shell({
+      shellId: options.shellId,
+      mountpoint: '/drive',
+      cwd: options.cwd,
+      baseUrl,
+      wasmBaseUrl: URLExt.join(
+        baseUrl,
+        'extensions/@jupyterlite/terminal/static/wasm/'
+      ),
+      browsingContextId: this._browsingContextId,
+      shellManager: this._shellManager,
+      aliases: this._aliases,
+      environment,
+      externalCommands: this._externalCommands,
+      color: true,
+      outputCallback: options.outputCallback
+    });
+
+    const readyTimeoutMs = options.readyTimeoutMs ?? DEFAULT_READY_TIMEOUT_MS;
+    let readyTimer: ReturnType<typeof setTimeout> | undefined;
+    try {
+      await Promise.race([
+        shell.ready,
+        new Promise<never>((_, reject) => {
+          readyTimer = setTimeout(
+            () =>
+              reject(
+                new Error(
+                  `Timed out after ${readyTimeoutMs}ms waiting for cockle shell '${options.shellId}' to become ready`
+                )
+              ),
+            readyTimeoutMs
+          );
+        })
+      ]);
+      await shell.start();
+    } catch (err) {
+      shell.dispose();
+      throw err;
+    } finally {
+      if (readyTimer !== undefined) {
+        clearTimeout(readyTimer);
+      }
+    }
+
+    return shell;
   }
 
   async shutdown(name: string): Promise<void> {
