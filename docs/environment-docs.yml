@@ -8,7 +8,7 @@ dependencies:
   - python =3.13
 
   # Jupyter dependencies
-  - jupyterlite-core >=0.7,<0.8.0
+  - jupyterlite-core >=0.7,<0.9.0
 
   # Docs dependencies
   - jupyterlite-sphinx
