@@ -37,8 +37,8 @@ test.describe('Terminal', () => {
     const modified = page.locator('span.jp-DirListing-itemModified');
     await modified.evaluateAll(els => els.map(el => (el.innerHTML = '')));
 
-    const imageName = 'initial.png';
-    expect(await page.screenshot()).toMatchSnapshot('initial.png');
+    const term = page.locator('div.xterm-viewport');
+    expect(await term.screenshot()).toMatchSnapshot('initial.png');
   });
 
   test('should run various commands', async ({ page }) => {
@@ -74,8 +74,8 @@ test.describe('Terminal', () => {
     const modified = page.locator('span.jp-DirListing-itemModified');
     await modified.evaluateAll(els => els.map(el => (el.innerHTML = '')));
 
-    const imageName = 'various-commands.png';
-    expect(await page.screenshot()).toMatchSnapshot('various-commands.png');
+    const term = page.locator('div.xterm-viewport');
+    expect(await term.screenshot()).toMatchSnapshot('various-commands.png');
   });
 
   test('should support both SharedArrayBuffer and ServiceWorker for stdin', async ({
