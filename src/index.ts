@@ -21,7 +21,8 @@ import { WebSocket } from 'mock-socket';
 import { LiteTerminalAPIClient } from './client';
 import { terminalExecPlugin } from './exec';
 import { ILiteTerminalAPIClient } from './tokens';
-import { Shell } from './shell';
+import { ITerminalShell } from './shell';
+import { TerminalShell } from './shell';
 
 /**
  * Plugin containing client for in-browser terminals.
@@ -146,5 +147,9 @@ export default [
   terminalExecPlugin
 ];
 
-// Export ILiteTerminalAPIClient so that other extensions can register external commands.
-export { ILiteTerminalAPIClient, Shell };
+export {
+  ILiteTerminalAPIClient,
+  ITerminalShell,
+  LiteTerminalAPIClient,
+  TerminalShell
+};
