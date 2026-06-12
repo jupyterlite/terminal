@@ -17,7 +17,8 @@ import { Signal } from '@lumino/signaling';
 import type { Client as WebSocketClient } from 'mock-socket';
 import { Server as WebSocketServer } from 'mock-socket';
 
-import { Shell } from './shell';
+import type { ITerminalShell } from './shell';
+import { TerminalShell } from './shell';
 import type { ILiteTerminalAPIClient } from './tokens';
 
 /**
@@ -31,7 +32,6 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   constructor(options: { serverSettings?: ServerConnection.ISettings } = {}) {
     this.serverSettings =
       options.serverSettings ?? ServerConnection.makeSettings();
-    this._shellManager = new ShellManager();
   }
 
   /**
@@ -46,7 +46,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
    * Function that handles stdin requests received from service worker.
    */
   async handleStdin(request: IStdinRequest): Promise<IStdinReply> {
-    return await this._shellManager.handleStdin(request);
+    return await Private.shellManager.handleStdin(request);
   }
 
   get isAvailable(): boolean {
@@ -62,7 +62,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     // Create shell.
     const name = options?.name ?? this._nextAvailableName();
     const { baseUrl, wsUrl } = this.serverSettings;
-    const shell = new Shell({
+    const shell = await this.createShell({
       mountpoint: '/drive',
       cwd: options?.cwd,
       baseUrl,
@@ -75,17 +75,17 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       environment: this._environment,
       externalCommands: this._externalCommands,
       shellId: name,
-      shellManager: this._shellManager,
+      shellManager: Private.shellManager,
       outputCallback: text => {
         const msg = JSON.stringify(['stdout', text]);
         shell.socket?.send(msg);
       }
     });
-    this._shells.set(name, shell);
+    Private.shells.set(name, shell);
 
     // Hook to connect socket to shell.
     const hook = async (
-      shell: Shell,
+      shell: ITerminalShell,
       socket: WebSocketClient
     ): Promise<void> => {
       shell.socket = socket;
@@ -163,7 +163,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
         ? { ...this._environment, ...options.environment }
         : this._environment;
     // `color: true` keeps TERM/TERMINFO populated for commands that need them.
-    const shell = new Shell({
+    const shell = await this.createShell({
       shellId: options.shellId,
       mountpoint: '/drive',
       cwd: options.cwd,
@@ -173,7 +173,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
         'extensions/@jupyterlite/terminal/static/wasm/'
       ),
       browsingContextId: this._browsingContextId,
-      shellManager: this._shellManager,
+      shellManager: Private.shellManager,
       aliases: this._aliases,
       environment,
       externalCommands: this._externalCommands,
@@ -212,11 +212,11 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   }
 
   async shutdown(name: string): Promise<void> {
-    const shell = this._shells.get(name);
+    const shell = Private.shells.get(name);
     if (shell !== undefined) {
       shell.socket?.send(JSON.stringify(['disconnect']));
       shell.socket?.close();
-      this._shells.delete(name);
+      Private.shells.delete(name);
       shell.dispose();
     }
   }
@@ -226,13 +226,19 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   }
 
   themeChange(isDarkMode?: boolean): void {
-    for (const shell of this._shells.values()) {
+    for (const shell of Private.shells.values()) {
       shell.themeChange(isDarkMode);
     }
   }
 
+  protected async createShell(
+    options: ITerminalShell.IOptions
+  ): Promise<ITerminalShell> {
+    return new TerminalShell(options);
+  }
+
   private get _models(): Terminal.IModel[] {
-    return Array.from(this._shells.keys(), name => {
+    return Array.from(Private.shells.keys(), name => {
       return { name };
     });
   }
@@ -240,7 +246,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   private _nextAvailableName(): string {
     for (let i = 1; ; ++i) {
       const name = `${i}`;
-      if (!this._shells.has(name)) {
+      if (!Private.shells.has(name)) {
         return name;
       }
     }
@@ -250,7 +256,13 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   private _environment?: { [key: string]: string | undefined };
   private _browsingContextId?: string;
   private _externalCommands: IExternalCommand.IOptions[] = [];
-  private _shellManager: IShellManager;
-  private _shells = new Map<string, Shell>();
   private _terminalDisposed = new Signal<this, string>(this);
+}
+
+/**
+ * A namespace for private data.
+ */
+namespace Private {
+  export const shellManager: IShellManager = new ShellManager();
+  export const shells = new Map<string, ITerminalShell>();
 }
