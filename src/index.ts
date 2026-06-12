@@ -20,9 +20,8 @@ import { WebSocket } from 'mock-socket';
 
 import { LiteTerminalAPIClient } from './client';
 import { terminalExecPlugin } from './exec';
+import { ITerminalShell, TerminalShell } from './shell';
 import { ILiteTerminalAPIClient } from './tokens';
-import { ITerminalShell } from './shell';
-import { TerminalShell } from './shell';
 
 /**
  * Plugin containing client for in-browser terminals.
