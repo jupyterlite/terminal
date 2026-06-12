@@ -38,9 +38,7 @@ const labextensionStaticDir = path.resolve(
  * Return the filename that the default labextension build process uses for the web worker.
  */
 function getOutputFilename(devMode) {
-  const lsProd = fs
-    .readdirSync(labextensionStaticDir)
-    .filter(f => f.endsWith('js'));
+  const lsProd = fs.readdirSync(labextensionStaticDir).filter(f => f.endsWith('js'));
   const regex = /extends (\w+)\.BaseShellWorker/;
 
   let outputFilename = '';
@@ -53,9 +51,7 @@ function getOutputFilename(devMode) {
   }
 
   if (outputFilename == '') {
-    console.error(
-      'ERROR: Failed to find JavaScript web worker file to replace'
-    );
+    console.error('ERROR: Failed to find JavaScript web worker file to replace');
     process.exit(1);
   }
 

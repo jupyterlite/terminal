@@ -1,13 +1,9 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import type {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin
-} from '@jupyterlab/application';
+import type { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import type { IShell } from '@jupyterlite/cockle';
 import type { CommandRegistry } from '@lumino/commands';
-
 import { ILiteTerminalAPIClient } from './tokens';
 
 /**
@@ -148,9 +144,7 @@ async function runOnSession(
   // state; refuse to reuse it. Also refuse overlapping commands, whose input
   // and captured output would otherwise interleave.
   if (session.timedOut) {
-    throw new Error(
-      `Headless shell '${shellId}' is no longer usable after a command timed out`
-    );
+    throw new Error(`Headless shell '${shellId}' is no longer usable after a command timed out`);
   }
   if (session.busy) {
     throw new Error(`Headless shell '${shellId}' is already running a command`);
@@ -205,20 +199,14 @@ async function runOnSession(
     shellName: shellId,
     duration,
     message:
-      exitCode === 0
-        ? 'Command executed successfully'
-        : `Command failed with exit code ${exitCode}`
+      exitCode === 0 ? 'Command executed successfully' : `Command failed with exit code ${exitCode}`
   };
 }
 
-function registerCommands(
-  commands: CommandRegistry,
-  pool: HeadlessShellPool
-): void {
+function registerCommands(commands: CommandRegistry, pool: HeadlessShellPool): void {
   commands.addCommand(COMMAND_IDS.executeShell, {
     label: 'Execute Shell',
-    caption:
-      'Execute a command in a headless cockle shell and capture the output',
+    caption: 'Execute a command in a headless cockle shell and capture the output',
     describedBy: {
       args: {
         type: 'object',
@@ -261,11 +249,7 @@ function registerCommands(
       if (cwd !== undefined && typeof cwd !== 'string') {
         throw new Error('cwd must be a string');
       }
-      if (
-        typeof timeout !== 'number' ||
-        !Number.isFinite(timeout) ||
-        timeout <= 0
-      ) {
+      if (typeof timeout !== 'number' || !Number.isFinite(timeout) || timeout <= 0) {
         throw new Error('timeout must be a positive number');
       }
 
@@ -299,16 +283,14 @@ function registerCommands(
 
   commands.addCommand(COMMAND_IDS.startShell, {
     label: 'Start Headless Shell',
-    caption:
-      'Start a new headless cockle shell that can be reused via execute-shell',
+    caption: 'Start a new headless cockle shell that can be reused via execute-shell',
     describedBy: {
       args: {
         type: 'object',
         properties: {
           cwd: {
             type: 'string',
-            description:
-              'Working directory for the new headless shell (optional).'
+            description: 'Working directory for the new headless shell (optional).'
           }
         }
       }
@@ -358,8 +340,7 @@ function registerCommands(
 
   commands.addCommand(COMMAND_IDS.listShells, {
     label: 'List Headless Shells',
-    caption:
-      'List running headless cockle shells (does not include user-opened terminals)',
+    caption: 'List running headless cockle shells (does not include user-opened terminals)',
     describedBy: { args: { type: 'object', properties: {} } },
     execute: async () => {
       const names = pool.names();
@@ -384,10 +365,7 @@ export const terminalExecPlugin: JupyterFrontEndPlugin<void> = {
   description: 'Headless shell exec commands backed by cockle',
   autoStart: true,
   requires: [ILiteTerminalAPIClient],
-  activate: (
-    app: JupyterFrontEnd,
-    liteTerminalAPIClient: ILiteTerminalAPIClient
-  ): void => {
+  activate: (app: JupyterFrontEnd, liteTerminalAPIClient: ILiteTerminalAPIClient): void => {
     const pool = new HeadlessShellPool(liteTerminalAPIClient);
     registerCommands(app.commands, pool);
   }

@@ -13,10 +13,8 @@ import { ShellManager } from '@jupyterlite/cockle';
 import type { JSONPrimitive } from '@lumino/coreutils';
 import type { ISignal } from '@lumino/signaling';
 import { Signal } from '@lumino/signaling';
-
 import type { Client as WebSocketClient } from 'mock-socket';
 import { Server as WebSocketServer } from 'mock-socket';
-
 import type { ITerminalShell } from './shell';
 import { TerminalShell } from './shell';
 import type { ILiteTerminalAPIClient } from './tokens';
@@ -30,8 +28,7 @@ const DEFAULT_READY_TIMEOUT_MS = 30000;
 
 export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   constructor(options: { serverSettings?: ServerConnection.ISettings } = {}) {
-    this.serverSettings =
-      options.serverSettings ?? ServerConnection.makeSettings();
+    this.serverSettings = options.serverSettings ?? ServerConnection.makeSettings();
   }
 
   /**
@@ -56,9 +53,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
 
   readonly serverSettings: ServerConnection.ISettings;
 
-  async startNew(
-    options?: Terminal.ITerminal.IOptions
-  ): Promise<Terminal.IModel> {
+  async startNew(options?: Terminal.ITerminal.IOptions): Promise<Terminal.IModel> {
     // Create shell.
     const name = options?.name ?? this._nextAvailableName();
     const { baseUrl, wsUrl } = this.serverSettings;
@@ -66,10 +61,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       mountpoint: '/drive',
       cwd: options?.cwd,
       baseUrl,
-      wasmBaseUrl: URLExt.join(
-        baseUrl,
-        'extensions/@jupyterlite/terminal/static/wasm/'
-      ),
+      wasmBaseUrl: URLExt.join(baseUrl, 'extensions/@jupyterlite/terminal/static/wasm/'),
       browsingContextId: this._browsingContextId,
       aliases: this._aliases,
       environment: this._environment,
@@ -84,10 +76,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     Private.shells.set(name, shell);
 
     // Hook to connect socket to shell.
-    const hook = async (
-      shell: ITerminalShell,
-      socket: WebSocketClient
-    ): Promise<void> => {
+    const hook = async (shell: ITerminalShell, socket: WebSocketClient): Promise<void> => {
       shell.socket = socket;
 
       socket.on('message', async (message: any) => {
@@ -168,10 +157,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       mountpoint: '/drive',
       cwd: options.cwd,
       baseUrl,
-      wasmBaseUrl: URLExt.join(
-        baseUrl,
-        'extensions/@jupyterlite/terminal/static/wasm/'
-      ),
+      wasmBaseUrl: URLExt.join(baseUrl, 'extensions/@jupyterlite/terminal/static/wasm/'),
       browsingContextId: this._browsingContextId,
       shellManager: Private.shellManager,
       aliases: this._aliases,
@@ -231,9 +217,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     }
   }
 
-  protected async createShell(
-    options: ITerminalShell.IOptions
-  ): Promise<ITerminalShell> {
+  protected async createShell(options: ITerminalShell.IOptions): Promise<ITerminalShell> {
     return new TerminalShell(options);
   }
 

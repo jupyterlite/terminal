@@ -1,6 +1,5 @@
 import type { IShell } from '@jupyterlite/cockle';
 import { BaseShell } from '@jupyterlite/cockle';
-
 import type { Client as WebSocketClient } from 'mock-socket';
 
 export interface ITerminalShell extends IShell {

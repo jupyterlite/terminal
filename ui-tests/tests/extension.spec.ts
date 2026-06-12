@@ -13,11 +13,7 @@ test.describe('Terminal extension', () => {
     await page.waitForTimeout(LONG_WAIT_MS);
 
     expect(
-      logs.filter(s =>
-        s.match(
-          /^JupyterLite extension @jupyterlite\/terminal:manager activated/
-        )
-      )
+      logs.filter(s => s.match(/^JupyterLite extension @jupyterlite\/terminal:manager activated/))
     ).toHaveLength(1);
   });
 });

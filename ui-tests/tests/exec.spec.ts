@@ -6,15 +6,11 @@ const START_SHELL = '@jupyterlite/terminal:start-shell';
 const SHUTDOWN_SHELL = '@jupyterlite/terminal:shutdown-shell';
 const LIST_SHELLS = '@jupyterlite/terminal:list-shells';
 
-async function execute(
-  page: IJupyterLabPageFixture,
-  id: string,
-  args: Record<string, any> = {}
-) {
-  return await page.evaluate(
-    ({ id, args }) => window.galata.app.commands.execute(id, args),
-    { id, args }
-  );
+async function execute(page: IJupyterLabPageFixture, id: string, args: Record<string, any> = {}) {
+  return await page.evaluate(({ id, args }) => window.galata.app.commands.execute(id, args), {
+    id,
+    args
+  });
 }
 
 test.describe('programmatic commands', () => {

@@ -2,8 +2,7 @@ import { expect, test } from '@jupyterlab/galata';
 
 import { TERMINAL_SELECTOR, inputLine } from './utils/misc';
 
-const OPEN_TERMINAL_1 =
-  'span.jp-RunningSessions-itemLabel:has-text("Terminal 1")';
+const OPEN_TERMINAL_1 = 'span.jp-RunningSessions-itemLabel:has-text("Terminal 1")';
 const TERMINALS_1 = 'text=terminals/1';
 
 test.describe('New', () => {
@@ -25,9 +24,7 @@ test.describe('New', () => {
 
   test('should open via launcher', async ({ page }) => {
     await page.goto();
-    await page
-      .locator('.jp-LauncherCard-label >> p:has-text("Terminal")')
-      .click();
+    await page.locator('.jp-LauncherCard-label >> p:has-text("Terminal")').click();
     await page.locator(TERMINAL_SELECTOR).waitFor();
   });
 });

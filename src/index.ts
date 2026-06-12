@@ -1,10 +1,7 @@
 // Copyright (c) Jupyter Development Team.
 // Distributed under the terms of the Modified BSD License.
 
-import type {
-  JupyterFrontEnd,
-  JupyterFrontEndPlugin
-} from '@jupyterlab/application';
+import type { JupyterFrontEnd, JupyterFrontEndPlugin } from '@jupyterlab/application';
 import { IThemeManager } from '@jupyterlab/apputils';
 import type { ServiceManagerPlugin, Terminal } from '@jupyterlab/services';
 import {
@@ -13,11 +10,9 @@ import {
   ServerConnection,
   TerminalManager
 } from '@jupyterlab/services';
-import { IServiceWorkerManager } from '@jupyterlite/apputils';
 import { ISettingRegistry } from '@jupyterlab/settingregistry';
-
+import { IServiceWorkerManager } from '@jupyterlite/apputils';
 import { WebSocket } from 'mock-socket';
-
 import { LiteTerminalAPIClient } from './client';
 import { terminalExecPlugin } from './exec';
 import { ITerminalShell, TerminalShell } from './shell';
@@ -26,26 +21,22 @@ import { ILiteTerminalAPIClient } from './tokens';
 /**
  * Plugin containing client for in-browser terminals.
  */
-const terminalClientPlugin: ServiceManagerPlugin<Terminal.ITerminalAPIClient> =
-  {
-    id: '@jupyterlite/terminal:client',
-    description: 'The client for Lite terminals',
-    autoStart: true,
-    provides: ILiteTerminalAPIClient,
-    optional: [IServerSettings],
-    activate: (
-      _: null,
-      serverSettings?: ServerConnection.ISettings
-    ): ILiteTerminalAPIClient => {
-      return new LiteTerminalAPIClient({
-        serverSettings: {
-          ...ServerConnection.makeSettings(),
-          ...serverSettings,
-          WebSocket
-        }
-      });
-    }
-  };
+const terminalClientPlugin: ServiceManagerPlugin<Terminal.ITerminalAPIClient> = {
+  id: '@jupyterlite/terminal:client',
+  description: 'The client for Lite terminals',
+  autoStart: true,
+  provides: ILiteTerminalAPIClient,
+  optional: [IServerSettings],
+  activate: (_: null, serverSettings?: ServerConnection.ISettings): ILiteTerminalAPIClient => {
+    return new LiteTerminalAPIClient({
+      serverSettings: {
+        ...ServerConnection.makeSettings(),
+        ...serverSettings,
+        WebSocket
+      }
+    });
+  }
+};
 
 /**
  * Plugin containing manager for in-browser terminals.
@@ -56,13 +47,8 @@ const terminalManagerPlugin: ServiceManagerPlugin<Terminal.IManager> = {
   autoStart: true,
   provides: ITerminalManager,
   requires: [ILiteTerminalAPIClient],
-  activate: (
-    _: null,
-    terminalAPIClient: Terminal.ITerminalAPIClient
-  ): Terminal.IManager => {
-    console.log(
-      'JupyterLite extension @jupyterlite/terminal:manager activated'
-    );
+  activate: (_: null, terminalAPIClient: Terminal.ITerminalAPIClient): Terminal.IManager => {
+    console.log('JupyterLite extension @jupyterlite/terminal:manager activated');
     return new TerminalManager({
       terminalAPIClient,
       serverSettings: terminalAPIClient.serverSettings
@@ -84,8 +70,7 @@ const terminalServiceWorkerPlugin: JupyterFrontEndPlugin<void> = {
     serviceWorkerManager?: IServiceWorkerManager
   ): void => {
     if (serviceWorkerManager !== undefined) {
-      liteTerminalAPIClient.browsingContextId =
-        serviceWorkerManager.browsingContextId;
+      liteTerminalAPIClient.browsingContextId = serviceWorkerManager.browsingContextId;
 
       serviceWorkerManager.registerStdinHandler(
         'terminal',
@@ -120,21 +105,19 @@ const terminalThemeChangePlugin: JupyterFrontEndPlugin<void> = {
     });
 
     // There is no signal for a terminal theme change, so use settings change.
-    settingRegistry
-      .load('@jupyterlab/terminal-extension:plugin')
-      .then(setting => {
-        terminalTheme = setting.composite.theme as string;
+    settingRegistry.load('@jupyterlab/terminal-extension:plugin').then(setting => {
+      terminalTheme = setting.composite.theme as string;
 
-        setting.changed.connect(() => {
-          // This signal is fired for any change to the terminal settings, not just the theme.
-          // Hence compare with the cached terminalTheme to identify if it has changed.
-          const newTerminalTheme = setting.composite.theme as string;
-          if (newTerminalTheme !== terminalTheme) {
-            liteTerminalAPIClient.themeChange();
-            terminalTheme = newTerminalTheme;
-          }
-        });
+      setting.changed.connect(() => {
+        // This signal is fired for any change to the terminal settings, not just the theme.
+        // Hence compare with the cached terminalTheme to identify if it has changed.
+        const newTerminalTheme = setting.composite.theme as string;
+        if (newTerminalTheme !== terminalTheme) {
+          liteTerminalAPIClient.themeChange();
+          terminalTheme = newTerminalTheme;
+        }
       });
+    });
   }
 };
 
@@ -146,9 +129,4 @@ export default [
   terminalExecPlugin
 ];
 
-export {
-  ILiteTerminalAPIClient,
-  ITerminalShell,
-  LiteTerminalAPIClient,
-  TerminalShell
-};
+export { ILiteTerminalAPIClient, ITerminalShell, LiteTerminalAPIClient, TerminalShell };
