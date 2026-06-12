@@ -1,11 +1,6 @@
 import { expect, test } from '@jupyterlab/galata';
 
-import {
-  LONG_WAIT_MS,
-  TERMINAL_SELECTOR,
-  WAIT_MS,
-  inputLine
-} from './utils/misc';
+import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
 
 test.describe('Terminal', () => {
   test('should emit service worker console message', async ({ page }) => {
@@ -20,9 +15,7 @@ test.describe('Terminal', () => {
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.waitForTimeout(LONG_WAIT_MS);
 
-    expect(
-      logs.filter(s => s.match(/^Service worker supports terminal stdin/))
-    ).toHaveLength(1);
+    expect(logs.filter(s => s.match(/^Service worker supports terminal stdin/))).toHaveLength(1);
   });
 
   test('should show initial prompt', async ({ page }) => {
@@ -78,9 +71,7 @@ test.describe('Terminal', () => {
     expect(await term.screenshot()).toMatchSnapshot('various-commands.png');
   });
 
-  test('should support both SharedArrayBuffer and ServiceWorker for stdin', async ({
-    page
-  }) => {
+  test('should support both SharedArrayBuffer and ServiceWorker for stdin', async ({ page }) => {
     await page.goto();
     await page.waitForTimeout(LONG_WAIT_MS);
     await page.menu.clickMenuItem('File>New>Terminal');
@@ -139,9 +130,7 @@ test.describe('Terminal', () => {
       await page.waitForTimeout(WAIT_MS);
 
       const term = page.locator('div.xterm-viewport');
-      expect(await term.screenshot()).toMatchSnapshot(
-        `stdin-${stdinOption}.png`
-      );
+      expect(await term.screenshot()).toMatchSnapshot(`stdin-${stdinOption}.png`);
     });
   });
 });

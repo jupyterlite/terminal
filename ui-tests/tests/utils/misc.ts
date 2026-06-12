@@ -12,11 +12,7 @@ export function decode64(encoded: string): string {
   return Buffer.from(encoded, 'base64').toString('binary');
 }
 
-export async function inputLine(
-  page: Page,
-  text: string,
-  enter: boolean = true
-) {
+export async function inputLine(page: Page, text: string, enter: boolean = true) {
   const ms = 20;
   await page.waitForTimeout(ms);
   for (const char of text) {

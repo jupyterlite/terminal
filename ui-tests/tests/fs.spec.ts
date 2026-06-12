@@ -1,13 +1,7 @@
 import { expect, test } from '@jupyterlab/galata';
 
 import { ContentsHelper } from './utils/contents';
-import {
-  LONG_WAIT_MS,
-  TERMINAL_SELECTOR,
-  WAIT_MS,
-  decode64,
-  inputLine
-} from './utils/misc';
+import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
 
 const MONTHS_TXT =
   'January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember\n';
@@ -41,20 +35,14 @@ test.describe('Filesystem', () => {
     const content = await page.contents.getContentMetadata('', 'directory');
     expect(content).not.toBeNull();
     const filenames = content?.content.map(item => item.name);
-    expect(filenames).toEqual(
-      expect.arrayContaining(['fact.lua', 'months.txt'])
-    );
+    expect(filenames).toEqual(expect.arrayContaining(['fact.lua', 'months.txt']));
 
     // File contents.
     const months = await page.contents.getContentMetadata('months.txt');
     expect(months?.content).toEqual(MONTHS_TXT);
 
     // Note fact.lua contents are returned base64 encoded.
-    const fact = await page.contents.getContentMetadata(
-      'fact.lua',
-      'file',
-      'base64'
-    );
+    const fact = await page.contents.getContentMetadata('fact.lua', 'file', 'base64');
     expect(decode64(fact?.content)).toEqual(FACT_LUA);
   });
 

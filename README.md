@@ -61,12 +61,9 @@ automation that need to run shell commands in JupyterLite.
 Run a single command (a throwaway shell is created and disposed automatically):
 
 ```ts
-const result = await app.commands.execute(
-  '@jupyterlite/terminal:execute-shell',
-  {
-    code: 'echo hello'
-  }
-);
+const result = await app.commands.execute('@jupyterlite/terminal:execute-shell', {
+  code: 'echo hello'
+});
 console.log(result.exitCode); // 0
 console.log(result.output); // hello
 ```
@@ -75,20 +72,15 @@ Pass a `shellName` to reuse a shell across calls so state such as the working
 directory persists:
 
 ```ts
-const { shellName } = await app.commands.execute(
-  '@jupyterlite/terminal:start-shell'
-);
+const { shellName } = await app.commands.execute('@jupyterlite/terminal:start-shell');
 await app.commands.execute('@jupyterlite/terminal:execute-shell', {
   code: 'cd /drive',
   shellName
 });
-const result = await app.commands.execute(
-  '@jupyterlite/terminal:execute-shell',
-  {
-    code: 'pwd',
-    shellName
-  }
-);
+const result = await app.commands.execute('@jupyterlite/terminal:execute-shell', {
+  code: 'pwd',
+  shellName
+});
 console.log(result.output); // /drive
 ```
 

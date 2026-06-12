@@ -84,6 +84,7 @@
         "eslint": "^8.36.0",
         "eslint-config-prettier": "^8.8.0",
         "eslint-plugin-prettier": "^5.0.0",
+        "eslint-plugin-sort": "^4.0.0",
         "jest": "^29.2.0",
         "npm-run-all": "^4.1.5",
         "prettier": "^3.0.0",
@@ -156,7 +157,8 @@
             "sourceType": "module"
         },
         "plugins": [
-            "@typescript-eslint"
+            "@typescript-eslint",
+            "eslint-plugin-sort"
         ],
         "rules": {
             "@typescript-eslint/consistent-type-imports": [
@@ -201,10 +203,42 @@
                 "all"
             ],
             "eqeqeq": "error",
-            "prefer-arrow-callback": "error"
+            "prefer-arrow-callback": "error",
+            "sort/imports": [
+                "warn",
+                {
+                    "caseSensitive": false,
+                    "groups": [
+                        {
+                            "regex": "^@",
+                            "order": 0
+                        },
+                        {
+                            "regex": "^\\./",
+                            "order": 20
+                        },
+                        {
+                            "regex": "^\\.\\./",
+                            "order": 30
+                        },
+                        {
+                            "type": "other",
+                            "order": 10
+                        }
+                    ],
+                    "typeOrder": "first"
+                }
+            ],
+            "sort/import-members": [
+                "error",
+                {
+                    "caseSensitive": false
+                }
+            ]
         }
     },
     "prettier": {
+        "printWidth": 100,
         "singleQuote": true,
         "trailingComma": "none",
         "arrowParens": "avoid",
