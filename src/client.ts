@@ -90,7 +90,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
         } else if (message_type === 'set_size') {
           const rows = content[0] as number;
           const columns = content[1] as number;
-          await shell.setSize(rows, columns);
+          await shell.setSize({ rows, columns });
         }
       });
 
