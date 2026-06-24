@@ -2,6 +2,38 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.5.0
+
+JupyterLite Terminal 1.5.0 adds JupyterLab commands so that terminal commands can be run programmatically from JupyterLab, and updates to Cockle 1.6.0.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.4.1...028e74b0ee547ed84aab112c930303c372cabca8))
+
+### Enhancements made
+
+- Update to cockle 1.6.0 [#118](https://github.com/jupyterlite/terminal/pull/118) ([@ianthomas23](https://github.com/ianthomas23))
+- Support ability to subclass `TerminalAPIClient` to `createShell` [#116](https://github.com/jupyterlite/terminal/pull/116) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to cockle 1.5.2-a0 [#112](https://github.com/jupyterlite/terminal/pull/112) ([@ianthomas23](https://github.com/ianthomas23))
+- Add JupyterLab commands for programmatic use [#110](https://github.com/jupyterlite/terminal/pull/110) ([@jtpio](https://github.com/jtpio), [@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Prepare for 1.5.0 release [#120](https://github.com/jupyterlite/terminal/pull/120) ([@ianthomas23](https://github.com/ianthomas23))
+- Bump the actions group with 2 updates [#119](https://github.com/jupyterlite/terminal/pull/119) ([@ianthomas23](https://github.com/ianthomas23))
+- Add eslint sort imports rule [#117](https://github.com/jupyterlite/terminal/pull/117) ([@ianthomas23](https://github.com/ianthomas23))
+- Allow jupyterlite-core 0.8.0 [#113](https://github.com/jupyterlite/terminal/pull/113) ([@jtpio](https://github.com/jtpio), [@ianthomas23](https://github.com/ianthomas23))
+- Bump Galata and Playwright [#111](https://github.com/jupyterlite/terminal/pull/111) ([@jtpio](https://github.com/jtpio), [@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-14&to=2026-06-24&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-14..2026-06-24&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2026-05-14..2026-06-24&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.4.2a2
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.4.2a1...94a5d61482d645d35adb75270dbfdc17d7ccec22))
@@ -18,8 +50,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-29&to=2026-06-03&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-29..2026-06-03&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2026-05-29..2026-06-03&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.4.2a1
 
