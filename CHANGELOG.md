@@ -2,6 +2,31 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.5.1
+
+JupyterLite Terminal 1.5.1 is a bug fix release to correctly support use of JupyterLite 0.7 and 0.8 in downstream projects.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.5.0...72c8d93e89a9fdd52d698463a71b3ff4368e52b6))
+
+### Bugs fixed
+
+- Support both 0.7 and 0.8 jupyterlite npm packages [#121](https://github.com/jupyterlite/terminal/pull/121) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Prepare for 1.5.1 release [#122](https://github.com/jupyterlite/terminal/pull/122) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-06-24&to=2026-06-25&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-06-24..2026-06-25&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.5.0
 
 JupyterLite Terminal 1.5.0 adds JupyterLab commands so that terminal commands can be run programmatically from JupyterLab, and updates to Cockle 1.6.0.
@@ -31,8 +56,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-05-14&to=2026-06-24&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-05-14..2026-06-24&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2026-05-14..2026-06-24&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.4.1
 
