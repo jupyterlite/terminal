@@ -116,6 +116,7 @@
     "jupyterlab": {
         "extension": true,
         "outputDir": "jupyterlite_terminal/labextension",
+        "webpackConfig": "rspack.config.js",
         "sharedPackages": {
             "@jupyterlab/apputils": {
                 "bundled": false,
