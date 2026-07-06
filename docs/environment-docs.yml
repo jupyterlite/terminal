@@ -4,7 +4,7 @@ channels:
 dependencies:
   # General build dependencies
   - micromamba
-  - nodejs =20
+  - nodejs =22
   - python =3.13
 
   # Jupyter dependencies
