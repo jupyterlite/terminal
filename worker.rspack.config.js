@@ -19,7 +19,8 @@ const resolve = {
 module.exports = [
   {
     entry: {
-      ['worker']: './lib/worker.js'
+      ['coincident.worker']: './lib/coincident.worker.js',
+      ['comlink.worker']: './lib/comlink.worker.js'
     },
     output: {
       filename: '[name].js',

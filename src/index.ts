@@ -57,6 +57,20 @@ const terminalManagerPlugin: ServiceManagerPlugin<Terminal.IManager> = {
 };
 
 /**
+ * Plugin that connects contents manager to terminals so that web workers can access shared drives
+ * using SharedArrayBuffer.
+ */
+const terminalContentsPlugin: JupyterFrontEndPlugin<void> = {
+  id: '@jupyterlite/terminal:contents',
+  autoStart: true,
+  requires: [ILiteTerminalAPIClient],
+  activate: (app: JupyterFrontEnd, liteTerminalAPIClient: ILiteTerminalAPIClient): void => {
+    const { contents: contentsManager } = app.serviceManager;
+    liteTerminalAPIClient.contentsManager = contentsManager;
+  }
+};
+
+/**
  * Plugin that connects in-browser terminals and service worker.
  */
 const terminalServiceWorkerPlugin: JupyterFrontEndPlugin<void> = {
@@ -69,7 +83,7 @@ const terminalServiceWorkerPlugin: JupyterFrontEndPlugin<void> = {
     liteTerminalAPIClient: ILiteTerminalAPIClient,
     serviceWorkerManager?: IServiceWorkerManager
   ): void => {
-    if (serviceWorkerManager !== undefined) {
+    if (serviceWorkerManager) {
       liteTerminalAPIClient.browsingContextId = serviceWorkerManager.browsingContextId;
 
       serviceWorkerManager.registerStdinHandler(
@@ -123,6 +137,7 @@ const terminalThemeChangePlugin: JupyterFrontEndPlugin<void> = {
 
 export default [
   terminalClientPlugin,
+  terminalContentsPlugin,
   terminalManagerPlugin,
   terminalServiceWorkerPlugin,
   terminalThemeChangePlugin,

@@ -160,7 +160,7 @@ jupyter lite serve
 To enable use of SharedArrayBuffer rather than ServiceWorker for `stdin` you will have to configure your server to add the `Cross-Origin-Embedder-Policy` and `Cross-Origin-Opener-Policy` headers. Do this using either:
 
 ```bash
-npx static-handler --cors --coop --coep --corp _output/
+npx static-handler --coi _output/
 ```
 
 or:

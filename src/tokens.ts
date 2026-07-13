@@ -1,4 +1,5 @@
 import type { Terminal } from '@jupyterlab/services';
+import type { Contents } from '@jupyterlab/services';
 import type {
   IExternalCommand,
   IOutputCallback,
@@ -18,6 +19,11 @@ export interface ILiteTerminalAPIClient extends Terminal.ITerminalAPIClient {
    * Identifier for communicating with service worker.
    */
   browsingContextId: string;
+
+  /**
+   * The Jupyterlite content manager, used for DriveFS requests via SharedArrayBuffer.
+   */
+  contentsManager?: Contents.IManager;
 
   /**
    * Function that handles stdin requests received from service worker.
