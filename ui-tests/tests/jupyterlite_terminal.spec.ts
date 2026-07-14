@@ -70,7 +70,12 @@ test.describe('Terminal', () => {
     expect(await term.screenshot()).toMatchSnapshot('various-commands.png');
   });
 
-  test('should support both SharedArrayBuffer and ServiceWorker for stdin', async ({ page }) => {
+  test('should support both SharedArrayBuffer and ServiceWorker for stdin', async ({
+    page,
+    supportsSAB
+  }) => {
+    test.skip(!supportsSAB, 'SAB not available');
+
     await page.goto();
     await page.waitForTimeout(LONG_WAIT_MS);
     await page.menu.clickMenuItem('File>New>Terminal');
@@ -85,7 +90,7 @@ test.describe('Terminal', () => {
     expect(await term.screenshot()).toMatchSnapshot('both-sab-and-sw.png');
   });
 
-  test('should support setting ServiceWorker for stdin', async ({ page }) => {
+  test('should support setting ServiceWorker for stdin', async ({ page, supportsSAB }) => {
     await page.goto();
     await page.waitForTimeout(LONG_WAIT_MS);
     await page.menu.clickMenuItem('File>New>Terminal');
@@ -97,12 +102,15 @@ test.describe('Terminal', () => {
     await page.waitForTimeout(WAIT_MS);
 
     const term = page.locator('div.xterm-viewport');
-    expect(await term.screenshot()).toMatchSnapshot('set-sw-stdin.png');
+    const snapshot = supportsSAB ? 'set-sw-stdin-with-sab.png' : 'set-sw-stdin-no-sab.png';
+    expect(await term.screenshot()).toMatchSnapshot(snapshot);
   });
 
   const stdinOptions = ['sab', 'sw'];
   stdinOptions.forEach(stdinOption => {
-    test(`should support using ${stdinOption} for stdin`, async ({ page }) => {
+    test(`should support using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+      test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
+
       await page.goto();
       await page.waitForTimeout(LONG_WAIT_MS);
       await page.menu.clickMenuItem('File>New>Terminal');
@@ -129,7 +137,8 @@ test.describe('Terminal', () => {
       await page.waitForTimeout(WAIT_MS);
 
       const term = page.locator('div.xterm-viewport');
-      expect(await term.screenshot()).toMatchSnapshot(`stdin-${stdinOption}.png`);
+      const extra = stdinOption === 'sw' ? (supportsSAB ? '-with-sab' : '-no-sab') : '';
+      expect(await term.screenshot()).toMatchSnapshot(`stdin-${stdinOption}${extra}.png`);
     });
   });
 });
