@@ -7,7 +7,7 @@ module.exports = {
   ...baseConfig,
   use: {
     acceptDownloads: true,
-    autoGoto: false,
+    autoGoto: false
   },
   retries: process.env.CI ? 2 : 0,
   workers: 1,

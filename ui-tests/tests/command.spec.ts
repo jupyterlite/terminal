@@ -102,7 +102,10 @@ test.describe('individual command', () => {
   test.describe('nano', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page , supportsSAB}) => {
+      test(`should create new file using ${stdinOption} for stdin`, async ({
+        page,
+        supportsSAB
+      }) => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 
@@ -121,7 +124,10 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('mnopqrst\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({
+        page,
+        supportsSAB
+      }) => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 
@@ -151,7 +157,10 @@ test.describe('individual command', () => {
   test.describe('vim', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+      test(`should create new file using ${stdinOption} for stdin`, async ({
+        page,
+        supportsSAB
+      }) => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 
@@ -170,7 +179,10 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('abcdefgh\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({
+        page,
+        supportsSAB
+      }) => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 

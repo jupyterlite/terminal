@@ -23,9 +23,7 @@ class SharedArrayBufferFS extends DriveFS {
  * Coincident worker as seen from TerminalShell in main UI thread.
  */
 export interface ICoincidentTerminalShellWorker extends ICoincidentShellWorker {
-  processDriveRequest<T extends TDriveMethod>(
-    data: TDriveRequest<T>,
-  ): Promise<TDriveResponse<T>>;
+  processDriveRequest<T extends TDriveMethod>(data: TDriveRequest<T>): Promise<TDriveResponse<T>>;
 }
 
 class CoincidentTerminalShellWorker extends CoincidentShellWorker {
@@ -57,7 +55,9 @@ class CoincidentTerminalShellWorker extends CoincidentShellWorker {
     worker.processDriveRequest = proxy.processDriveRequest.bind(proxy);
   }
 
-  processDriveRequest?: <T extends TDriveMethod>(data: TDriveRequest<T>) => Promise<TDriveResponse<T>>;
+  processDriveRequest?: <T extends TDriveMethod>(
+    data: TDriveRequest<T>
+  ) => Promise<TDriveResponse<T>>;
 }
 
 export const proxy = coincident(self) as ICoincidentTerminalShellWorker;

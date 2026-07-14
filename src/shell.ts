@@ -43,7 +43,9 @@ export class TerminalShell extends BaseShell {
     const remote = super.createRemote(options);
 
     if (this.workerType === 'coincident') {
-      (remote as ICoincidentTerminalShellWorker).processDriveRequest = async <T extends TDriveMethod>(
+      (remote as ICoincidentTerminalShellWorker).processDriveRequest = async <
+        T extends TDriveMethod
+      >(
         data: TDriveRequest<T>
       ) => {
         if (this._contentsProcessor === undefined) {
