@@ -1,5 +1,6 @@
 import { Buffer } from 'node:buffer';
 import type { Page } from '@playwright/test';
+import { expect } from '../options';
 
 export const WAIT_MS = 100;
 
@@ -23,4 +24,13 @@ export async function inputLine(page: Page, text: string, enter: boolean = true)
     await page.keyboard.press('Enter');
     await page.waitForTimeout(ms);
   }
+}
+
+export async function setStdinOption(page: Page, stdinOption: string) {
+  await inputLine(page, `cockle-config stdin ${stdinOption}`);
+  await page.waitForTimeout(LONG_WAIT_MS);
+  await inputLine(page, `env|grep ? > exit.txt`);
+  await page.waitForTimeout(LONG_WAIT_MS);
+  const exitCodeFile = await page.contents.getContentMetadata('exit.txt');
+  expect(exitCodeFile?.content).toBe('?=0\n');
 }

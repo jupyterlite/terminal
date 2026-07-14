@@ -1,5 +1,5 @@
-import { expect, test } from '@jupyterlab/galata';
 import type { IJupyterLabPageFixture } from '@jupyterlab/galata';
+import { expect, test } from './options';
 
 const EXECUTE_SHELL = '@jupyterlite/terminal:execute-shell';
 const START_SHELL = '@jupyterlite/terminal:start-shell';

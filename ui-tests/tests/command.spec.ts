@@ -1,7 +1,6 @@
-import { expect, test } from '@jupyterlab/galata';
-
+import { expect, test } from './options';
 import { ContentsHelper } from './utils/contents';
-import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
+import { LONG_WAIT_MS, TERMINAL_SELECTOR, inputLine, setStdinOption } from './utils/misc';
 
 test.describe('individual command', () => {
   test.beforeEach(async ({ page }) => {
@@ -16,6 +15,47 @@ test.describe('individual command', () => {
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(LONG_WAIT_MS);
+  });
+
+  test.describe('cockle-config', () => {
+    test(`should show worker type`, async ({ page, supportsSAB }) => {
+      await inputLine(page, `cockle-config --worker > worker.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('worker.txt');
+      if (supportsSAB) {
+        expect(outputFile?.content).toMatch(/^coincident worker\n$/);
+      } else {
+        expect(outputFile?.content).toMatch(/^comlink worker\n$/);
+      }
+    });
+
+    test(`should show stdin options`, async ({ page, supportsSAB }) => {
+      await inputLine(page, `cockle-config stdin > stdin.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('stdin.txt');
+      const lines = outputFile?.content.split('\n');
+      expect(lines.length).toBe(7);
+      expect(lines[1]).toEqual('│ synchronous stdin   │ short name │ available │ enabled │');
+      if (supportsSAB) {
+        expect(lines[3]).toEqual('│ shared array buffer │ sab        │ yes       │ yes     │');
+        expect(lines[4]).toEqual('│ service worker      │ sw         │ yes       │         │');
+      } else {
+        expect(lines[3]).toEqual('│ shared array buffer │ sab        │           │         │');
+        expect(lines[4]).toEqual('│ service worker      │ sw         │ yes       │ yes     │');
+      }
+    });
+
+    test(`should support setting use of SW via cockle-config`, async ({ page, supportsSAB }) => {
+      await inputLine(page, `cockle-config stdin sw > stdin.txt`);
+      await page.waitForTimeout(LONG_WAIT_MS);
+
+      const outputFile = await page.contents.getContentMetadata('stdin.txt');
+      const lines = outputFile?.content.split('\n');
+      expect(lines.length).toBe(7);
+      expect(lines[4]).toEqual('│ service worker      │ sw         │ yes       │ yes     │');
+    });
   });
 
   test.describe('uname', () => {
@@ -62,9 +102,9 @@ test.describe('individual command', () => {
   test.describe('nano', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page }) => {
-        await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(LONG_WAIT_MS);
+      test(`should create new file using ${stdinOption} for stdin`, async ({ page , supportsSAB}) => {
+        test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
+        await setStdinOption(page, stdinOption);
 
         await inputLine(page, 'nano a.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
@@ -81,9 +121,9 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('mnopqrst\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page }) => {
-        await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(LONG_WAIT_MS);
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+        test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
+        await setStdinOption(page, stdinOption);
 
         // Prepare file to delete from.
         await inputLine(page, 'echo mnopqrst > b.txt');
@@ -111,9 +151,9 @@ test.describe('individual command', () => {
   test.describe('vim', () => {
     const stdinOptions = ['sab', 'sw'];
     stdinOptions.forEach(stdinOption => {
-      test(`should create new file using ${stdinOption} for stdin`, async ({ page }) => {
-        await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(LONG_WAIT_MS);
+      test(`should create new file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+        test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
+        await setStdinOption(page, stdinOption);
 
         await inputLine(page, 'vim c.txt');
         await page.waitForTimeout(LONG_WAIT_MS);
@@ -130,9 +170,9 @@ test.describe('individual command', () => {
         expect(outputFile?.content).toEqual('abcdefgh\n');
       });
 
-      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page }) => {
-        await inputLine(page, `cockle-config stdin ${stdinOption}`);
-        await page.waitForTimeout(LONG_WAIT_MS);
+      test(`should delete data from file using ${stdinOption} for stdin`, async ({ page, supportsSAB }) => {
+        test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
+        await setStdinOption(page, stdinOption);
 
         // Prepare file to delete from.
         await inputLine(page, 'echo abcdefgh > d.txt');
