@@ -2,7 +2,7 @@ import type { ICoincidentShellWorker, IDriveFSOptions } from '@jupyterlite/cockl
 import { CoincidentShellWorker } from '@jupyterlite/cockle';
 import type { TDriveMethod, TDriveRequest, TDriveResponse } from '@jupyterlite/services';
 import { ContentsAPI, DriveFS } from '@jupyterlite/services';
-import coincident from 'coincident';
+import coincident from 'coincident/worker';
 
 /**
  * An Emscripten-compatible synchronous Contents API using shared array buffers.
@@ -60,6 +60,6 @@ class CoincidentTerminalShellWorker extends CoincidentShellWorker {
   ) => Promise<TDriveResponse<T>>;
 }
 
-export const proxy = coincident(self) as ICoincidentTerminalShellWorker;
+export const proxy = (await coincident()).proxy as ICoincidentTerminalShellWorker;
 export const worker = new CoincidentTerminalShellWorker();
 worker.initProxy(proxy);

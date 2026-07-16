@@ -2802,19 +2802,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/cockle@npm:^1.7.0-a0":
-  version: 1.7.0-a0
-  resolution: "@jupyterlite/cockle@npm:1.7.0-a0"
+"@jupyterlite/cockle@npm:^1.7.0-a1":
+  version: 1.7.0-a1
+  resolution: "@jupyterlite/cockle@npm:1.7.0-a1"
   dependencies:
     "@lumino/coreutils": ^2.2.0
     "@lumino/disposable": ^2.1.3
     "@lumino/signaling": ^2.1.3
-    coincident: ^1.2.3
+    coincident: ^4.1.1
     comlink: ^4.4.2
     deepmerge-ts: ^7.1.4
     rimraf: ^6.0.1
     zod: ^3.23.8
-  checksum: 59e75c50c6df85baebd2e6069605ff1dfc49f36c18feec84ad74f5e2856029fee78d0ed6f0077d9cbeab092f49baabc9ae6650dd1773ec94f3ac39ea6be77d86
+  checksum: b85653d7cdb7034b9f36c2cb46a01ddc49cc31f9d021a5cfc21b9412fbc4a8581f7c67c90d44183bb8c29efec20aec818f0d93e3ed945ebfc0ec5cea58b2ca1e
   languageName: node
   linkType: hard
 
@@ -2867,7 +2867,7 @@ __metadata:
     "@jupyterlab/settingregistry": ^4.5.0
     "@jupyterlab/testutils": ^4.5.0
     "@jupyterlite/apputils": ^0.7.0 || ^0.8.0
-    "@jupyterlite/cockle": ^1.7.0-a0
+    "@jupyterlite/cockle": ^1.7.0-a1
     "@jupyterlite/services": ^0.7.0 || ^0.8.0
     "@lumino/coreutils": ^2.2.1
     "@lumino/signaling": ^2.1.4
@@ -2879,7 +2879,7 @@ __metadata:
     "@types/react-addons-linked-state-mixin": ^0.14.22
     "@typescript-eslint/eslint-plugin": ^7.16.1
     "@typescript-eslint/parser": ^7.16.1
-    coincident: ^1.2.3
+    coincident: ^4.1.1
     comlink: ^4.4.2
     css-loader: ^6.7.1
     eslint: ^8.36.0
@@ -4329,13 +4329,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ungap/with-resolvers@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "@ungap/with-resolvers@npm:0.1.0"
-  checksum: ac0c6234414b87ec26e9603c5e57f6ae48477ccc901841e725e820bc026367987cc82dbdb8c702e058179dadbd16578c0fcc607d2122e72d9fe91373bade126c
-  languageName: node
-  linkType: hard
-
 "@upsetjs/venn.js@npm:^2.0.0":
   version: 2.0.0
   resolution: "@upsetjs/venn.js@npm:2.0.0"
@@ -4348,6 +4341,20 @@ __metadata:
     d3-transition:
       optional: true
   checksum: 345f6adcdb0761289e41dd3d1aa3f3edf1780a0c55d20ccc4d4461a04b8e34e09b96fd07ab7fb323086bbd4e53505ed660c0a7d139167415c66ff7921b033643
+  languageName: node
+  linkType: hard
+
+"@webreflection/utils@npm:^0.1.1, @webreflection/utils@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "@webreflection/utils@npm:0.1.2"
+  checksum: ad0cc0cbcde42e1d64dc729b5af5ad4b4ce3750f0d8dda5ae5c1784dd36429d0cb22b05c69b95c77a2b1ec832457416213b9fb5aa244f8c5729f2d74b3f698c8
+  languageName: node
+  linkType: hard
+
+"@webreflection/utils@npm:^0.3.6":
+  version: 0.3.20
+  resolution: "@webreflection/utils@npm:0.3.20"
+  checksum: 453e11f36d4e40bbdd0918b8e14fcc7876c2584659c7b91e675bed94035dcd66ecbf68f7432692fcd2eac9aee86ff08237f42fc7fcb229c269d2d4a334c1cdd8
   languageName: node
   linkType: hard
 
@@ -4933,19 +4940,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"coincident@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "coincident@npm:1.2.3"
+"coincident@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "coincident@npm:4.1.1"
   dependencies:
-    "@ungap/structured-clone": ^1.2.0
-    "@ungap/with-resolvers": ^0.1.0
-    gc-hook: ^0.3.1
-    proxy-target: ^3.0.2
-    ws: ^8.16.0
-  dependenciesMeta:
-    ws:
-      optional: true
-  checksum: 21c44d9d74be393b12d6f91c885c8b6c640dce570b01b5d5156327488390c858de8e40c0af08763e3cd7041bcf32bee70c058a1b24aa25b145376a92b1c520a3
+    "@webreflection/utils": ^0.1.1
+    next-resolver: ^0.1.4
+    reflected-ffi: ^0.7.0
+  bin:
+    coincident: cli.cjs
+  checksum: 418e4a0c1dff2bd1a8c46fcf7c20c7e549fceb63b7c7022f873d581f7bdb2ff63c0352db6379fa86d1ef54a27525ddb77ba96cc642ddc2219158d6d288095767
   languageName: node
   linkType: hard
 
@@ -6509,13 +6513,6 @@ __metadata:
   version: 1.1.2
   resolution: "function-bind@npm:1.1.2"
   checksum: 2b0ff4ce708d99715ad14a6d1f894e2a83242e4a52ccfcefaee5e40050562e5f6dafc1adbb4ce2d4ab47279a45dc736ab91ea5042d843c3c092820dfe032efb1
-  languageName: node
-  linkType: hard
-
-"gc-hook@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "gc-hook@npm:0.3.1"
-  checksum: bda26ab6493faf8593eb8e1ff636c91ba4b38f3d87867ede757b24c4677e4f55ec696977a2b884503e3e56243d5e38abf8cec52257b1fd0685622ec5a3d9c84b
   languageName: node
   linkType: hard
 
@@ -8451,6 +8448,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"next-resolver@npm:^0.1.4":
+  version: 0.1.7
+  resolution: "next-resolver@npm:0.1.7"
+  dependencies:
+    "@webreflection/utils": ^0.1.2
+    weak-id: ^0.2.1
+  checksum: 3477a57555b8e587e7f78a088d96ec50d7c5492fcc95d623ca19dc67404709d4f971574e65565731583102b68411e02dcb3b8d7cd220407486be9949e1d712af
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 13.0.1
   resolution: "node-gyp@npm:13.0.1"
@@ -8956,13 +8963,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-target@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "proxy-target@npm:3.0.2"
-  checksum: 9d8aa207ce8d3d50273e6926a61bb0205848f2a9de7b6781feeb115072242d9803255351d4da2f2980c573fd2164609257d8c8feaa39b80147867805f2c5d101
-  languageName: node
-  linkType: hard
-
 "psl@npm:^1.1.33":
   version: 1.15.0
   resolution: "psl@npm:1.15.0"
@@ -9072,6 +9072,15 @@ __metadata:
     indent-string: ^5.0.0
     strip-indent: ^4.0.0
   checksum: 6944e7b1d8f3fd28c2515f5c605b9f7f0ea0f4edddf41890bbbdd4d9ee35abb7540c3b278f03ff827bd278bb6ff4a5bd8692ca406b748c5c1c3ce7355e9fbf8f
+  languageName: node
+  linkType: hard
+
+"reflected-ffi@npm:^0.7.0":
+  version: 0.7.2
+  resolution: "reflected-ffi@npm:0.7.2"
+  dependencies:
+    weak-id: ^0.2.1
+  checksum: e66f23a5ceee5788cd125934f3e018d26d269d6c4a84c7df535b98e95241060a76f3c2f747e93547dc46b22d51d794e7e1274a73adcf252ca79de687a3f2ae8f
   languageName: node
   linkType: hard
 
@@ -10337,6 +10346,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"weak-id@npm:^0.2.1":
+  version: 0.2.2
+  resolution: "weak-id@npm:0.2.2"
+  dependencies:
+    "@webreflection/utils": ^0.3.6
+  checksum: 8ce603d49c0fb239e77375ffe1d2b1de6e375e99e49740d818a79075d4faa802e374a1627002224437b9ad96c37195325ff33b17c68b38a28cca3c758264bb7e
+  languageName: node
+  linkType: hard
+
 "webidl-conversions@npm:^7.0.0":
   version: 7.0.0
   resolution: "webidl-conversions@npm:7.0.0"
@@ -10498,7 +10516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.11.0, ws@npm:^8.16.0":
+"ws@npm:^8.11.0":
   version: 8.21.0
   resolution: "ws@npm:8.21.0"
   peerDependencies:
