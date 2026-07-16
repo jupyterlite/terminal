@@ -65,7 +65,7 @@
         "@jupyterlab/services": "^7.5.0",
         "@jupyterlab/settingregistry": "^4.5.0",
         "@jupyterlite/apputils": "^0.7.0 || ^0.8.0",
-        "@jupyterlite/cockle": "^1.7.0-a1",
+        "@jupyterlite/cockle": "^1.7.0",
         "@jupyterlite/services": "^0.7.0 || ^0.8.0",
         "@lumino/coreutils": "^2.2.1",
         "@lumino/signaling": "^2.1.4",
@@ -74,7 +74,7 @@
         "mock-socket": "^9.3.1"
     },
     "devDependencies": {
-        "@jupyter/builder": "^1.0.0",
+        "@jupyter/builder": "^1.1.0",
         "@jupyterlab/testutils": "^4.5.0",
         "@rspack/cli": "^2.0.6",
         "@rspack/core": "^2.0.6",
@@ -100,8 +100,7 @@
         "stylelint-csstree-validator": "^3.0.0",
         "stylelint-prettier": "^4.0.0",
         "ts-loader": "^9.5.2",
-        "typescript": "~5.7.0",
-        "yjs": "^13.5.0"
+        "typescript": "~5.7.0"
     },
     "resolutions": {
         "parse5": "7.2.1"
