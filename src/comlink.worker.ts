@@ -1,5 +1,5 @@
 import type { IDriveFSOptions } from '@jupyterlite/cockle';
-import { BaseShellWorker } from '@jupyterlite/cockle';
+import { ComlinkShellWorker } from '@jupyterlite/cockle';
 import { DriveFS } from '@jupyterlite/services';
 import { expose } from 'comlink';
 
@@ -7,13 +7,13 @@ import { expose } from 'comlink';
  * Shell web worker that uses DriveFS via service worker.
  * Note that this is not exported as it is accessed from Shell via the filename.
  */
-class ShellWorker extends BaseShellWorker {
+class ComlinkTerminalShellWorker extends ComlinkShellWorker {
   /**
    * Initialize the DriveFS to mount an external file system, if available.
    */
   protected override initDriveFS(options: IDriveFSOptions): void {
     const { baseUrl, browsingContextId, fileSystem, mountpoint } = options;
-    console.log('Terminal initDriveFS', baseUrl, mountpoint, browsingContextId);
+    console.log('Terminal comlink initDriveFS', baseUrl, mountpoint, browsingContextId);
     if (mountpoint !== '' && baseUrl !== undefined && browsingContextId !== undefined) {
       const { FS, ERRNO_CODES, PATH } = fileSystem;
       const driveFS = new DriveFS({
@@ -33,5 +33,5 @@ class ShellWorker extends BaseShellWorker {
   }
 }
 
-const worker = new ShellWorker();
+const worker = new ComlinkTerminalShellWorker();
 expose(worker);

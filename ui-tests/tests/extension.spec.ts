@@ -1,5 +1,4 @@
-import { expect, test } from '@jupyterlab/galata';
-
+import { expect, test } from './options';
 import { LONG_WAIT_MS } from './utils/misc';
 
 test.describe('Terminal extension', () => {

@@ -1,5 +1,4 @@
-import { expect, test } from '@jupyterlab/galata';
-
+import { expect, test } from './options';
 import { TERMINAL_SELECTOR, inputLine } from './utils/misc';
 
 const OPEN_TERMINAL_1 = 'span.jp-RunningSessions-itemLabel:has-text("Terminal 1")';

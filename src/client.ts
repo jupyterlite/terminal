@@ -1,5 +1,5 @@
 import { PageConfig, URLExt } from '@jupyterlab/coreutils';
-import type { Terminal } from '@jupyterlab/services';
+import type { Contents, Terminal } from '@jupyterlab/services';
 import { ServerConnection } from '@jupyterlab/services';
 import type {
   IExternalCommand,
@@ -35,8 +35,14 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
    * Set identifier for communicating with service worker.
    */
   set browsingContextId(browsingContextId: string) {
-    console.log('LiteTerminalAPIClient browsingContextId', browsingContextId);
     this._browsingContextId = browsingContextId;
+  }
+
+  /**
+   * Set contents manager used for SharedArrayBuffer DriveFS.
+   */
+  set contentsManager(contentsManager: Contents.IManager) {
+    this._contentsManager = contentsManager;
   }
 
   /**
@@ -63,6 +69,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       baseUrl,
       wasmBaseUrl: URLExt.join(baseUrl, 'extensions/@jupyterlite/terminal/static/wasm/'),
       browsingContextId: this._browsingContextId,
+      contentsManager: this._contentsManager,
       aliases: this._aliases,
       environment: this._environment,
       externalCommands: this._externalCommands,
@@ -159,6 +166,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
       baseUrl,
       wasmBaseUrl: URLExt.join(baseUrl, 'extensions/@jupyterlite/terminal/static/wasm/'),
       browsingContextId: this._browsingContextId,
+      contentsManager: this._contentsManager,
       shellManager: Private.shellManager,
       aliases: this._aliases,
       environment,
@@ -239,6 +247,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
   private _aliases?: { [key: string]: string };
   private _environment?: { [key: string]: string | undefined };
   private _browsingContextId?: string;
+  private _contentsManager?: Contents.IManager;
   private _externalCommands: IExternalCommand.IOptions[] = [];
   private _terminalDisposed = new Signal<this, string>(this);
 }
