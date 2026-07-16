@@ -13,7 +13,7 @@ export interface ITerminalShell extends IShell {
 export namespace ITerminalShell {
   export interface IOptions extends IShell.IOptions {
     /**
-     * The Jupyterlite content manager, used by coincident web worker DriveFS.
+     * The JupyterLite content manager, used for DriveFS requests via SharedArrayBuffer.
      */
     contentsManager?: Contents.IManager;
   }

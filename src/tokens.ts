@@ -21,7 +21,7 @@ export interface ILiteTerminalAPIClient extends Terminal.ITerminalAPIClient {
   browsingContextId: string;
 
   /**
-   * The Jupyterlite content manager, used for DriveFS requests via SharedArrayBuffer.
+   * The JupyterLite content manager, used for DriveFS requests via SharedArrayBuffer.
    */
   contentsManager?: Contents.IManager;
 
