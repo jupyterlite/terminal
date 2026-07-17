@@ -2,6 +2,34 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.6.0
+
+JupyterLite Terminal 1.6.0 adds a new [coincident](https://github.com/WebReflection/coincident) web worker which is used in deployments that are served cross-origin isolated, otherwise the default [comlink](https://github.com/googlechromelabs/comlink) web worker is used. The coincident web worker uses SharedArrayBuffer to access the JupyterLite shared drive whereas the comlink web worker uses the Service Worker. The JupyterLite `pyodide` and `xeus` kernels work in the same way. You can check which web worker is being used via `cockle-config --worker` or `cockle-config -w`. There is no functional change here for users of the JupyterLite terminal, but downstream developers who are inheriting from and modifying these libraries may have to make changes to support the choice of web worker.
+
+The synchronous stdin options are kept separate to the choice of web worker. This means that the coincident worker supports stdin via both SharedArrayBuffer and Service Worker whereas the comlink worker only supports it via Service Worker.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.5.1...707b17c19f702583fca0c91a0ceb1342b3f27091))
+
+### Enhancements made
+
+- Implement shared drive using `SharedArrayBuffer` [#124](https://github.com/jupyterlite/terminal/pull/124) ([@ianthomas23](https://github.com/ianthomas23), [@juntyr](https://github.com/juntyr))
+
+### Maintenance and upkeep improvements
+
+- Prepare for 1.6.0 release [#125](https://github.com/jupyterlite/terminal/pull/125) ([@ianthomas23](https://github.com/ianthomas23))
+- Switch from `jupyterlab-builder` to `jupyter-builder` [#123](https://github.com/jupyterlite/terminal/pull/123) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-06-25&to=2026-07-17&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-06-25..2026-07-17&type=Issues)) | @juntyr ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajuntyr+updated%3A2026-06-25..2026-07-17&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.5.1
 
 JupyterLite Terminal 1.5.1 is a bug fix release to correctly support use of JupyterLite 0.7 and 0.8 in downstream projects.
@@ -24,8 +52,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-06-24&to=2026-06-25&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-06-24..2026-06-25&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.5.0
 
