@@ -104,7 +104,7 @@ test.describe('individual command', () => {
       await runCommand(page, 'ls .git 2> err3.txt');
 
       output = await retrieveAndDeleteFile(page, 'err3.txt');
-      expect(output).toEqual(["ls: cannot access '.git': No such file or directory", ""]);
+      expect(output).toEqual(["ls: cannot access '.git': No such file or directory", '']);
     });
 
     test('should run git init --bare', async ({ page }) => {
@@ -158,7 +158,7 @@ test.describe('individual command', () => {
         await runCommand(page, 'git clone https://github.com/ianthomas23/cockle-playground');
         await runCommand(page, 'tree -afi cockle-playground > git1.txt 2> err1.txt');
 
-        let output = await retrieveAndDeleteFile(page , 'git1.txt');
+        let output = await retrieveAndDeleteFile(page, 'git1.txt');
         // Do not match all of the files as some contain hashes.
         expect(output).toContainEqual('cockle-playground/LICENSE');
         expect(output).toContainEqual('cockle-playground/README.md');
