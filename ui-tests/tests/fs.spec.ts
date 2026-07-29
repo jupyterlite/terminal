@@ -3,6 +3,7 @@ import {
   LONG_WAIT_MS,
   TERMINAL_SELECTOR,
   WAIT_MS,
+  decode64,
   retrieveAndDeleteFile,
   runCommand
 } from './utils/misc';
@@ -31,10 +32,10 @@ test.describe('Filesystem', () => {
   });
 
   test('should have initial files', async ({ page }) => {
-    await runCommand(page, 'ls -ld /drive/* > out');
+    await runCommand(page, 'ls -ld /drive/* > out.txt');
 
     // Shared drive contents.
-    const output = await retrieveAndDeleteFile(page, 'out');
+    const output = await retrieveAndDeleteFile(page, 'out.txt');
     expect(output).toHaveLength(3);
     expect(output[0]).toMatch(/^-rw-rw-rw- .* fact.lua$/);
     expect(output[1]).toMatch(/^-rw-rw-rw- .* months.txt$/);
@@ -44,7 +45,16 @@ test.describe('Filesystem', () => {
     expect(months_txt).toEqual(MONTHS_TXT.split('\n'));
 
     const fact_lua = await retrieveAndDeleteFile(page, 'fact.lua');
-    expect(fact_lua).toEqual(FACT_LUA.split('\n'));
+
+    const jupyterliteVersion = await page.evaluate(() => {
+      const el = document.getElementById('jupyter-config-data');
+      return JSON.parse(el?.textContent || '{}').appVersion;
+    });
+    if (jupyterliteVersion === '0.7.0') {
+      expect(decode64(fact_lua.join('\n'))).toEqual(FACT_LUA);
+    } else {
+      expect(fact_lua).toEqual(FACT_LUA.split('\n'));
+    }
   });
 
   test('should create a new file', async ({ page }) => {
