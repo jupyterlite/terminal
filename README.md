@@ -139,7 +139,9 @@ jlpm watch
 jupyter lab
 ```
 
-Then build a JupyterLite distribution with the extension installed:
+### Development deployment
+
+To build a JupyterLite distribution with the extension installed:
 
 ```bash
 cd deploy
@@ -170,6 +172,23 @@ or:
 
 ```bash
 jupyter lite serve --LiteBuildConfig.extra_http_headers=Cross-Origin-Embedder-Policy=require-corp --LiteBuildConfig.extra_http_headers=Cross-Origin-Opener-Policy=same-origin
+```
+
+To `git2cpp clone` remote repositories you will need to run a local CORS proxy. The easiest way to
+do this is to use the one from the `ui-tests`. In a separate operating system terminal run:
+
+```bash
+cd ui-tests
+jlpm
+jlpm serve:cors-proxy
+```
+
+and then in the JupyterLite terminal in your browser set the `GIT_CORS_PROXY` environment variable
+and try a `git2cpp clone`:
+
+```bash
+export GIT_CORS_PROXY=http://localhost:8881/
+git clone https://github.com/jupyterlite/terminal
 ```
 
 ### Building the documentation

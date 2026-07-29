@@ -31,7 +31,7 @@ module.exports = {
     }
   ],
   webServer: {
-    command: 'jlpm start',
+    command: 'jlpm serve',
     url: 'http://localhost:8000',
     timeout: 120 * 1000,
     reuseExistingServer: true

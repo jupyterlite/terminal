@@ -6,9 +6,10 @@
   "scripts": {
     "build": "jlpm clean && python build.py",
     "clean": "rimraf cockle_wasm_env dist .cockle_temp .jupyterlite.doit.db",
-    "start": "concurrently 'npm run start:simple' 'npm run start:coi'",
-    "start:simple": "npx static-handler -p 8000 ./dist",
-    "start:coi": "npx static-handler --coi -p 8001 ./dist",
+    "serve": "concurrently 'npm run serve:simple' 'npm run serve:coi' 'npm run serve:cors-proxy'",
+    "serve:simple": "npx static-handler -p 8000 ./dist",
+    "serve:coi": "npx static-handler --coi -p 8001 ./dist",
+    "serve:cors-proxy": "HOST=localhost PORT=8881 node node_modules/cors-anywhere/server.js",
     "test": "jlpm playwright test",
     "test:ui": "jlpm playwright test --ui",
     "test:update": "jlpm playwright test --update-snapshots"
@@ -17,6 +18,7 @@
     "@jupyterlab/galata": "^5.6.1",
     "@playwright/test": "^1.57.0",
     "concurrently": "^10.0.3",
+    "cors-anywhere": "^0.4.4",
     "rimraf": "^6.0.1"
   }
 }
