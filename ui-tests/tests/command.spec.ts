@@ -19,8 +19,8 @@ test.describe('individual command', () => {
   });
 
   test.describe('cockle-config', () => {
-    test(`should show worker type`, async ({ page, supportsSAB }) => {
-      await runCommand(page, `cockle-config --worker > worker.txt`);
+    test('should show worker type', async ({ page, supportsSAB }) => {
+      await runCommand(page, 'cockle-config --worker > worker.txt');
       const output = await retrieveAndDeleteFile(page, 'worker.txt');
       if (supportsSAB) {
         expect(output[0]).toEqual('coincident worker');
@@ -29,8 +29,8 @@ test.describe('individual command', () => {
       }
     });
 
-    test(`should show stdin options`, async ({ page, supportsSAB }) => {
-      await runCommand(page, `cockle-config stdin > stdin.txt`);
+    test('should show stdin options', async ({ page, supportsSAB }) => {
+      await runCommand(page, 'cockle-config stdin > stdin.txt');
       const lines = await retrieveAndDeleteFile(page, 'stdin.txt');
       expect(lines).toHaveLength(7);
       expect(lines[1]).toEqual('│ synchronous stdin   │ short name │ available │ enabled │');
@@ -43,8 +43,8 @@ test.describe('individual command', () => {
       }
     });
 
-    test(`should support setting use of SW via cockle-config`, async ({ page, supportsSAB }) => {
-      await runCommand(page, `cockle-config stdin sw > stdin.txt`);
+    test('should support setting use of SW via cockle-config', async ({ page, supportsSAB }) => {
+      await runCommand(page, 'cockle-config stdin sw > stdin.txt');
       const lines = await retrieveAndDeleteFile(page, 'stdin.txt');
       expect(lines.length).toBe(7);
       expect(lines[4]).toEqual('│ service worker      │ sw         │ yes       │ yes     │');
@@ -52,8 +52,8 @@ test.describe('individual command', () => {
   });
 
   test.describe('uname', () => {
-    test(`should show emscripten build`, async ({ page }) => {
-      await runCommand(page, `uname -a > uname.txt`);
+    test('should show emscripten build', async ({ page }) => {
+      await runCommand(page, 'uname -a > uname.txt');
 
       const output = await retrieveAndDeleteFile(page, 'uname.txt');
       expect(output[0]).toMatch(/^Emscripten emscripten .* wasm32 GNU\/Linux$/);
@@ -61,13 +61,13 @@ test.describe('individual command', () => {
   });
 
   test.describe('git2cpp', () => {
-    test(`should print version`, async ({ page }) => {
-      await runCommand(page, `git -v > git0.txt`);
+    test('should print version', async ({ page }) => {
+      await runCommand(page, 'git -v > git0.txt');
       const output = await retrieveAndDeleteFile(page, 'git0.txt');
       expect(output[0]).toMatch(/^git2cpp version .* \(libgit2 .*\)$/);
     });
 
-    test(`should run git init`, async ({ page }) => {
+    test('should run git init', async ({ page }) => {
       await runCommand(page, 'git init .');
       await runCommand(page, 'tree -afi .git > git1.txt 2> err1.txt');
 
@@ -94,7 +94,7 @@ test.describe('individual command', () => {
       output = await retrieveAndDeleteFile(page, 'err1.txt');
       expect(output).toEqual(['']);
 
-      await runCommand(page, `git status > git2.txt 2> err2.txt`);
+      await runCommand(page, 'git status > git2.txt 2> err2.txt');
       output = await retrieveAndDeleteFile(page, 'git2.txt');
       expect(output.slice(0, 2)).toEqual(['On branch master', 'No commit yet']);
       output = await retrieveAndDeleteFile(page, 'err2.txt');

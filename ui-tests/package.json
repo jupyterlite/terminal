@@ -11,7 +11,7 @@
     "serve:coi": "npx static-handler --coi -p 8001 ./dist",
     "serve:cors-proxy": "HOST=localhost PORT=8881 node node_modules/cors-anywhere/server.js",
     "test": "jlpm playwright test",
-    "test:ui": "jlpm playwright test",
+    "test:ui": "jlpm playwright test --ui",
     "test:update": "jlpm playwright test --update-snapshots"
   },
   "devDependencies": {
