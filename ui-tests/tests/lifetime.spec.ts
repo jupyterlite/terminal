@@ -1,5 +1,5 @@
 import { expect, test } from './options';
-import { TERMINAL_SELECTOR, inputLine } from './utils/misc';
+import { TERMINAL_SELECTOR, runCommand } from './utils/misc';
 
 const OPEN_TERMINAL_1 = 'span.jp-RunningSessions-itemLabel:has-text("Terminal 1")';
 const TERMINALS_1 = 'text=terminals/1';
@@ -48,8 +48,7 @@ test.describe('Shutdown', () => {
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.sidebar.openTab('jp-running-sessions');
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await inputLine(page, 'exit');
-    await page.waitForTimeout(100);
+    await runCommand(page, 'exit');
 
     await expect(page.locator(OPEN_TERMINAL_1)).toHaveCount(0);
     await expect(page.locator(TERMINALS_1)).toHaveCount(0);
