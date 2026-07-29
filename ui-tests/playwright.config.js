@@ -9,7 +9,8 @@ module.exports = {
     '{snapshotDir}/{testFileDir}/{testFileName}-snapshots/{arg}-{platform}{ext}',
   use: {
     acceptDownloads: true,
-    autoGoto: false
+    autoGoto: false,
+    video: 'retain-on-failure'
   },
   retries: process.env.CI ? 2 : 0,
   workers: 1,

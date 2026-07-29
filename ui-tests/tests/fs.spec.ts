@@ -1,6 +1,11 @@
 import { expect, test } from './options';
-import { ContentsHelper } from './utils/contents';
-import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, decode64, inputLine } from './utils/misc';
+import {
+  LONG_WAIT_MS,
+  TERMINAL_SELECTOR,
+  WAIT_MS,
+  retrieveAndDeleteFile,
+  runCommand
+} from './utils/misc';
 
 const MONTHS_TXT =
   'January\nFebruary\nMarch\nApril\nMay\nJune\nJuly\nAugust\nSeptember\nOctober\nNovember\nDecember\n';
@@ -19,10 +24,6 @@ test.describe('Filesystem', () => {
     await page.goto();
     await page.waitForTimeout(LONG_WAIT_MS);
 
-    // Overwrite the (read-only) page.contents with our own ContentsHelper.
-    // @ts-ignore
-    page.contents = new ContentsHelper(page);
-
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
@@ -30,53 +31,37 @@ test.describe('Filesystem', () => {
   });
 
   test('should have initial files', async ({ page }) => {
-    // Directory contents.
-    const content = await page.contents.getContentMetadata('', 'directory');
-    expect(content).not.toBeNull();
-    const filenames = content?.content.map(item => item.name);
-    expect(filenames).toEqual(expect.arrayContaining(['fact.lua', 'months.txt']));
+    await runCommand(page, 'ls -ld /drive/* > out');
+
+    // Shared drive contents.
+    const output = await retrieveAndDeleteFile(page, 'out');
+    expect(output).toHaveLength(3);
+    expect(output[0]).toMatch(/^-rw-rw-rw- .* fact.lua$/);
+    expect(output[1]).toMatch(/^-rw-rw-rw- .* months.txt$/);
 
     // File contents.
-    const months = await page.contents.getContentMetadata('months.txt');
-    expect(months?.content).toEqual(MONTHS_TXT);
+    const months_txt = await retrieveAndDeleteFile(page, 'months.txt');
+    expect(months_txt).toEqual(MONTHS_TXT.split('\n'));
 
-    // Note fact.lua contents are returned base64 encoded.
-    const fact = await page.contents.getContentMetadata('fact.lua', 'file', 'base64');
-    expect(decode64(fact?.content)).toEqual(FACT_LUA);
+    const fact_lua = await retrieveAndDeleteFile(page, 'fact.lua');
+    expect(fact_lua).toEqual(FACT_LUA.split('\n'));
   });
 
   test('should create a new file', async ({ page }) => {
-    await page.goto();
-    await page.waitForTimeout(LONG_WAIT_MS);
-    await page.menu.clickMenuItem('File>New>Terminal');
-    await page.locator(TERMINAL_SELECTOR).waitFor();
-    await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
-    await page.waitForTimeout(LONG_WAIT_MS);
-
-    await inputLine(page, 'echo Hello > out.txt');
-    await page.getByTitle('Name: out.txt').waitFor();
+    await runCommand(page, 'echo Hello > out.txt');
+    const output = await retrieveAndDeleteFile(page, 'out.txt');
+    expect(output).toEqual(['Hello', '']);
   });
 
   test('should support cp', async ({ page }) => {
-    await inputLine(page, 'cp months.txt other.txt');
-    await page.waitForTimeout(WAIT_MS);
-    await page.filebrowser.refresh();
-
-    expect(await page.contents.fileExists('months.txt')).toBeTruthy();
-    expect(await page.contents.fileExists('other.txt')).toBeTruthy();
-
-    const other = await page.contents.getContentMetadata('other.txt');
-    expect(other?.content).toEqual(MONTHS_TXT);
+    await runCommand(page, 'cp months.txt other.txt');
+    const other = await retrieveAndDeleteFile(page, 'other.txt');
+    expect(other).toEqual(MONTHS_TXT.split('\n'));
   });
 
   test('should support touch', async ({ page }) => {
-    await inputLine(page, 'touch touched.txt');
-    await page.waitForTimeout(WAIT_MS);
-    await page.filebrowser.refresh();
-
-    expect(await page.contents.fileExists('touched.txt')).toBeTruthy();
-
-    const other = await page.contents.getContentMetadata('touched.txt');
-    expect(other?.content).toEqual('');
+    await runCommand(page, 'touch touched.txt');
+    const other = await retrieveAndDeleteFile(page, 'touched.txt');
+    expect(other).toEqual(['']);
   });
 });

@@ -1,15 +1,16 @@
 import { expect, test } from './options';
-import { ContentsHelper } from './utils/contents';
-import { LONG_WAIT_MS, TERMINAL_SELECTOR, inputLine, setStdinOption } from './utils/misc';
+import {
+  LONG_WAIT_MS,
+  TERMINAL_SELECTOR,
+  retrieveAndDeleteFile,
+  runCommand,
+  setStdinOption
+} from './utils/misc';
 
 test.describe('individual command', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto();
     await page.waitForTimeout(LONG_WAIT_MS);
-
-    // Overwrite the (read-only) page.contents with our own ContentsHelper.
-    // @ts-ignore
-    page.contents = new ContentsHelper(page);
 
     await page.menu.clickMenuItem('File>New>Terminal');
     await page.locator(TERMINAL_SELECTOR).waitFor();
@@ -19,24 +20,19 @@ test.describe('individual command', () => {
 
   test.describe('cockle-config', () => {
     test(`should show worker type`, async ({ page, supportsSAB }) => {
-      await inputLine(page, `cockle-config --worker > worker.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      const outputFile = await page.contents.getContentMetadata('worker.txt');
+      await runCommand(page, `cockle-config --worker > worker.txt`);
+      const output = await retrieveAndDeleteFile(page, 'worker.txt');
       if (supportsSAB) {
-        expect(outputFile?.content).toMatch(/^coincident worker\n$/);
+        expect(output[0]).toEqual('coincident worker');
       } else {
-        expect(outputFile?.content).toMatch(/^comlink worker\n$/);
+        expect(output[0]).toEqual('comlink worker');
       }
     });
 
     test(`should show stdin options`, async ({ page, supportsSAB }) => {
-      await inputLine(page, `cockle-config stdin > stdin.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      const outputFile = await page.contents.getContentMetadata('stdin.txt');
-      const lines = outputFile?.content.split('\n');
-      expect(lines.length).toBe(7);
+      await runCommand(page, `cockle-config stdin > stdin.txt`);
+      const lines = await retrieveAndDeleteFile(page, 'stdin.txt');
+      expect(lines).toHaveLength(7);
       expect(lines[1]).toEqual('│ synchronous stdin   │ short name │ available │ enabled │');
       if (supportsSAB) {
         expect(lines[3]).toEqual('│ shared array buffer │ sab        │ yes       │ yes     │');
@@ -48,11 +44,8 @@ test.describe('individual command', () => {
     });
 
     test(`should support setting use of SW via cockle-config`, async ({ page, supportsSAB }) => {
-      await inputLine(page, `cockle-config stdin sw > stdin.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      const outputFile = await page.contents.getContentMetadata('stdin.txt');
-      const lines = outputFile?.content.split('\n');
+      await runCommand(page, `cockle-config stdin sw > stdin.txt`);
+      const lines = await retrieveAndDeleteFile(page, 'stdin.txt');
       expect(lines.length).toBe(7);
       expect(lines[4]).toEqual('│ service worker      │ sw         │ yes       │ yes     │');
     });
@@ -60,42 +53,45 @@ test.describe('individual command', () => {
 
   test.describe('uname', () => {
     test(`should show emscripten build`, async ({ page }) => {
-      await inputLine(page, `uname -a > uname.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
+      await runCommand(page, `uname -a > uname.txt`);
 
-      const outputFile = await page.contents.getContentMetadata('uname.txt');
-      expect(outputFile?.content).toMatch(/^Emscripten emscripten .* wasm32 GNU\/Linux\n$/);
+      const output = await retrieveAndDeleteFile(page, 'uname.txt');
+      expect(output[0]).toMatch(/^Emscripten emscripten .* wasm32 GNU\/Linux$/);
     });
   });
 
   test.describe('git2cpp', () => {
     test(`should print version`, async ({ page }) => {
-      await inputLine(page, `git -v > git0.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      const outputFile = await page.contents.getContentMetadata('git0.txt');
-      expect(outputFile?.content).toMatch(/^git2cpp version .* \(libgit2 .*\)\n$/);
+      await runCommand(page, `git -v > git0.txt`);
+      const output = await retrieveAndDeleteFile(page, 'git0.txt');
+      expect(output[0]).toMatch(/^git2cpp version .* \(libgit2 .*\)$/);
     });
 
     test(`should run git init`, async ({ page }) => {
-      await inputLine(page, `git init .`);
+      await runCommand(page, `git init .`);
+      await runCommand(page, `ls .git > git1.txt 2> err1.txt`);
+
+      let output = await retrieveAndDeleteFile(page, 'git1.txt');
+      expect(output).toEqual([
+        'HEAD',
+        'config',
+        'description',
+        'hooks',
+        'info',
+        'objects',
+        'refs',
+        ''
+      ]);
+      output = await retrieveAndDeleteFile(page, 'err1.txt');
+      expect(output).toEqual(['']);
+
+      await runCommand(page, `git status > git2.txt 2> err2.txt`);
       await page.waitForTimeout(LONG_WAIT_MS);
 
-      await inputLine(page, `ls .git > git1.txt 2> err1.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      let outputFile = await page.contents.getContentMetadata('git1.txt');
-      expect(outputFile?.content).toBe('HEAD\nconfig\ndescription\nhooks\ninfo\nobjects\nrefs\n');
-      outputFile = await page.contents.getContentMetadata('err1.txt');
-      expect(outputFile?.content).toBe('');
-
-      await inputLine(page, `git status > git2.txt 2> err2.txt`);
-      await page.waitForTimeout(LONG_WAIT_MS);
-
-      outputFile = await page.contents.getContentMetadata('git2.txt');
-      expect(outputFile?.content).toMatch(/^On branch master\nNo commit yet/);
-      outputFile = await page.contents.getContentMetadata('err2.txt');
-      expect(outputFile?.content).toBe('');
+      output = await retrieveAndDeleteFile(page, 'git2.txt');
+      expect(output.slice(0, 2)).toEqual(['On branch master', 'No commit yet']);
+      output = await retrieveAndDeleteFile(page, 'err2.txt');
+      expect(output).toEqual(['']);
     });
   });
 
@@ -109,19 +105,17 @@ test.describe('individual command', () => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 
-        await inputLine(page, 'nano a.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'nano a.txt');
 
         // Insert new characters.
-        await inputLine(page, 'mnopqrst', false);
+        await runCommand(page, 'mnopqrst', false);
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await inputLine(page, 'y');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'y');
 
-        const outputFile = await page.contents.getContentMetadata('a.txt');
-        expect(outputFile?.content).toEqual('mnopqrst\n');
+        const output = await retrieveAndDeleteFile(page, 'a.txt');
+        expect(output).toEqual(['mnopqrst', '']);
       });
 
       test(`should delete data from file using ${stdinOption} for stdin`, async ({
@@ -132,11 +126,9 @@ test.describe('individual command', () => {
         await setStdinOption(page, stdinOption);
 
         // Prepare file to delete from.
-        await inputLine(page, 'echo mnopqrst > b.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'echo mnopqrst > b.txt');
 
-        await inputLine(page, 'nano b.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'nano b.txt');
 
         // Delete first 4 characters.
         for (let i = 0; i < 4; i++) {
@@ -145,11 +137,10 @@ test.describe('individual command', () => {
 
         // Save and quit.
         await page.keyboard.press('Control+x');
-        await inputLine(page, 'y');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'y');
 
-        const outputFile = await page.contents.getContentMetadata('b.txt');
-        expect(outputFile?.content).toEqual('qrst\n');
+        const output = await retrieveAndDeleteFile(page, 'b.txt');
+        expect(output).toEqual(['qrst', '']);
       });
     });
   });
@@ -164,19 +155,17 @@ test.describe('individual command', () => {
         test.skip(stdinOption === 'sab' && !supportsSAB, 'SAB not available');
         await setStdinOption(page, stdinOption);
 
-        await inputLine(page, 'vim c.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'vim c.txt');
 
         // Insert new characters.
-        await inputLine(page, 'iabcdefgh', false);
+        await runCommand(page, 'iabcdefgh', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');
-        await inputLine(page, ':wq');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, ':wq');
 
-        const outputFile = await page.contents.getContentMetadata('c.txt');
-        expect(outputFile?.content).toEqual('abcdefgh\n');
+        const output = await retrieveAndDeleteFile(page, 'c.txt');
+        expect(output).toEqual(['abcdefgh', '']);
       });
 
       test(`should delete data from file using ${stdinOption} for stdin`, async ({
@@ -187,22 +176,19 @@ test.describe('individual command', () => {
         await setStdinOption(page, stdinOption);
 
         // Prepare file to delete from.
-        await inputLine(page, 'echo abcdefgh > d.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'echo abcdefgh > d.txt');
 
-        await inputLine(page, 'vim d.txt');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, 'vim d.txt');
 
         // Delete first 4 characters.
-        await inputLine(page, 'd4l', false);
+        await runCommand(page, 'd4l', false);
 
         // Save and quit.
         await page.keyboard.press('Escape');
-        await inputLine(page, ':wq');
-        await page.waitForTimeout(LONG_WAIT_MS);
+        await runCommand(page, ':wq');
 
-        const outputFile = await page.contents.getContentMetadata('d.txt');
-        expect(outputFile?.content).toEqual('efgh\n');
+        const output = await retrieveAndDeleteFile(page, 'd.txt');
+        expect(output).toEqual(['efgh', '']);
       });
     });
   });

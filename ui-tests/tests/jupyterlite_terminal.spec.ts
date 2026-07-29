@@ -1,5 +1,5 @@
 import { expect, test } from './options';
-import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, inputLine } from './utils/misc';
+import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, runCommand } from './utils/misc';
 
 test.describe('Terminal', () => {
   test('should emit service worker console message', async ({ page }) => {
@@ -41,25 +41,16 @@ test.describe('Terminal', () => {
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(LONG_WAIT_MS);
 
-    await inputLine(page, 'ls'); // avoid timestamps
-    await page.waitForTimeout(WAIT_MS);
+    await runCommand(page, 'ls'); // avoid timestamps
+    await runCommand(page, 'cp months.txt other.txt');
+    await runCommand(page, 'ls'); // avoid timestamps
+    await runCommand(page, 'una\t'); // tab complete command name
 
-    await inputLine(page, 'cp months.txt other.txt');
-    await page.waitForTimeout(WAIT_MS);
-
-    await inputLine(page, 'ls'); // avoid timestamps
-    await page.waitForTimeout(WAIT_MS);
-
-    await inputLine(page, 'una\t'); // tab complete command name
-    await page.waitForTimeout(WAIT_MS);
-
-    await inputLine(page, 'grep ember mon\t'); // tab complete filename
-    await page.waitForTimeout(WAIT_MS);
-
+    await runCommand(page, 'grep ember mon\t'); // tab complete filename
     await page.keyboard.press('Tab'); // list all commands
     await page.waitForTimeout(WAIT_MS);
 
-    await inputLine(page, 'abc'); // no such command
+    await runCommand(page, 'abc'); // no such command
     await page.waitForTimeout(WAIT_MS);
 
     // Hide modification times.
@@ -83,8 +74,7 @@ test.describe('Terminal', () => {
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(LONG_WAIT_MS);
 
-    await inputLine(page, 'cockle-config stdin');
-    await page.waitForTimeout(WAIT_MS);
+    await runCommand(page, 'cockle-config stdin');
 
     const term = page.locator('div.xterm-viewport');
     expect(await term.screenshot()).toMatchSnapshot('both-sab-and-sw.png');
@@ -98,8 +88,7 @@ test.describe('Terminal', () => {
     await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
     await page.waitForTimeout(LONG_WAIT_MS);
 
-    await inputLine(page, 'cockle-config stdin sw');
-    await page.waitForTimeout(WAIT_MS);
+    await runCommand(page, 'cockle-config stdin sw');
 
     const term = page.locator('div.xterm-viewport');
     const snapshot = supportsSAB ? 'set-sw-stdin-with-sab.png' : 'set-sw-stdin-no-sab.png';
@@ -118,19 +107,15 @@ test.describe('Terminal', () => {
       await page.locator('div.xterm-screen').click(); // sets focus for keyboard input
       await page.waitForTimeout(LONG_WAIT_MS);
 
-      await inputLine(page, `cockle-config stdin ${stdinOption}`);
+      await runCommand(page, `cockle-config stdin ${stdinOption}`);
       await page.waitForTimeout(WAIT_MS);
 
       // Start interactive grep command.
-      await inputLine(page, 'grep o');
-      await page.waitForTimeout(WAIT_MS);
+      await runCommand(page, 'grep o');
 
-      await inputLine(page, 'abcod');
-      await page.waitForTimeout(WAIT_MS);
-      await inputLine(page, 'def');
-      await page.waitForTimeout(WAIT_MS);
-      await inputLine(page, 'oogoo');
-      await page.waitForTimeout(WAIT_MS);
+      await runCommand(page, 'abcod');
+      await runCommand(page, 'def');
+      await runCommand(page, 'oogoo');
 
       // Finish interactive grep command.
       await page.keyboard.press('Control+d');
