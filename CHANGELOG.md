@@ -2,6 +2,34 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.6.1
+
+JupyterLite Terminal 1.6.1 is a bug fix release to correct the extension directory name, for use in hybrid JupyterLab/JupyterLite deployments.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.6.0...7aa266866d5387f3b12a3f9bbf7e382ac39cd863))
+
+### Bugs fixed
+
+- Use correct extension directory name [#129](https://github.com/jupyterlite/terminal/pull/129) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Prepare for 1.6.1 release [#130](https://github.com/jupyterlite/terminal/pull/130) ([@ianthomas23](https://github.com/ianthomas23))
+- Improve robustness of ui tests [#128](https://github.com/jupyterlite/terminal/pull/128) ([@ianthomas23](https://github.com/ianthomas23))
+- Add more git2cpp tests [#127](https://github.com/jupyterlite/terminal/pull/127) ([@ianthomas23](https://github.com/ianthomas23))
+- Bump actions/setup-python from 6 to 7 in the actions group [#126](https://github.com/jupyterlite/terminal/pull/126) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-07-17&to=2026-08-05&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-07-17..2026-08-05&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.6.0
 
 JupyterLite Terminal 1.6.0 adds a new [coincident](https://github.com/WebReflection/coincident) web worker which is used in deployments that are served cross-origin isolated, otherwise the default [comlink](https://github.com/googlechromelabs/comlink) web worker is used. The coincident web worker uses SharedArrayBuffer to access the JupyterLite shared drive whereas the comlink web worker uses the Service Worker. The JupyterLite `pyodide` and `xeus` kernels work in the same way. You can check which web worker is being used via `cockle-config --worker` or `cockle-config -w`. There is no functional change here for users of the JupyterLite terminal, but downstream developers who are inheriting from and modifying these libraries may have to make changes to support the choice of web worker.
@@ -27,8 +55,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-06-25&to=2026-07-17&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-06-25..2026-07-17&type=Issues)) | @juntyr ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajuntyr+updated%3A2026-06-25..2026-07-17&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.5.1
 
