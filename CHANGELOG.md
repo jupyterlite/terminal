@@ -2,6 +2,32 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.7.0
+
+JupyterLite Terminal 1.7.0 updates to cockle 1.8.0 which adds support for multiline inputs at the command prompt, and use of Ctrl-L to clear the screen. There are also improvements in support for asynchronous shared drives in JupyterLite.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.6.2...339a9d1aee687a3460e66d4d2766570efcac9faa))
+
+### Enhancements made
+
+- Update to cockle 1.8.0-a1 [#134](https://github.com/jupyterlite/terminal/pull/134) ([@ianthomas23](https://github.com/ianthomas23))
+- Update to cockle 1.8.0-a0 [#132](https://github.com/jupyterlite/terminal/pull/132) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update to cockle 1.8.0 [#135](https://github.com/jupyterlite/terminal/pull/135) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-08-10&to=2026-09-29&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-08-10..2026-09-29&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.7.0a1
 
 ([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.7.0a0...2e2aa002756575510176294ac03a3c8805323788))
@@ -18,8 +44,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-08-12&to=2026-09-11&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-08-12..2026-09-11&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.7.0a0
 
