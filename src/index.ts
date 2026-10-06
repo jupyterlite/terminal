@@ -32,7 +32,9 @@ const terminalClientPlugin: ServiceManagerPlugin<Terminal.ITerminalAPIClient> = 
       serverSettings: {
         ...ServerConnection.makeSettings(),
         ...serverSettings,
-        WebSocket
+        // mock-socket types WebSocket.readyState as number whereas the DOM lib in
+        // TypeScript 6+ types it as 0 | 1 | 2 | 3. They are compatible at runtime.
+        WebSocket: WebSocket as unknown as typeof globalThis.WebSocket
       }
     });
   }

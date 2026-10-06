@@ -100,7 +100,7 @@
         "stylelint-csstree-validator": "^3.0.0",
         "stylelint-prettier": "^4.0.0",
         "ts-loader": "^9.5.2",
-        "typescript": "~5.7.0"
+        "typescript": "^6.0.3"
     },
     "resolutions": {
         "parse5": "7.2.1"
