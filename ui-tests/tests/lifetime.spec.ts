@@ -1,5 +1,5 @@
 import { expect, test } from './options';
-import { TERMINAL_SELECTOR, runCommand } from './utils/misc';
+import { runCommand, TERMINAL_SELECTOR } from './utils/misc';
 
 const OPEN_TERMINAL_1 = 'span.jp-RunningSessions-itemLabel:has-text("Terminal 1")';
 const TERMINALS_1 = 'text=terminals/1';

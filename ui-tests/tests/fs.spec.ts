@@ -1,11 +1,11 @@
 import { expect, test } from './options';
 import {
-  LONG_WAIT_MS,
-  TERMINAL_SELECTOR,
-  WAIT_MS,
   decode64,
+  LONG_WAIT_MS,
   retrieveAndDeleteFile,
-  runCommand
+  runCommand,
+  TERMINAL_SELECTOR,
+  WAIT_MS
 } from './utils/misc';
 
 const MONTHS_TXT =

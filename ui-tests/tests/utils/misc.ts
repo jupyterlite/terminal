@@ -1,5 +1,5 @@
-import { Buffer } from 'node:buffer';
 import type { Page } from '@playwright/test';
+import { Buffer } from 'node:buffer';
 import { expect } from '../options';
 
 export const WAIT_MS = 100;
@@ -54,7 +54,7 @@ export async function runCommand(
 
 export async function setStdinOption(page: Page, stdinOption: string) {
   await runCommand(page, `cockle-config stdin ${stdinOption}`);
-  await runCommand(page, `env|grep ? > exit.txt`);
+  await runCommand(page, 'env|grep ? > exit.txt');
   const exitCode = await retrieveAndDeleteFile(page, 'exit.txt');
   expect(exitCode[0]).toMatch('?=0');
 }

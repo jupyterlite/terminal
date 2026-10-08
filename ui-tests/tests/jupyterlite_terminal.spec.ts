@@ -1,5 +1,5 @@
 import { expect, test } from './options';
-import { LONG_WAIT_MS, TERMINAL_SELECTOR, WAIT_MS, runCommand } from './utils/misc';
+import { LONG_WAIT_MS, runCommand, TERMINAL_SELECTOR, WAIT_MS } from './utils/misc';
 
 test.describe('Terminal', () => {
   test('should emit service worker console message', async ({ page }) => {

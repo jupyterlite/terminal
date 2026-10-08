@@ -1,10 +1,10 @@
 import { expect, test } from './options';
 import {
   LONG_WAIT_MS,
-  TERMINAL_SELECTOR,
   retrieveAndDeleteFile,
   runCommand,
-  setStdinOption
+  setStdinOption,
+  TERMINAL_SELECTOR
 } from './utils/misc';
 
 test.describe('individual command', () => {
