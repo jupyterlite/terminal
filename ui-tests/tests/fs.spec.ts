@@ -74,4 +74,23 @@ test.describe('Filesystem', () => {
     const other = await retrieveAndDeleteFile(page, 'touched.txt');
     expect(other).toEqual(['']);
   });
+
+  test('should not rmdir a non-empty directory', async ({ page }) => {
+    await runCommand(page, 'mkdir newdir');
+    await runCommand(page, 'echo Hello123 > newdir/a.txt');
+    await runCommand(page, 'rmdir newdir 2> err.txt');
+
+    const err = await retrieveAndDeleteFile(page, 'err.txt');
+    expect(err[0]).toMatch(/Directory not empty/);
+
+    // Directory and its contents still exist.
+    await page.locator('.jp-DirListing-item[title^="Name: newdir"]').dblclick();
+    await runCommand(page, 'cd newdir');
+    const content = await retrieveAndDeleteFile(page, 'a.txt');
+    expect(content).toEqual(['Hello123', '']);
+
+    // Now empty so can be removed.
+    await runCommand(page, 'cd ..');
+    await runCommand(page, 'rmdir newdir');
+  });
 });
