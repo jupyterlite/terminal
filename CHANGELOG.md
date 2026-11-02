@@ -2,6 +2,32 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.7.1
+
+JupyterLite Terminal 1.7.1 is a bug fix release that builds against JupyterLite 0.8.7 to include its `rmdir` bug fix (https://github.com/jupyterlite/jupyterlite/pull/2102).
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.7.0...6c61c35f83e070d68e9a379b0f720c2583925195))
+
+### Bugs fixed
+
+- Build against jupyterlite 0.8.7 to fix `rmdir` bug [#138](https://github.com/jupyterlite/terminal/pull/138) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update `eslint` to version 10 [#137](https://github.com/jupyterlite/terminal/pull/137) ([@ianthomas23](https://github.com/ianthomas23))
+- Update `typescript` to version 6 [#136](https://github.com/jupyterlite/terminal/pull/136) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-09-29&to=2026-11-02&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-09-29..2026-11-02&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.7.0
 
 JupyterLite Terminal 1.7.0 updates to cockle 1.8.0 which adds support for multiline inputs at the command prompt, and use of Ctrl-L to clear the screen. There are also improvements in support for asynchronous shared drives in JupyterLite.
@@ -25,8 +51,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-08-10&to=2026-09-29&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-08-10..2026-09-29&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.7.0a1
 
