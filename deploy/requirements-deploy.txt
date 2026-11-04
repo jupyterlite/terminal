@@ -1,3 +1,4 @@
+catppuccin-jupyterlab
 jupyterlab
 jupyterlite-core
 ..

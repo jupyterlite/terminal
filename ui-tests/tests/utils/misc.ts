@@ -56,5 +56,5 @@ export async function setStdinOption(page: Page, stdinOption: string) {
   await runCommand(page, `cockle-config stdin ${stdinOption}`);
   await runCommand(page, 'env|grep ? > exit.txt');
   const exitCode = await retrieveAndDeleteFile(page, 'exit.txt');
-  expect(exitCode[0]).toMatch('?=0');
+  expect(exitCode[0]).toMatch("'?'=0");
 }

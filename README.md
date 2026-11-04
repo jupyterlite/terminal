@@ -148,6 +148,7 @@ To build a JupyterLite distribution with the extension installed:
 
 ```bash
 cd deploy
+python -m pip install -r requirements-deploy.txt
 jupyter lite build --contents contents
 ```
 
