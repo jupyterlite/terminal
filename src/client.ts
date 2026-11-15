@@ -110,7 +110,7 @@ export class LiteTerminalAPIClient implements ILiteTerminalAPIClient {
     };
 
     const url = URLExt.join(wsUrl, 'terminals', 'websocket', name);
-    const wsServer = new WebSocketServer(url);
+    const wsServer = new WebSocketServer(url, { mock: false });
     wsServer.on('connection', (socket: WebSocketClient): void => {
       hook(shell, socket);
     });

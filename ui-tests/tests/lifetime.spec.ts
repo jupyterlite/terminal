@@ -26,6 +26,17 @@ test.describe('New', () => {
     await page.locator('.jp-LauncherCard-label >> p:has-text("Terminal")').click();
     await page.locator(TERMINAL_SELECTOR).waitFor();
   });
+
+  test('should keep the native WebSocket', async ({ page }) => {
+    await page.goto();
+    await page.menu.clickMenuItem('File>New>Terminal');
+    await page.locator(TERMINAL_SELECTOR).waitFor();
+
+    const isNative = await page.evaluate(() =>
+      Function.prototype.toString.call(window.WebSocket).includes('[native code]')
+    );
+    expect(isNative).toBe(true);
+  });
 });
 
 test.describe('Shutdown', () => {
