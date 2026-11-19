@@ -1,7 +1,11 @@
 {
   "packages": {
     "git2cpp": {},
-    "lua": {},
+     "lua-static": {
+      "modules": {
+        "lua": {}
+      }
+    },
     "nano": {},
     "tree": {},
     "vim": {}
