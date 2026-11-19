@@ -37,8 +37,8 @@ test.describe('Filesystem', () => {
     // Shared drive contents.
     const output = await retrieveAndDeleteFile(page, 'out.txt');
     expect(output).toHaveLength(3);
-    expect(output[0]).toMatch(/^-rw-rw-rw- .* fact.lua$/);
-    expect(output[1]).toMatch(/^-rw-rw-rw- .* months.txt$/);
+    expect(output[0]).toMatch(/^-rw-rw-rw- .* \/drive\/fact.lua$/);
+    expect(output[1]).toMatch(/^-rw-rw-rw- .* \/drive\/months.txt$/);
 
     // File contents.
     const months_txt = await retrieveAndDeleteFile(page, 'months.txt');
