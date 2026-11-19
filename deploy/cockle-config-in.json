@@ -1,7 +1,7 @@
 {
   "packages": {
     "git2cpp": {},
-     "lua-static": {
+    "lua-static": {
       "modules": {
         "lua": {}
       }
