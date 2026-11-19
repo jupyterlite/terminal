@@ -1,5 +1,4 @@
 import type { Page } from '@playwright/test';
-import { Buffer } from 'node:buffer';
 import { expect } from '../options';
 
 export const WAIT_MS = 100;
@@ -8,10 +7,6 @@ export const WAIT_MS = 100;
 export const LONG_WAIT_MS = 300;
 
 export const TERMINAL_SELECTOR = '.jp-Terminal';
-
-export function decode64(encoded: string): string {
-  return Buffer.from(encoded, 'base64').toString('binary');
-}
 
 export async function retrieveAndDeleteFile(page: Page, filename: string): Promise<string[]> {
   const fileItem = page.locator(`.jp-DirListing-item[title^="Name: ${filename}"]`);

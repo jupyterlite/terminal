@@ -9,7 +9,7 @@ A terminal for JupyterLite.
 
 ## Requirements
 
-- JupyterLite >= 0.7.0, < 0.9.0
+- JupyterLite >= 0.8.0, < 0.9.0
 
 ## Install
 
@@ -96,7 +96,7 @@ include imports from both `jupyterlite-terminal` and `cockle`, such as if you ar
 
 | `jupyterlite-terminal` | `cockle` | `jupyterlite-core`                | Release date |
 | ---------------------- | -------- | --------------------------------- | ------------ |
-| 1.8.0                  | 1.9.1    | >= 0.7, < 0.9, != 0.7.4, != 0.7.5 | 2026-11-19   |
+| 1.8.0                  | 1.9.1    | >= 0.8, < 0.9                     | 2026-11-20   |
 | 1.7.0                  | 1.8.0    | >= 0.7, < 0.9, != 0.7.4, != 0.7.5 | 2026-09-29   |
 | 1.6.2                  | 1.7.1    | >= 0.7, < 0.9, != 0.7.4, != 0.7.5 | 2026-08-10   |
 | 1.6.1                  | 1.7.0    | >= 0.7, < 0.9, != 0.7.4, != 0.7.5 | 2026-08-05   |

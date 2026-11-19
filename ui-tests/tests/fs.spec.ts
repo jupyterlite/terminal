@@ -1,6 +1,5 @@
 import { expect, test } from './options';
 import {
-  decode64,
   LONG_WAIT_MS,
   retrieveAndDeleteFile,
   runCommand,
@@ -45,16 +44,7 @@ test.describe('Filesystem', () => {
     expect(months_txt).toEqual(MONTHS_TXT.split('\n'));
 
     const fact_lua = await retrieveAndDeleteFile(page, 'fact.lua');
-
-    const jupyterliteVersion = await page.evaluate(() => {
-      const el = document.getElementById('jupyter-config-data');
-      return JSON.parse(el?.textContent || '{}').appVersion;
-    });
-    if (jupyterliteVersion === '0.7.0') {
-      expect(decode64(fact_lua.join('\n'))).toEqual(FACT_LUA);
-    } else {
-      expect(fact_lua).toEqual(FACT_LUA.split('\n'));
-    }
+    expect(fact_lua).toEqual(FACT_LUA.split('\n'));
   });
 
   test('should create a new file', async ({ page }) => {

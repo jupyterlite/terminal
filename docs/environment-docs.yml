@@ -4,11 +4,11 @@ channels:
 dependencies:
   # General build dependencies
   - micromamba
-  - nodejs =22
-  - python =3.13
+  - nodejs =24
+  - python =3.14
 
   # Jupyter dependencies
-  - jupyterlite-core >=0.7,<0.9.0
+  - jupyterlite-core >=0.8,<0.9.0
 
   # Docs dependencies
   - jupyterlite-sphinx

@@ -2871,7 +2871,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/apputils@npm:^0.7.0 || ^0.8.0":
+"@jupyterlite/apputils@npm:^0.8.0":
   version: 0.8.7
   resolution: "@jupyterlite/apputils@npm:0.8.7"
   dependencies:
@@ -2925,7 +2925,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jupyterlite/services@npm:^0.7.0 || ^0.8.0, @jupyterlite/services@npm:^0.8.7":
+"@jupyterlite/services@npm:^0.8.0, @jupyterlite/services@npm:^0.8.7":
   version: 0.8.7
   resolution: "@jupyterlite/services@npm:0.8.7"
   dependencies:
@@ -2962,9 +2962,9 @@ __metadata:
     "@jupyterlab/services": ^7.5.0
     "@jupyterlab/settingregistry": ^4.5.0
     "@jupyterlab/testutils": ^4.5.0
-    "@jupyterlite/apputils": ^0.7.0 || ^0.8.0
+    "@jupyterlite/apputils": ^0.8.0
     "@jupyterlite/cockle": ^1.9.1
-    "@jupyterlite/services": ^0.7.0 || ^0.8.0
+    "@jupyterlite/services": ^0.8.0
     "@lumino/coreutils": ^2.2.1
     "@lumino/signaling": ^2.1.4
     "@rspack/cli": ^2.0.6
