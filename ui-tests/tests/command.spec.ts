@@ -56,7 +56,7 @@ test.describe('individual command', () => {
       await runCommand(page, 'uname -a > uname.txt');
 
       const output = await retrieveAndDeleteFile(page, 'uname.txt');
-      expect(output[0]).toMatch(/^Emscripten emscripten .* wasm32 GNU\/Linux$/);
+      expect(output[0]).toMatch(/^Emscripten emscripten .* wasm32 Emscripten$/);
     });
   });
 

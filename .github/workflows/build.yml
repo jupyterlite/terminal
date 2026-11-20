@@ -17,7 +17,7 @@ env:
   # Min and max limits of jupyterlite-core versions that this should work on.
   # Changes here should be synchronised with pyproject.toml dependencies section.
   # If MAX installs a pre-release, may also need pre-release of jupyterlab
-  MIN_LITE_VERSION: jupyterlite-core==0.7.0
+  MIN_LITE_VERSION: jupyterlite-core==0.8.0
   MAX_LITE_VERSION: --pre jupyterlite-core<0.9.0 jupyterlab>=4.6.0,<5
 
   LAB_VERSION: jupyterlab>=4.6.0,<5
@@ -116,7 +116,7 @@ jobs:
       fail-fast: false
       matrix:
         lite-version: ['min', 'normal', 'max']
-        python-version: ['3.10', '3.14']
+        python-version: ['3.11', '3.15']
 
     env:
       PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/pw-browsers

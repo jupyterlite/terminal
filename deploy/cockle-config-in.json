@@ -1,7 +1,17 @@
 {
   "packages": {
+    "awk": {},
+    "findutils": {
+      "modules": {
+        "find": {}
+      }
+    },
     "git2cpp": {},
-    "lua": {},
+    "lua-static": {
+      "modules": {
+        "lua": {}
+      }
+    },
     "nano": {},
     "tree": {},
     "vim": {}
