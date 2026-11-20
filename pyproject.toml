@@ -38,8 +38,11 @@ source = "nodejs"
 fields = ["description", "authors", "urls"]
 
 [tool.hatch.build.targets.sdist]
-artifacts = ["jupyterlite_terminal/labextension"]
+artifacts = ["jupyterlite_terminal/labextension", "jupyterlite_terminal/cockle"]
 exclude = [".github", "binder"]
+
+[tool.hatch.build.targets.wheel]
+artifacts = ["jupyterlite_terminal/cockle"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "jupyterlite_terminal/labextension" = "share/jupyter/labextensions/@jupyterlite/terminal"
@@ -54,8 +57,13 @@ build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
     "jupyterlite_terminal/labextension/static/style.js",
     "jupyterlite_terminal/labextension/package.json",
+    "jupyterlite_terminal/cockle/lib/tools/prepare_wasm.js",
+    "jupyterlite_terminal/cockle/cockle-config-base.json",
 ]
-skip-if-exists = ["jupyterlite_terminal/labextension/static/style.js"]
+skip-if-exists = [
+    "jupyterlite_terminal/labextension/static/style.js",
+    "jupyterlite_terminal/cockle/lib/tools/prepare_wasm.js",
+]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"

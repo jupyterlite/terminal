@@ -23,12 +23,11 @@ class TerminalAddon(FederatedExtensionAddon):
         lite_dir = manager.lite_dir
         output_dir = manager.output_dir
 
-        cockleTool = Path("node_modules", "@jupyterlite", "cockle", "lib", "tools", "prepare_wasm.js")
+        # Vendored copy of cockle's prepare_wasm tool, bundled at build time so that it matches
+        # the version of cockle that this extension was built against.
+        cockleTool = Path(__file__).parent / "cockle" / "lib" / "tools" / "prepare_wasm.js"
         if not cockleTool.is_file():
-            cockleTool = ".cockle_temp" / cockleTool
-            cmd = ["npm", "install", "--no-save", "--prefix", cockleTool.parts[0], "@jupyterlite/cockle"]
-            print("TerminalAddon:", " ".join(cmd))
-            subprocess.run(cmd, check=True, cwd=lite_dir)
+            raise FileNotFoundError(f"TerminalAddon: cannot find vendored cockle tool {cockleTool}")
 
         assetDir = output_dir / "extensions" / "@jupyterlite" / "terminal" / "static" / "wasm"
 
