@@ -8,6 +8,8 @@ node_modules/
 .ipynb_checkpoints
 *.tsbuildinfo
 jupyterlite_terminal/labextension
+# Vendored cockle prepare_wasm tool, created at build time
+jupyterlite_terminal/cockle
 # Version file is handled by hatchling
 jupyterlite_terminal/_version.py
 
@@ -128,4 +130,3 @@ dmypy.json
 _output/
 cockle_wasm_env/
 cockle-config.json
-.cockle_temp/

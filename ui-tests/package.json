@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "jlpm clean && python build.py",
-    "clean": "rimraf cockle_wasm_env dist .cockle_temp .jupyterlite.doit.db",
+    "clean": "rimraf cockle_wasm_env dist .jupyterlite.doit.db",
     "serve": "concurrently 'npm run serve:simple' 'npm run serve:coi' 'npm run serve:cors-proxy'",
     "serve:simple": "npx static-handler -p 8000 ./dist",
     "serve:coi": "npx static-handler --coi -p 8001 ./dist",
