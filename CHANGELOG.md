@@ -2,6 +2,38 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 1.8.0
+
+JupyterLite Terminal 1.8.0 upgrades to cockle 1.9.1 which brings many improvements including switching to the `emscripten/6x` channel on Emscripten-forge, the addition of new commands `awk` and `find`, sharing the file system between wasm commands, and significant enhancements to command-line handling of redirections, tab completion, variable expansion, handling of Ctrl-C and Ctrl-D, and combining commands with `&&` and `||`.
+
+In addition, this release vendors cockle's `prepare_wasm` script to ensure that JupyterLite deployments use the same version of cockle that it is built against.
+
+([Full Changelog](https://github.com/jupyterlite/terminal/compare/v1.7.1...92566fefd13fb9d040c75e20dda88aafc440ecc6))
+
+### Enhancements made
+
+- Vendor cockle's prepare_wasm script to ensure using correct version [#142](https://github.com/jupyterlite/terminal/pull/142) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Bugs fixed
+
+- Do not replace the global WebSocket [#140](https://github.com/jupyterlite/terminal/pull/140) ([@jtpio](https://github.com/jtpio), [@ianthomas23](https://github.com/ianthomas23))
+
+### Maintenance and upkeep improvements
+
+- Update to cockle 1.9.1 in preparation for 1.8.0 release [#141](https://github.com/jupyterlite/terminal/pull/141) ([@ianthomas23](https://github.com/ianthomas23))
+- Add catppuccin theme to demo deployment [#139](https://github.com/jupyterlite/terminal/pull/139) ([@ianthomas23](https://github.com/ianthomas23))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-11-02&to=2026-11-20&type=c))
+
+@ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-11-02..2026-11-20&type=Issues)) | @jtpio ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Ajtpio+updated%3A2026-11-02..2026-11-20&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 1.7.1
 
 JupyterLite Terminal 1.7.1 is a bug fix release that builds against JupyterLite 0.8.7 to include its `rmdir` bug fix (https://github.com/jupyterlite/jupyterlite/pull/2102).
@@ -25,8 +57,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/jupyterlite/terminal/graphs/contributors?from=2026-09-29&to=2026-11-02&type=c))
 
 @ianthomas23 ([activity](https://github.com/search?q=repo%3Ajupyterlite%2Fterminal+involves%3Aianthomas23+updated%3A2026-09-29..2026-11-02&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 1.7.0
 
