@@ -293,4 +293,20 @@ test.describe('individual command', () => {
       });
     });
   });
+
+  test.describe('rg', () => {
+    test('should search recursively for regex', async ({ page }) => {
+      await runCommand(page, 'mkdir subdir');
+      await runCommand(page, 'echo "October sky" > subdir/a.txt');
+      await runCommand(page, "rg --sort path --line-number '^Oct.*r' . > rg.txt 2> err.txt");
+
+      let output = await retrieveAndDeleteFile(page, 'rg.txt');
+      expect(output).toEqual(['./months.txt:10:October', './subdir/a.txt:1:October sky', '']);
+
+      output = await retrieveAndDeleteFile(page, 'err.txt');
+      expect(output).toEqual(['']);
+
+      await runCommand(page, 'rm -rf subdir');
+    });
+  });
 });
